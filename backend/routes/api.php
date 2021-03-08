@@ -1,6 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PrenatalRecordController;
+use App\Http\Controllers\PurchaseRequestController;
+use App\Http\Controllers\RecordController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +20,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('/auth')->group(function () {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/users/search', [UserController::class, 'search']);
+    Route::apiResources([
+        'patients' => PatientController::class,
+        'users' => UserController::class,
+        'regular-records' => RecordController::class,
+        'prenatal-records' => PrenatalRecordController::class,
+    ]);
+
+    Route::prefix('/pharmacy')->group(function () {
+        Route::apiResources([
+            'medicines' => MedicineController::class,
+            'purchase-requests' => PurchaseRequestController::class,
+        ]);
+    });
 });
