@@ -14,9 +14,9 @@ const Patients: FC<Props> = (props) => {
 	return (
 		<Switch>
 			<Route path={url('')} exact component={List} />
-			<Route path={url('/add')} exact component={Form} />
-			<Route path={url('/:id/edit')} exact component={Form} />
-			<Route path={url('/:id/view')} exact component={View} />
+			<Route path={url('/add')} component={Form} />
+			<Route path={url('/:id')} exact component={View} />
+			<Route path={url('/:id/edit')} component={Form} />
 		</Switch>
 	);
 };

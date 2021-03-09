@@ -36,7 +36,7 @@ class PurchaseRequest extends Model
 
     public function checkStocks()
     {
-        if ($this->delivered !== null) {
+        if ($this->delivered !== null && $this->isDirty()) {
             foreach ($this->items as $item) {
                 $medicine = $item->medicine;
                 $medicine->stocks += $item->quantity;

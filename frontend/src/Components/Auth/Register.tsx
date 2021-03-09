@@ -109,7 +109,7 @@ const Register: FC<Props> = (props) => {
 								{processing ? <i className='material-icons spin'>refresh</i> : 'Register'}
 							</button>
 						</div>
-						<Link to={routes.LOGIN} className='btn btn-link btn-info'>
+						<Link to={routes.LOGIN} className='btn btn-link btn-info p-0'>
 							Already have an account? Login
 						</Link>
 					</div>

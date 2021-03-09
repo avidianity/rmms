@@ -149,7 +149,7 @@ const Form: FC<Props> = (props) => {
 										</div>
 										{items.map((item, index) => (
 											<div className='col-12 row' key={index}>
-												<div className='form-group bmd-form-group is-filled col-12 col-md-4'>
+												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
 													<label className='bmd-label-floating'>Quantity</label>
 													<input
 														type='number'
@@ -163,7 +163,7 @@ const Form: FC<Props> = (props) => {
 														}}
 													/>
 												</div>
-												<div className='form-group bmd-form-group is-filled col-12 col-md-4'>
+												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
 													<label className='bmd-label-floating'>Medicine</label>
 													<select
 														className='form-control'
@@ -181,7 +181,7 @@ const Form: FC<Props> = (props) => {
 														))}
 													</select>
 												</div>
-												<div className='form-group bmd-form-group is-filled col-12 col-md-4'>
+												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
 													<label className='bmd-label-floating'>Total</label>
 													<input
 														type='text'
@@ -189,6 +189,17 @@ const Form: FC<Props> = (props) => {
 														className='form-control'
 														value={formatCurrency(getMedicineCost(item.medicine_id) * item.quantity)}
 													/>
+												</div>
+												<div className='col-md-3 text-center'>
+													<button
+														className='btn btn-danger btn-sm'
+														onClick={(e) => {
+															e.preventDefault();
+															items.splice(index, 1);
+															setItems([...items]);
+														}}>
+														Remove
+													</button>
 												</div>
 											</div>
 										))}

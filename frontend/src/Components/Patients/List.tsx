@@ -75,7 +75,7 @@ const List: FC<Props> = (props) => {
 						<td>{address}</td>
 						<td>{dayjs(birthday).format('MMMM DD, YYYY')}</td>
 						<td>
-							<Link to={url(`/${id}/view`)} className='btn btn-info btn-sm' title='Edit'>
+							<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='Edit'>
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>

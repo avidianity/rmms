@@ -80,7 +80,7 @@ const Login: FC<Props> = (props) => {
 								{processing ? <i className='material-icons spin'>refresh</i> : 'Login'}
 							</button>
 						</div>
-						<Link to={routes.REGISTER} className='btn btn-link btn-info'>
+						<Link to={routes.REGISTER} className='btn btn-link btn-info p-0'>
 							Don't have an account? Register
 						</Link>
 					</div>

@@ -12,6 +12,7 @@ import toastr from 'toastr';
 import { PrenatalRecord } from '../../Contracts/PrenatalRecord';
 import $ from 'jquery';
 import Modal from '../Modal';
+import lodash from 'lodash';
 
 type Props = {};
 
@@ -120,7 +121,7 @@ const View: FC<Props> = (props) => {
 									<th>Case Number</th>
 									<th>Physician</th>
 									<th>Diagnosis</th>
-									<th>Actions</th>
+									<th className='text-center'>Actions</th>
 								</tr>
 							)}>
 							{patient?.records?.map((record, index) => (
@@ -128,8 +129,8 @@ const View: FC<Props> = (props) => {
 									<td>{record.id}</td>
 									<td>{dayjs(record.case_number).format('MMMM DD, YYYY')}</td>
 									<td>{record.doctor?.name}</td>
-									<td>{record.diagnosis}</td>
-									<td>
+									<td>{lodash.truncate(record.diagnosis, { length: 20 })}</td>
+									<td className='text-center'>
 										<button
 											className='btn btn-info btn-sm'
 											onClick={(e) => {
@@ -189,14 +190,14 @@ const View: FC<Props> = (props) => {
 						<p className='card-text'>Diagnosis: {record.diagnosis}</p>
 						<p className='card-text'>Physician: {record.doctor?.name}</p>
 						<Table
-							title='Records'
+							title='Prescriptions'
 							subtitles={
 								record?.prescriptions && record.prescriptions.length === 0 ? 'No Prescriptions Available' : undefined
 							}
 							head={() => (
 								<tr>
 									<th>ID</th>
-									<th>Released At</th>
+									<th>Released</th>
 									<th>Items</th>
 								</tr>
 							)}>
@@ -227,14 +228,14 @@ const View: FC<Props> = (props) => {
 						<p className='card-text'>Case Number: {dayjs(prenatal.case_number).format('MMMM DD, YYYY')}</p>
 						<p className='card-text'>Nurse/Midwife: {prenatal.attendee?.name}</p>
 						<Table
-							title='Records'
+							title='Prescriptions'
 							subtitles={
 								prenatal.prescriptions && prenatal.prescriptions.length === 0 ? 'No Prescriptions Available' : undefined
 							}
 							head={() => (
 								<tr>
 									<th>ID</th>
-									<th>Released At</th>
+									<th>Released</th>
 									<th>Items</th>
 								</tr>
 							)}>

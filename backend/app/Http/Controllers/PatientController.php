@@ -15,14 +15,16 @@ class PatientController extends Controller
      */
     public function index(Request $request)
     {
-        $builder = Patient::with(['records.requests.items', 'prenatals.requests.items']);
-
+        $builder = new Patient();
         if ($request->has('name')) {
             $name = $request->input('name');
             $builder = $builder->where('name', 'LIKE', "%{$name}%");
         }
-
-        return $builder->paginate(15);
+        if ($request->input('paginate', 'true') === 'false') {
+            return $builder->get();
+        } else {
+            return $builder->paginate(15);
+        }
     }
 
     /**
@@ -72,7 +74,12 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        return Patient::with(['records.prescriptions.items.medicine', 'prenatals.prescriptions.items.medicine'])->findOrFail($id);
+        return Patient::with([
+            'records.prescriptions.items.medicine',
+            'prenatals.prescriptions.items.medicine',
+            'records.doctor',
+            'prenatals.attendee'
+        ])->findOrFail($id);
     }
 
     /**

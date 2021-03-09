@@ -5,7 +5,6 @@ import Login from './Components/Auth/Login';
 import Register from './Components/Auth/Register';
 import Dashboard from './Components/Dashboard';
 import { routes } from './routes';
-import $ from 'jquery';
 
 function App() {
 	const loadScripts = async () => {
@@ -50,6 +49,7 @@ function App() {
 	return (
 		<Router>
 			<Switch>
+				<Route path={routes.HOME} exact component={Login} />
 				<Route path={routes.DASHBOARD} component={Dashboard} />
 				<Route path={routes.LOGIN} component={Login} />
 				<Route path={routes.REGISTER} component={Register} />

@@ -1,79 +1,80 @@
 import axios from 'axios';
+import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
-import { PurchaseRequest } from '../../../Contracts/PurchaseRequest';
-import { Paginated } from '../../../Contracts/misc';
-import { handleError, makeDummyPagination } from '../../../helpers';
-import Table from '../../Table';
-import swal from 'sweetalert';
+import { useRouteMatch, Link } from 'react-router-dom';
 import toastr from 'toastr';
+import { Paginated } from '../../../Contracts/misc';
+import { Record } from '../../../Contracts/Record';
+import { makeDummyPagination, handleError } from '../../../helpers';
 import state from '../../../state';
 import Pagination from '../../Pagination';
-import dayjs from 'dayjs';
+import Table from '../../Table';
+import swal from 'sweetalert';
+import lodash from 'lodash';
 
 type Props = {};
 
 const List: FC<Props> = (props) => {
-	const [purchaseRequests, setPurchaseRequests] = useState<PurchaseRequest[]>([]);
+	const [records, setRecords] = useState<Record[]>([]);
 	const [pagination, setPagination] = useState<Paginated>(makeDummyPagination());
 	const match = useRouteMatch();
 
 	const url = (path: string) => `${match.path}${path}`;
 
-	const fetchPurchaseRequests = async (url?: string) => {
+	const fetchRecords = async (url?: string) => {
 		try {
-			const page = state.get<number>('purchaseRequest-page') || 1;
-			const { data } = await axios.get<Paginated<PurchaseRequest>>(url ? url : `/pharmacy/purchase-requests?page=${page}`);
-			setPurchaseRequests(data.data);
+			const page = state.get<number>('regular-recods-page') || 1;
+			const { data } = await axios.get<Paginated<Record>>(url ? url : `/regular-records?page=${page}`);
+			setRecords(data.data);
 			setPagination(data);
-			state.set('purchaseRequest-page', data.current_page);
+			state.set('regular-recods-page', data.current_page);
 		} catch (error) {
 			handleError(error);
 		}
 	};
 
-	const deletePurchaseRequest = async (id: any) => {
+	const deleteRecord = async (id: any) => {
 		try {
-			await axios.delete(`/pharmacy/purchase-requests/${id}`);
-			toastr.info('Purchase Request has been deleted.', 'Notice');
-			fetchPurchaseRequests();
+			await axios.delete(`/regular-records/${id}`);
+			toastr.info('Record has been deleted.', 'Notice');
+			fetchRecords();
 		} catch (error) {
 			handleError(error);
 		}
 	};
 
 	useEffect(() => {
-		fetchPurchaseRequests();
+		fetchRecords();
 		// eslint-disable-next-line
 	}, []);
 
 	return (
 		<>
 			<Link to={url('/add')} className='btn btn-info btn-sm'>
-				Add New Purchase Request
+				Add New Record
 			</Link>
 			<Table
-				title='Purchase Requests'
+				title='Records'
 				head={() => (
 					<tr>
 						<th>ID</th>
-						<th>PR Number</th>
-						<th>SAI Number</th>
-						<th>OBR Number</th>
-						<th>Delivered</th>
-						<th>Issued</th>
+						<th>Case Number</th>
+						<th>Patient</th>
+						<th>Doctor</th>
+						<th>Diagnosis</th>
+						<th>Last Updated</th>
 						<th colSpan={3}>Actions</th>
 					</tr>
 				)}
-				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchPurchaseRequests(url)} />}>
-				{purchaseRequests.map(({ id, pr_number, sai_number, obr_number, delivered, created_at }, index) => (
+				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchRecords(url)} />}>
+				{records.map(({ id, case_number, updated_at, patient, doctor, diagnosis }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
-						<td>{pr_number || 'N/A'}</td>
-						<td>{sai_number || 'N/A'}</td>
-						<td>{obr_number || 'N/A'}</td>
-						<td>{delivered ? dayjs(delivered).format('MMMM DD, YYYY') : 'Pending'}</td>
-						<td>{dayjs(created_at!).format('MMMM DD, YYYY')}</td>
+						<td>{dayjs(case_number!).format('MMMM DD, YYYY')}</td>
+						<td>{patient?.name}</td>
+						<td>{doctor?.name}</td>
+						<td>{lodash.truncate(diagnosis, { length: 20 })}</td>
+						<td>{dayjs(updated_at!).format('MMMM DD, YYYY hh:mm A')}</td>
 						<td>
 							<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='Edit'>
 								<i className='material-icons mr-1'>visibility</i>
@@ -90,13 +91,13 @@ const List: FC<Props> = (props) => {
 								onClick={async (e) => {
 									e.preventDefault();
 									const confirm = await swal({
-										title: `Delete this Purchase Request?`,
+										title: `Delete this record?`,
 										icon: 'warning',
 										buttons: ['Cancel', 'Confirm'],
 										dangerMode: true,
 									});
 									if (confirm === true) {
-										deletePurchaseRequest(id);
+										deleteRecord(id);
 									}
 								}}>
 								<i className='material-icons mr-1'>remove_circle</i>

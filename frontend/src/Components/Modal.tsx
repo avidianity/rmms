@@ -7,7 +7,7 @@ type Props = {
 
 export default forwardRef<HTMLDivElement, PropsWithChildren<Props>>(({ title, id, children }, ref) => (
 	<div id={id} className='modal fade' tabIndex={-1} role='dialog' ref={ref}>
-		<div className='modal-dialog' role='document'>
+		<div className='modal-dialog modal-lg modal-dialog-centered' role='document'>
 			<div className='modal-content'>
 				<div className='modal-header'>
 					<h5 className='modal-title'>{title}</h5>

@@ -15,9 +15,17 @@ class UserController extends Controller
         $this->middleware('admin')->only(['store', 'update', 'destroy']);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return User::paginate(15);
+        $builder = new User();
+        if ($request->has('role') && in_array($role = $request->input('role'), User::ROLES)) {
+            $builder = $builder->where('role', $role);
+        }
+        if ($request->input('paginate', 'true') === 'false') {
+            return $builder->get();
+        } else {
+            return $builder->orderBy('role', 'ASC')->paginate(15);
+        }
     }
 
     public function show(User $user)
