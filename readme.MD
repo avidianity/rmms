@@ -12,8 +12,9 @@
 ## Installation
 
 1. `git clone https://github.com/avidianity/rmms.git`
-2. `cd backend && composer install`
-3. `cd ../frontend && yarn`
+2. `cd rmms`
+3. `cd backend && composer install`
+4. `cd ../frontend && yarn`
 
 Create `.env` file in `backend` folder using `.env.example` file and put correct database credentials.
 
