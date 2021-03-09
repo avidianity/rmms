@@ -84,7 +84,7 @@ const Register: FC<Props> = (props) => {
 								name='password'
 								id='password'
 								placeholder='Password'
-								className={`form-control form-control-sm ${outIf(errors.password, 'is-invalid')}`}
+								className={`form-control ${outIf(errors.password, 'is-invalid')}`}
 								disabled={processing}
 							/>
 							{errors.password ? <div className='invalid-feedback'>{errors.password.message}</div> : null}
@@ -95,7 +95,7 @@ const Register: FC<Props> = (props) => {
 								name='role'
 								id='role'
 								placeholder='Role'
-								className={`form-control form-control-sm ${outIf(errors.role, 'is-invalid')}`}
+								className={`form-control ${outIf(errors.role, 'is-invalid')}`}
 								disabled={processing}>
 								<option value='Admin'>Admin</option>
 								<option value='Doctor'>Doctor</option>

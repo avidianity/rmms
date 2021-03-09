@@ -18,7 +18,6 @@ class CreatePurchaseRequestsTable extends Migration
             $table->string('pr_number')->nullable()->index();
             $table->string('sai_number')->nullable()->index();
             $table->string('obr_number')->nullable()->index();
-            $table->morphs('recordable');
             $table->timestamp('delivered')->nullable()->default(null);
             $table->timestamps();
         });

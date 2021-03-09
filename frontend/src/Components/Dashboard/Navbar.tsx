@@ -1,15 +1,34 @@
-import React, { FC } from 'react';
+import axios from 'axios';
+import React, { FC, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { routes } from '../../routes';
+import toastr from 'toastr';
+import { outIf } from '../../helpers';
+import state from '../../state';
 
 type Props = {};
 
 const Navbar: FC<Props> = (props) => {
+	const [show, setShow] = useState(false);
+	const history = useHistory();
+	const logout = async () => {
+		try {
+			await axios.post('/auth/logout');
+		} catch (_) {
+		} finally {
+			state.clear();
+			toastr.info('You have logged out.', 'Notice');
+			history.push(routes.LOGIN);
+		}
+	};
+
 	return (
 		<nav className='navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top'>
 			<div className='container-fluid'>
 				<div className='navbar-wrapper'>
-					<a className='navbar-brand' href='javascript:;'>
+					<Link className='navbar-brand' to={routes.DASHBOARD}>
 						Dashboard
-					</a>
+					</Link>
 				</div>
 				<button
 					className='navbar-toggler'
@@ -37,54 +56,30 @@ const Navbar: FC<Props> = (props) => {
 						<li className='nav-item dropdown'>
 							<a
 								className='nav-link'
-								href='#'
-								id='navbarDropdownMenuLink'
-								data-toggle='dropdown'
-								aria-haspopup='true'
-								aria-expanded='false'>
-								<i className='material-icons'>notifications</i>
-								<span className='notification'>5</span>
-								<p className='d-lg-none d-md-block'>Some Actions</p>
-							</a>
-							<div className='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdownMenuLink'>
-								<a className='dropdown-item' href='#'>
-									Mike John responded to your email
-								</a>
-								<a className='dropdown-item' href='#'>
-									You have 5 new tasks
-								</a>
-								<a className='dropdown-item' href='#'>
-									You're now friend with Andrew
-								</a>
-								<a className='dropdown-item' href='#'>
-									Another Notification
-								</a>
-								<a className='dropdown-item' href='#'>
-									Another One
-								</a>
-							</div>
-						</li>
-						<li className='nav-item dropdown'>
-							<a
-								className='nav-link'
-								href='javascript:;'
-								id='navbarDropdownProfile'
-								data-toggle='dropdown'
-								aria-haspopup='true'
-								aria-expanded='false'>
+								href='/'
+								onClick={(e) => {
+									e.preventDefault();
+									setShow(!show);
+								}}>
 								<i className='material-icons'>person</i>
 								<p className='d-lg-none d-md-block'>Account</p>
 							</a>
-							<div className='dropdown-menu dropdown-menu-right' aria-labelledby='navbarDropdownProfile'>
-								<a className='dropdown-item' href='#'>
+							<div className={`dropdown-menu dropdown-menu-right ${outIf(show, 'show')}`}>
+								<a className='dropdown-item' href='/'>
 									Profile
 								</a>
-								<a className='dropdown-item' href='#'>
+								<a className='dropdown-item' href='/'>
 									Settings
 								</a>
 								<div className='dropdown-divider'></div>
-								<a className='dropdown-item' href='#'>
-									Log out
+								<a
+									className='dropdown-item'
+									href='/'
+									onClick={(e) => {
+										e.preventDefault();
+										logout();
+									}}>
+									Logout
 								</a>
 							</div>
 						</li>

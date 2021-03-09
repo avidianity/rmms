@@ -51,26 +51,26 @@ const Login: FC<Props> = (props) => {
 				</div>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='card-body'>
-						<div className='form-group'>
+						<div className='form-group bmd-form-group'>
+							<label className='bmd-label-floating'>Email Address</label>
 							<input
 								ref={register}
 								type='email'
 								name='email'
 								id='email'
-								placeholder='Email Address'
-								className={`form-control form-control-sm ${outIf(errors.email, 'is-invalid')}`}
+								className={`form-control ${outIf(errors.email, 'is-invalid')}`}
 								disabled={processing}
 							/>
 							{errors.email ? <div className='invalid-feedback'>{errors.email.message}</div> : null}
 						</div>
-						<div className='form-group'>
+						<div className='form-group bmd-form-group'>
+							<label className='bmd-label-floating'>Password</label>
 							<input
 								ref={register}
 								type='password'
 								name='password'
 								id='password'
-								placeholder='Password'
-								className={`form-control form-control-sm ${outIf(errors.password, 'is-invalid')}`}
+								className={`form-control ${outIf(errors.password, 'is-invalid')}`}
 								disabled={processing}
 							/>
 							{errors.password ? <div className='invalid-feedback'>{errors.password.message}</div> : null}

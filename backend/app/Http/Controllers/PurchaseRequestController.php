@@ -3,21 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Medicine;
-use App\Models\PrenatalRecord;
 use App\Models\PurchaseRequest;
-use App\Models\PurchaseRequestItem;
-use App\Models\Record;
-use App\Rules\DynamicModelExists;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class PurchaseRequestController extends Controller
 {
-    protected $map = [
-        'prenatal' => PrenatalRecord::class,
-        'regular' => Record::class,
-    ];
 
     /**
      * Display a listing of the resource.
@@ -26,10 +18,7 @@ class PurchaseRequestController extends Controller
      */
     public function index()
     {
-        return PurchaseRequest::with([
-            'items.medicine',
-            'recordable',
-        ])->paginate(15);
+        return PurchaseRequest::paginate(15);
     }
 
     /**
@@ -45,32 +34,23 @@ class PurchaseRequestController extends Controller
             'sai_number' => ['nullable', 'string', 'max:255'],
             'obr_number' => ['nullable', 'string', 'max:255'],
             'delivered' => ['nullable', 'date'],
-            'recordable_type' => ['required', 'string', Rule::in(array_keys($this->map))],
-            'recordable_id' => ['required', 'numeric', new DynamicModelExists($this->map, 'recordable_type')],
             'items' => ['nullable', 'array'],
             'items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
             'items.*.quantity' => ['required', 'numeric'],
         ]);
 
-        $class = $this->map[$data['recordable_type']];
-
-        /**
-         * @var Record|PrenatalRecord
-         */
-        $model = $class::findOrFail($data['recordable_id']);
-
         /**
          * @var PurchaseRequest
          */
-        $purchaseRequest = $model->requests()->create($data);
+        $purchaseRequest = PurchaseRequest::create($data);
 
-        $items = collect($data['items'])->map(function ($row) {
-            return new PurchaseRequestItem($row);
-        });
+        if (Arr::has($data, 'items')) {
+            $this->saveItems($purchaseRequest, $data);
+        }
 
-        $purchaseRequest->items()->createMany($items);
+        $purchaseRequest->checkStocks();
 
-        $purchaseRequest->load('items.medicine', 'recordable');
+        $purchaseRequest->load('items.medicine');
 
         return $purchaseRequest;
     }
@@ -83,10 +63,9 @@ class PurchaseRequestController extends Controller
      */
     public function show($id)
     {
-        return PurchaseRequest::with([
-            'items.medicine',
-            'recordable',
-        ])->findOrFail($id);
+        return PurchaseRequest::with(
+            'items.medicine'
+        )->findOrFail($id);
     }
 
     /**
@@ -108,19 +87,14 @@ class PurchaseRequestController extends Controller
             'items.*.quantity' => ['nullable', 'numeric'],
         ]);
 
-        $purchaseRequest->update($data);
-
         if (Arr::has($data, 'items')) {
             $purchaseRequest->items()->delete();
-
-            $items = collect($data['items'])->map(function ($row) {
-                return new PurchaseRequestItem($row);
-            });
-
-            $purchaseRequest->items()->createMany($items);
+            $this->saveItems($purchaseRequest, $data);
         }
 
-        $purchaseRequest->load('items.medicine', 'recordable');
+        $purchaseRequest->update($data);
+
+        $purchaseRequest->load('items.medicine');
 
         return $purchaseRequest;
     }
@@ -136,5 +110,10 @@ class PurchaseRequestController extends Controller
         $purchaseRequest->delete();
 
         return response('', 204);
+    }
+
+    protected function saveItems($purchaseRequest, $data)
+    {
+        $purchaseRequest->items()->createMany($data['items']);
     }
 }

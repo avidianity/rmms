@@ -12,12 +12,14 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
+    "bootstrap": "4.5",
     "dayjs": "^1.10.4",
     "jquery": "3.2.1",
     "lodash": "^4.17.21",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-flatpickr": "^3.10.7",
     "react-hook-form": "^6.15.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -52,7 +54,9 @@
     ]
   },
   "devDependencies": {
+    "@types/bootstrap": "4.5",
     "@types/lodash": "^4.14.168",
+    "@types/react-flatpickr": "^3.8.3",
     "@types/react-router-dom": "^5.1.7",
     "@types/toastr": "^2.1.38"
   }

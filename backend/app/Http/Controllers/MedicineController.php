@@ -12,9 +12,14 @@ class MedicineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Medicine::paginate(15);
+        $builder = new Medicine();
+        if ($request->input('paginate', 'true') === 'false') {
+            return $builder->get();
+        } else {
+            return $builder->paginate(15);
+        }
     }
 
     /**

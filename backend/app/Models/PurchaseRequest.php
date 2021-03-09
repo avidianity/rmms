@@ -25,14 +25,8 @@ class PurchaseRequest extends Model
 
     protected static function booted()
     {
-        static::saving(function (self $purchaseRequest) {
-            if ($purchaseRequest->delivered !== null) {
-                foreach ($purchaseRequest->items as $item) {
-                    $medicine = $item->medicine;
-                    $medicine->stocks -= $item->quantity;
-                    $medicine->save();
-                }
-            }
+        static::saved(function (self $purchaseRequest) {
+            $purchaseRequest->checkStocks();
         });
 
         static::deleting(function (self $purchaseRequest) {
@@ -40,13 +34,19 @@ class PurchaseRequest extends Model
         });
     }
 
+    public function checkStocks()
+    {
+        if ($this->delivered !== null) {
+            foreach ($this->items as $item) {
+                $medicine = $item->medicine;
+                $medicine->stocks += $item->quantity;
+                $medicine->save();
+            }
+        }
+    }
+
     public function items()
     {
         return $this->hasMany(PurchaseRequestItem::class);
-    }
-
-    public function recordable()
-    {
-        return $this->morphTo();
     }
 }

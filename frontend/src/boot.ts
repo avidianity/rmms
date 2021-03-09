@@ -1,7 +1,9 @@
+import './shims';
 import axios from 'axios';
 import state from './state';
 import 'toastr/build/toastr.css';
 import $ from 'jquery';
+import 'bootstrap';
 
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.withCredentials = true;

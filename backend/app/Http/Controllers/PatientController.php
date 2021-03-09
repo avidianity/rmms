@@ -38,7 +38,7 @@ class PatientController extends Controller
             'age' => ['required', 'numeric'],
             'sex' => ['required', 'string', Rule::in(['Male', 'Female'])],
             'birthday' => ['required', 'date'],
-            'address' => ['nullable', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
             'civil_status' => ['nullable', 'string', 'max:255'],
             'membership_nh' => ['nullable', 'string', 'max:255'],
             'membership_nn' => ['nullable', 'string', 'max:255'],
@@ -72,7 +72,7 @@ class PatientController extends Controller
      */
     public function show($id)
     {
-        return Patient::with(['records.requests.items', 'prenatals.requests.items'])->findOrFail($id);
+        return Patient::with(['records.prescriptions.items.medicine', 'prenatals.prescriptions.items.medicine'])->findOrFail($id);
     }
 
     /**
@@ -101,7 +101,7 @@ class PatientController extends Controller
             'religion' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $patient = Patient::with(['records.requests.items', 'prenatals.requests.items'])->findOrFail($id);
+        $patient = Patient::with(['records.prescriptions.items.medicine', 'prenatals.prescriptions.items.medicine'])->findOrFail($id);
 
         $patient->update($data);
 

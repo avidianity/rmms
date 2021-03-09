@@ -43,3 +43,8 @@
 	animation-iteration-count: infinite;
 	animation-timing-function: linear;
 }
+
+label.required::after {
+	content: '*';
+	color: rgb(190, 0, 0);
+}

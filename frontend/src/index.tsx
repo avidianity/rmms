@@ -4,6 +4,7 @@ import './Styles/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './boot';
+import 'flatpickr/dist/themes/material_blue.css';
 
 ReactDOM.render(
 	<React.StrictMode>

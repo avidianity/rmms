@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PrenatalRecordController;
+use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\RecordController;
 use App\Http\Controllers\UserController;
@@ -39,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResources([
             'medicines' => MedicineController::class,
             'purchase-requests' => PurchaseRequestController::class,
+            'prescriptions' => PrescriptionController::class,
         ]);
     });
 });

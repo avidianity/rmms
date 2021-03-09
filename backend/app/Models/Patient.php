@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Casts\Date;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -28,6 +29,10 @@ class Patient extends Model
         '4ps',
         'blood_type',
         'religion',
+    ];
+
+    protected $casts = [
+        'birthday' => Date::class,
     ];
 
     protected static function booted()

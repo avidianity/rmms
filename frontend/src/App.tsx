@@ -5,9 +5,11 @@ import Login from './Components/Auth/Login';
 import Register from './Components/Auth/Register';
 import Dashboard from './Components/Dashboard';
 import { routes } from './routes';
+import $ from 'jquery';
 
 function App() {
-	const loadScripts = () => {
+	const loadScripts = async () => {
+		await Promise.all([import('jquery'), import('popper.js'), import('bootstrap')]);
 		[
 			'/assets/js/core/jquery.min.js',
 			'/assets/js/core/popper.min.js',
@@ -37,13 +39,6 @@ function App() {
 			script.src = url;
 			script.defer = true;
 			document.body.append(script);
-		});
-		const labels = $('.bmd-form-group');
-		labels.on('focus', 'input', function () {
-			$(this).addClass('is-focused');
-		});
-		labels.on('blur', 'input', function () {
-			$(this).removeClass('is-focused');
 		});
 	};
 

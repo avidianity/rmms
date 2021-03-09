@@ -45,11 +45,7 @@ class PrenatalRecord extends Model
     protected static function booted()
     {
         static::creating(function (self $record) {
-            $record->case_number = now();
-        });
-
-        static::deleting(function (self $record) {
-            $record->requests()->delete();
+            $record->case_number = now()->format('Y-m-d');
         });
     }
 
@@ -63,8 +59,8 @@ class PrenatalRecord extends Model
         return $this->belongsTo(Patient::class);
     }
 
-    public function requests()
+    public function prescriptions()
     {
-        return $this->morphMany(PurchaseRequest::class, 'recordable');
+        return $this->morphMany(Prescription::class, 'recordable');
     }
 }

@@ -18,7 +18,9 @@ class RecordController extends Controller
      */
     public function index()
     {
-        return Record::orderBy('case_number', 'DESC')->paginate(15);
+        return Record::with(['doctor', 'patient'])
+            ->orderBy('case_number', 'DESC')
+            ->paginate(15);
     }
 
     /**
@@ -46,7 +48,7 @@ class RecordController extends Controller
      */
     public function show(Record $record)
     {
-        return $record;
+        return $record->load(['doctor', 'patient']);
     }
 
     /**
@@ -64,6 +66,8 @@ class RecordController extends Controller
         ]);
 
         $record->update($data);
+
+        $record->load(['doctor', 'patient']);
 
         return $record;
     }
