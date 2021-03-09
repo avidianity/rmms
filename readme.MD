@@ -36,7 +36,7 @@ In `backend` folder, run the following commands in order:
 
 Create `.env` file in `frontend` folder using `.env.example` file and put correct backend url.
 
-Example
+Example:
 
 ```config
 REACT_APP_BACKEND_URL=http://localhost:8000
