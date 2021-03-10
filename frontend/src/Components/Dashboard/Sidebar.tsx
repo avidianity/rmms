@@ -19,7 +19,7 @@ const Sidebar: FC<Props> = (props) => {
 			title: 'Dashboard',
 			icon: 'dashboard',
 			exact: true,
-			show: true,
+			show: user.role === 'Admin',
 		},
 		{
 			to: url(routes.MEDICINES),

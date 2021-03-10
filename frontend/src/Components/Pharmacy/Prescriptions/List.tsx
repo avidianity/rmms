@@ -11,6 +11,7 @@ import { makeDummyPagination, handleError } from '../../../helpers';
 import state from '../../../state';
 import Pagination from '../../Pagination';
 import Table from '../../Table';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -43,6 +44,8 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
+	const user = state.get<User>('user');
+
 	useEffect(() => {
 		fetchPrescriptions();
 		// eslint-disable-next-line
@@ -64,7 +67,7 @@ const List: FC<Props> = (props) => {
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchPrescriptions(url)} />}>
-				{prescriptions.map(({ id, released_at, recordable, recordable_type, doctor }, index) => (
+				{prescriptions.map(({ id, released_at, recordable, recordable_type, doctor, doctor_id }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
 						<td>{recordable?.patient?.name}</td>
@@ -77,29 +80,12 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>
-							<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-								<i className='material-icons mr-1'>create</i>
-								Edit
-							</Link>
-							<a
-								href={url(`/${id}/delete`)}
-								className='btn btn-danger btn-sm'
-								title='Delete'
-								onClick={async (e) => {
-									e.preventDefault();
-									const confirm = await swal({
-										title: `Delete this prescription?`,
-										icon: 'warning',
-										buttons: ['Cancel', 'Confirm'],
-										dangerMode: true,
-									});
-									if (confirm === true) {
-										deletePrescription(id);
-									}
-								}}>
-								<i className='material-icons mr-1'>remove_circle</i>
-								Delete
-							</a>
+							{released_at === null && doctor_id === user.id ? (
+								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+									<i className='material-icons mr-1'>create</i>
+									Edit
+								</Link>
+							) : null}
 						</td>
 					</tr>
 				))}

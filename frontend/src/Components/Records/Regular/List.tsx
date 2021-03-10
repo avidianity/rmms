@@ -90,25 +90,6 @@ const List: FC<Props> = (props) => {
 										<i className='material-icons mr-1'>create</i>
 										Edit
 									</Link>
-									<a
-										href={url(`/${id}/delete`)}
-										className='btn btn-danger btn-sm'
-										title='Delete'
-										onClick={async (e) => {
-											e.preventDefault();
-											const confirm = await swal({
-												title: `Delete this record?`,
-												icon: 'warning',
-												buttons: ['Cancel', 'Confirm'],
-												dangerMode: true,
-											});
-											if (confirm === true) {
-												deleteRecord(id);
-											}
-										}}>
-										<i className='material-icons mr-1'>remove_circle</i>
-										Delete
-									</a>
 								</>
 							) : null}
 						</td>

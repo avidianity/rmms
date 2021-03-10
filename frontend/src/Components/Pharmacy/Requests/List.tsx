@@ -13,6 +13,7 @@ import dayjs from 'dayjs';
 import Modal from '../../Modal';
 import Flatpickr from 'react-flatpickr';
 import $ from 'jquery';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -67,6 +68,8 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
+	const user = state.get<User>('user');
+
 	useEffect(() => {
 		fetchPurchaseRequests();
 		// eslint-disable-next-line
@@ -104,7 +107,7 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>
-							{delivered === null ? (
+							{delivered === null && ['Admin', 'Pharmacist'].includes(user.role) ? (
 								<button
 									className='btn btn-success btn-sm'
 									title='Mark as Delivered'
@@ -119,7 +122,7 @@ const List: FC<Props> = (props) => {
 									Mark as Delivered
 								</button>
 							) : null}
-							{delivered === null ? (
+							{delivered === null && ['Admin', 'Pharmacist'].includes(user.role) ? (
 								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
 									<i className='material-icons mr-1'>create</i>
 									Edit
@@ -137,25 +140,6 @@ const List: FC<Props> = (props) => {
 									Delivered
 								</button>
 							)}
-							<a
-								href={url(`/${id}/delete`)}
-								className='btn btn-danger btn-sm'
-								title='Delete'
-								onClick={async (e) => {
-									e.preventDefault();
-									const confirm = await swal({
-										title: `Delete this Purchase Request?`,
-										icon: 'warning',
-										buttons: ['Cancel', 'Confirm'],
-										dangerMode: true,
-									});
-									if (confirm === true) {
-										deletePurchaseRequest(id);
-									}
-								}}>
-								<i className='material-icons mr-1'>remove_circle</i>
-								Delete
-							</a>
 						</td>
 					</tr>
 				))}
