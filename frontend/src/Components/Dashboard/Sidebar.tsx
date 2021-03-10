@@ -66,7 +66,7 @@ const Sidebar: FC<Props> = (props) => {
 	];
 
 	return (
-		<div className='sidebar' data-color='purple' data-background-color='white' data-image='/assets/img/sidebar-1.jpg'>
+		<div className='sidebar' data-color='green' data-background-color='white' data-image='/assets/img/sidebar-1.jpg'>
 			<div className='logo'>
 				<Link to={routes.HOME} className='simple-text logo-normal d-flex align-items-center justify-content-center'>
 					<img

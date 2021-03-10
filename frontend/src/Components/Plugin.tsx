@@ -1,15 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
+import { outIf } from '../helpers';
 
 type Props = {};
 
 const Plugin: FC<Props> = (props) => {
+	const [show, setShow] = useState(false);
 	return (
 		<div className='fixed-plugin'>
-			<div className='dropdown show-dropdown'>
-				<a href='#' data-toggle='dropdown'>
+			<div className={`dropdown show-dropdown ${outIf(show, 'show')}`}>
+				<a
+					href='/'
+					onClick={(e) => {
+						e.preventDefault();
+						setShow(!show);
+					}}>
 					<i className='fa fa-cog fa-2x'> </i>
 				</a>
-				<ul className='dropdown-menu'>
+				<ul className={`dropdown-menu ${outIf(show, 'show')}`}>
 					<li className='header-title'>Sidebar Filters</li>
 					<li className='adjustments-line'>
 						<a href='javascript:void(0)' className='switch-trigger active-color'>
@@ -44,44 +51,6 @@ const Plugin: FC<Props> = (props) => {
 						<a className='img-holder switch-trigger' href='javascript:void(0)'>
 							<img src='/assets/img/sidebar-4.jpg' alt='' />
 						</a>
-					</li>
-					<li className='button-container'>
-						<a
-							href='https://www.creative-tim.com/product/material-dashboard'
-							target='_blank'
-							className='btn btn-primary btn-block'>
-							Free Download
-						</a>
-					</li>
-					<li className='button-container'>
-						<a
-							href='https://demos.creative-tim.com/material-dashboard/docs/2.1/getting-started/introduction.html'
-							target='_blank'
-							className='btn btn-default btn-block'>
-							View Documentation
-						</a>
-					</li>
-					<li className='button-container github-star'>
-						<a
-							className='github-button'
-							href='https://github.com/creativetimofficial/material-dashboard'
-							data-icon='octicon-star'
-							data-size='large'
-							data-show-count='true'
-							aria-label='Star ntkme/github-buttons on GitHub'>
-							Star
-						</a>
-					</li>
-					<li className='header-title'>Thank you for 95 shares!</li>
-					<li className='button-container text-center'>
-						<button id='twitter' className='btn btn-round btn-twitter'>
-							<i className='fa fa-twitter'></i> &middot; 45
-						</button>
-						<button id='facebook' className='btn btn-round btn-facebook'>
-							<i className='fa fa-facebook-f'></i> &middot; 50
-						</button>
-						<br />
-						<br />
 					</li>
 				</ul>
 			</div>
