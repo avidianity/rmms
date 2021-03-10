@@ -71,7 +71,7 @@ const List: FC<Props> = (props) => {
 						<td>{doctor?.name}</td>
 						<td>{RecordableMap[recordable_type]}</td>
 						<td>{dayjs(recordable?.case_number!).format('MMMM DD, YYYY')}</td>
-						<td>{dayjs(released_at!).format('MMMM DD, YYYY hh:mm A')}</td>
+						<td>{released_at ? dayjs(released_at).format('MMMM DD, YYYY hh:mm A') : 'N/A'}</td>
 						<td>
 							<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='View'>
 								<i className='material-icons mr-1'>visibility</i>
