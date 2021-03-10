@@ -5,6 +5,6 @@ export const EMAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|
 export const URL_REGEX = /[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/;
 
 export const RecordableMap = {
-	'\\App\\Models\\Record': 'Regular Record',
-	'\\App\\Models\\PrenatalRecord': 'Prenatal Record',
+	Record: 'Regular Record',
+	PrenatalRecord: 'Prenatal Record',
 } as FreeObject;

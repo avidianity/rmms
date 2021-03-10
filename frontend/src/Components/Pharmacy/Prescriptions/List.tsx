@@ -69,7 +69,7 @@ const List: FC<Props> = (props) => {
 						<td>{id}</td>
 						<td>{recordable?.patient?.name}</td>
 						<td>{doctor?.name}</td>
-						<td>{RecordableMap[recordable_type]}</td>
+						<td>{RecordableMap[recordable_type.split('\\')[2]]}</td>
 						<td>{dayjs(recordable?.case_number!).format('MMMM DD, YYYY')}</td>
 						<td>{released_at ? dayjs(released_at).format('MMMM DD, YYYY hh:mm A') : 'N/A'}</td>
 						<td>
