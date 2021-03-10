@@ -18,11 +18,18 @@ class Prescription extends Model
         'released_at' => 'datetime',
     ];
 
+    protected $appends = ['released'];
+
     protected static function booted()
     {
         static::deleting(function (self $prescription) {
             $prescription->items()->delete();
         });
+    }
+
+    public function getReleasedAttribute()
+    {
+        return $this->isReleased();
     }
 
     public function recordable()
@@ -38,5 +45,10 @@ class Prescription extends Model
     public function items()
     {
         return $this->hasMany(PrescriptionItem::class);
+    }
+
+    public function isReleased()
+    {
+        return $this->released_at !== null;
     }
 }

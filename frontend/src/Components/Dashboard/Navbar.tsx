@@ -5,6 +5,7 @@ import { routes } from '../../routes';
 import toastr from 'toastr';
 import { outIf } from '../../helpers';
 import state from '../../state';
+import { User } from '../../Contracts/User';
 
 type Props = {};
 
@@ -16,18 +17,20 @@ const Navbar: FC<Props> = (props) => {
 			await axios.post('/auth/logout');
 		} catch (_) {
 		} finally {
-			state.clear();
 			toastr.info('You have logged out.', 'Notice');
+			state.clear();
 			history.push(routes.LOGIN);
 		}
 	};
+
+	const user = state.get<User>('user');
 
 	return (
 		<nav className='navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top'>
 			<div className='container-fluid'>
 				<div className='navbar-wrapper'>
 					<Link className='navbar-brand' to={routes.DASHBOARD}>
-						Dashboard
+						Dashboard - {user.role}
 					</Link>
 				</div>
 				<button

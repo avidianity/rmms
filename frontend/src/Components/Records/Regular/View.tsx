@@ -120,10 +120,10 @@ const View: FC<Props> = (props) => {
 										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : 'N/A'}
 									</td>
 									<td>
-										<ul>
+										<ul className='list-unstyled'>
 											{prescription.items?.map((item, index) => (
 												<li key={index}>
-													{item.medicine?.name} ({item.quantity})
+													{item.medicine?.name} ({item.quantity} {item.medicine?.unit_of_issue})
 												</li>
 											))}
 										</ul>

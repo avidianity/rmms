@@ -59,7 +59,7 @@ class RecordController extends Controller
      */
     public function show(Record $record)
     {
-        return $record->load(['doctor', 'patient']);
+        return $record->load(['doctor', 'patient', 'prescriptions.items.medicine']);
     }
 
     /**
@@ -80,9 +80,13 @@ class RecordController extends Controller
         ]);
 
         if (Arr::has($data, 'prescriptions')) {
-            $record->prescriptions()
-                ->whereNotNull('released_at')
-                ->delete();
+            $record->prescriptions
+                ->filter(function ($prescription) {
+                    return !$prescription->released;
+                })
+                ->each(function ($prescription) {
+                    $prescription->delete();
+                });
             $this->savePrescriptions($record, $data);
         }
 

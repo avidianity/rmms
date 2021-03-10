@@ -63,7 +63,9 @@ const List: FC<Props> = (props) => {
 						<th>Email</th>
 						<th>Role</th>
 						<th>Created</th>
-						<th colSpan={2}>Actions</th>
+						<th colSpan={2} className='text-center'>
+							Actions
+						</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchUsers(url)} />}>
@@ -81,7 +83,7 @@ const List: FC<Props> = (props) => {
 							</span>
 						</td>
 						<td>{dayjs(created_at!).format('MMMM DD, YYYY hh:mm A')}</td>
-						<td>
+						<td className='text-center'>
 							<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
 								<i className='material-icons mr-1'>create</i>
 								Edit
