@@ -13,4 +13,5 @@ export const routes = {
 	},
 	SETTINGS: '/settings',
 	USERS: '/users',
+	PROFILE: '/profile',
 };

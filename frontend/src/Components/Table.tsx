@@ -17,7 +17,7 @@ const Table: FC<Props> = ({ title, subtitles, head, children, foot }) => {
 			<div className='card-body'>
 				<div className='table-responsive'>
 					<table className='table'>
-						<thead className='text-primary'>{head()}</thead>
+						<thead className='text-success'>{head()}</thead>
 						<tbody>{children}</tbody>
 					</table>
 				</div>

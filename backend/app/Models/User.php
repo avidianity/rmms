@@ -42,6 +42,13 @@ class User extends Authenticatable
 
     protected $searchable = ['name'];
 
+    protected $with = ['picture'];
+
+    public function picture()
+    {
+        return $this->belongsTo(File::class, 'profile_picture_id');
+    }
+
     public function getSearchableColumns()
     {
         return $this->searchable;

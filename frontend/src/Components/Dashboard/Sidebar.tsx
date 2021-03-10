@@ -91,9 +91,9 @@ const Sidebar: FC<Props> = (props) => {
 						) : null
 					)}
 					<li className='nav-item active-pro'>
-						<Link className='nav-link' to={url(routes.SETTINGS)}>
+						<Link className='nav-link' to={url(routes.PROFILE)}>
 							<i className='material-icons'>settings</i>
-							<p>Settings</p>
+							<p>Profile Settings</p>
 						</Link>
 					</li>
 				</ul>

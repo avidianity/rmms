@@ -1,3 +1,4 @@
+import { File } from './File';
 import { Model } from './Model';
 
 export interface User extends Model {
@@ -5,4 +6,5 @@ export interface User extends Model {
 	email: string;
 	password: string;
 	role: string;
+	picture?: File;
 }

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { FC, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 import toastr from 'toastr';
 import { outIf } from '../../helpers';
@@ -12,6 +12,10 @@ type Props = {};
 const Navbar: FC<Props> = (props) => {
 	const [show, setShow] = useState(false);
 	const history = useHistory();
+	const match = useRouteMatch();
+
+	const url = (path: string) => `${match.path}${path}`;
+
 	const logout = async () => {
 		try {
 			await axios.post('/auth/logout');
@@ -68,12 +72,9 @@ const Navbar: FC<Props> = (props) => {
 								<p className='d-lg-none d-md-block'>Account</p>
 							</a>
 							<div className={`dropdown-menu dropdown-menu-right ${outIf(show, 'show')}`}>
-								<a className='dropdown-item' href='/'>
+								<Link className='dropdown-item' to={url(routes.PROFILE)}>
 									Profile
-								</a>
-								<a className='dropdown-item' href='/'>
-									Settings
-								</a>
+								</Link>
 								<div className='dropdown-divider'></div>
 								<a
 									className='dropdown-item'
