@@ -62,47 +62,55 @@ const List: FC<Props> = (props) => {
 						<th>Patient</th>
 						<th>Doctor</th>
 						<th>Diagnosis</th>
+						<th>Status</th>
 						<th>Last Updated</th>
 						<th colSpan={3}>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchRecords(url)} />}>
-				{records.map(({ id, case_number, updated_at, patient, doctor, diagnosis }, index) => (
+				{records.map(({ id, case_number, updated_at, patient, doctor, diagnosis, status }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
 						<td>{dayjs(case_number!).format('MMMM DD, YYYY')}</td>
 						<td>{patient?.name}</td>
 						<td>{doctor?.name}</td>
 						<td>{lodash.truncate(diagnosis, { length: 20 })}</td>
+						<td>
+							<b>{status}</b>
+						</td>
 						<td>{dayjs(updated_at!).format('MMMM DD, YYYY hh:mm A')}</td>
 						<td>
 							<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='View'>
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>
-							<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-								<i className='material-icons mr-1'>create</i>
-								Edit
-							</Link>
-							<a
-								href={url(`/${id}/delete`)}
-								className='btn btn-danger btn-sm'
-								title='Delete'
-								onClick={async (e) => {
-									e.preventDefault();
-									const confirm = await swal({
-										title: `Delete this record?`,
-										icon: 'warning',
-										buttons: ['Cancel', 'Confirm'],
-										dangerMode: true,
-									});
-									if (confirm === true) {
-										deleteRecord(id);
-									}
-								}}>
-								<i className='material-icons mr-1'>remove_circle</i>
-								Delete
-							</a>
+							{status !== 'Done' ? (
+								<>
+									<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+										<i className='material-icons mr-1'>create</i>
+										Edit
+									</Link>
+									<a
+										href={url(`/${id}/delete`)}
+										className='btn btn-danger btn-sm'
+										title='Delete'
+										onClick={async (e) => {
+											e.preventDefault();
+											const confirm = await swal({
+												title: `Delete this record?`,
+												icon: 'warning',
+												buttons: ['Cancel', 'Confirm'],
+												dangerMode: true,
+											});
+											if (confirm === true) {
+												deleteRecord(id);
+											}
+										}}>
+										<i className='material-icons mr-1'>remove_circle</i>
+										Delete
+									</a>
+								</>
+							) : null}
 						</td>
 					</tr>
 				))}

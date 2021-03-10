@@ -84,4 +84,24 @@ class User extends Authenticatable
     {
         return $this->hasMany(Prescription::class, 'doctor_id');
     }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('role', 'Admin');
+    }
+
+    public function scopeDoctor($query)
+    {
+        return $query->where('role', 'Doctor');
+    }
+
+    public function scopePharmacist($query)
+    {
+        return $query->where('role', 'Pharmacist');
+    }
+
+    public function scopeNurse($query)
+    {
+        return $query->where('role', 'Nurse');
+    }
 }

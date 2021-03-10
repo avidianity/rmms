@@ -53,32 +53,36 @@ const View: FC<Props> = (props) => {
 							<i className='material-icons mr-1'>visibility</i>
 							View Patient
 						</Link>
-						<Link
-							to={`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record?.id}/edit`}
-							className='btn btn-warning btn-sm ml-1'>
-							<i className='material-icons mr-1'>create</i>
-							Edit
-						</Link>
-						<a
-							href={`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record?.id}/delete`}
-							className='btn btn-danger btn-sm ml-1'
-							onClick={async (e) => {
-								e.preventDefault();
-								if (record) {
-									const confirm = await swal({
-										title: `Delete this purchase request?`,
-										icon: 'warning',
-										buttons: ['Cancel', 'Confirm'],
-										dangerMode: true,
-									});
-									if (confirm === true) {
-										deleteRecord(record.id);
-									}
-								}
-							}}>
-							<i className='material-icons mr-1'>remove_circle</i>
-							Delete
-						</a>
+						{record?.status !== 'Done' ? (
+							<>
+								<Link
+									to={`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record?.id}/edit`}
+									className='btn btn-warning btn-sm ml-1'>
+									<i className='material-icons mr-1'>create</i>
+									Edit
+								</Link>
+								<a
+									href={`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record?.id}/delete`}
+									className='btn btn-danger btn-sm ml-1'
+									onClick={async (e) => {
+										e.preventDefault();
+										if (record) {
+											const confirm = await swal({
+												title: `Delete this purchase request?`,
+												icon: 'warning',
+												buttons: ['Cancel', 'Confirm'],
+												dangerMode: true,
+											});
+											if (confirm === true) {
+												deleteRecord(record.id);
+											}
+										}
+									}}>
+									<i className='material-icons mr-1'>remove_circle</i>
+									Delete
+								</a>
+							</>
+						) : null}
 					</div>
 				</div>
 				<div className='card-body'>
@@ -92,10 +96,8 @@ const View: FC<Props> = (props) => {
 					<div className='card-title'>Membership NN: {patient?.membership_nn || 'N/A'}</div>
 					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || 'N/A'}</div>
 					<div className='card-title'>Contact Number: {patient?.contact_number || 'N/A'}</div>
-					<div className='card-title'>PHIC: {patient?.phic || 'N/A'}</div>
 					<div className='card-title'>4Ps: {patient?.['4ps'] || 'N/A'}</div>
 					<div className='card-title'>Blood Type: {patient?.blood_type || 'N/A'}</div>
-					<div className='card-title'>Religion: {patient?.religion || 'N/A'}</div>
 					<p className='card-title'>Attending Doctor: {record?.doctor?.name}</p>
 					<p className='card-title'>
 						Issued: {record?.created_at ? dayjs(record.created_at).format('MMMM DD, YYYY hh:mm A') : null}

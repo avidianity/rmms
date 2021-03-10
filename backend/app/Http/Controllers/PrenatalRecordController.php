@@ -51,6 +51,8 @@ class PrenatalRecordController extends Controller
             'diagnosed_anemia' => ['nullable', 'string', 'max:255'],
             'cbc_hgb_hct' => ['nullable', 'string', 'max:255'],
             'deworming_dose' => ['nullable', 'string', 'max:255'],
+            'phic' => ['nullable', 'string', 'max:255'],
+            'religion' => ['nullable', 'string', 'max:255'],
             'attendee_id' => ['required', 'numeric', Rule::exists(User::class, 'id'), new Role(['Nurse', 'Midwife'])],
             'patient_id' => ['required', 'numeric', Rule::exists(Patient::class, 'id')],
         ]);
@@ -99,6 +101,8 @@ class PrenatalRecordController extends Controller
             'diagnosed_anemia' => ['nullable', 'string', 'max:255'],
             'cbc_hgb_hct' => ['nullable', 'string', 'max:255'],
             'deworming_dose' => ['nullable', 'string', 'max:255'],
+            'phic' => ['nullable', 'string', 'max:255'],
+            'religion' => ['nullable', 'string', 'max:255'],
             'attendee_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Nurse', 'Midwife'])],
         ]);
 

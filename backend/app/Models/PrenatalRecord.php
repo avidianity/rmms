@@ -30,6 +30,8 @@ class PrenatalRecord extends Model
         'diagnosed_anemia',
         'cbc_hgb_hct',
         'deworming_dose',
+        'phic',
+        'religion',
         'attendee_id',
         'patient_id',
     ];

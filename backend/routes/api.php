@@ -7,6 +7,7 @@ use App\Http\Controllers\PrenatalRecordController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\PurchaseRequestController;
 use App\Http\Controllers\RecordController;
+use App\Http\Controllers\StatisticsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,15 @@ Route::prefix('/auth')->group(function () {
         Route::post('/self', [AuthController::class, 'update']);
         Route::get('/check', [AuthController::class, 'check']);
     });
+});
+
+Route::prefix('/statistics')->group(function () {
+    Route::get('/counts', [StatisticsController::class, 'counts']);
+    Route::get('/years', [StatisticsController::class, 'years']);
+    Route::get('/quarters', [StatisticsController::class, 'quarters']);
+    Route::get('/months', [StatisticsController::class, 'months']);
+    Route::get('/weeks', [StatisticsController::class, 'weeks']);
+    Route::get('/daily', [StatisticsController::class, 'daily']);
 });
 
 Route::middleware('auth:sanctum')->group(function () {

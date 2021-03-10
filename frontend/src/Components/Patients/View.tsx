@@ -107,10 +107,8 @@ const View: FC<Props> = (props) => {
 					<div className='card-title'>Membership NN: {patient?.membership_nn || 'N/A'}</div>
 					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || 'N/A'}</div>
 					<div className='card-title'>Contact Number: {patient?.contact_number || 'N/A'}</div>
-					<div className='card-title'>PHIC: {patient?.phic || 'N/A'}</div>
 					<div className='card-title'>4Ps: {patient?.['4ps'] || 'N/A'}</div>
 					<div className='card-title'>Blood Type: {patient?.blood_type || 'N/A'}</div>
-					<div className='card-title'>Religion: {patient?.religion || 'N/A'}</div>
 					<div className='container-fluid'>
 						<Table
 							title='Records'

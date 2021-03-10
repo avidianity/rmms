@@ -13,10 +13,8 @@ export interface Patient extends Model {
 	membership_nn: string | null;
 	philhealth_number: string | null;
 	contact_number: string | null;
-	phic: string | null;
 	'4ps': string | null;
 	blood_type: string | null;
-	religion: string | null;
 	records?: Record[];
 	prenatals?: PrenatalRecord[];
 }

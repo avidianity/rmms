@@ -15,8 +15,9 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $email = 'admin@rmms.com';
-        User::where('email', $email)->delete();
-        User::create(['email' => $email, 'password' => Hash::make('admin'), 'role' => 'Admin', 'name' => 'John Doe']);
+        User::factory()->create(['email' => 'admin@rmms.com', 'password' => Hash::make('admin'), 'role' => 'Admin']);
+        User::factory()->create(['email' => 'doctor@rmms.com', 'password' => Hash::make('doctor'), 'role' => 'Doctor']);
+        User::factory()->create(['email' => 'nurse@rmms.com', 'password' => Hash::make('nurse'), 'role' => 'Nurse']);
+        User::factory()->create(['email' => 'pharmacist@rmms.com', 'password' => Hash::make('pharmacist'), 'role' => 'Pharmacist']);
     }
 }

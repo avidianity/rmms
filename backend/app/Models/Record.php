@@ -13,6 +13,7 @@ class Record extends Model
         'diagnosis',
         'doctor_id',
         'patient_id',
+        'status',
     ];
 
     protected $casts = [
@@ -41,5 +42,10 @@ class Record extends Model
     public function prescriptions()
     {
         return $this->morphMany(Prescription::class, 'recordable');
+    }
+
+    public function scopeStatus($query, $status)
+    {
+        return $query->where('status', $status);
     }
 }

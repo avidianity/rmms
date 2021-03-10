@@ -25,10 +25,8 @@ class CreatePatientsTable extends Migration
             $table->string('membership_nn')->nullable();
             $table->string('philhealth_number')->nullable();
             $table->string('contact_number')->nullable();
-            $table->string('phic')->nullable();
             $table->string('4ps')->nullable();
             $table->string('blood_type')->nullable();
-            $table->string('religion')->nullable();
             $table->timestamps();
         });
     }

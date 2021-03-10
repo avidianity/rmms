@@ -82,15 +82,15 @@ const Login: FC<Props> = (props) => {
 							{errors.password ? <div className='invalid-feedback'>{errors.password.message}</div> : null}
 						</div>
 						<div className='form-group '>
-							<button type='submit' className='btn btn-info btn-sm w-100' disabled={processing}>
+							<button type='submit' className='btn btn-success btn-sm w-100' disabled={processing}>
 								{processing ? <i className='material-icons spin'>refresh</i> : 'Login'}
 							</button>
 						</div>
 						<div className='d-flex'>
-							{/* <Link to={routes.REGISTER} className='btn btn-link btn-info p-0'>
+							{/* <Link to={routes.REGISTER} className='btn btn-link btn-success p-0'>
 								Don't have an account? Register
 							</Link> */}
-							<a href='/forgot-password' className='btn btn-link btn-info p-0 ml-auto'>
+							<a href='/forgot-password' className='btn btn-link btn-success p-0 ml-auto'>
 								Forgot password?
 							</a>
 						</div>

@@ -19,11 +19,11 @@ const Sidebar: FC<Props> = (props) => {
 			title: 'Dashboard',
 			icon: 'dashboard',
 			exact: true,
-			show: user.role === 'Admin',
+			show: true,
 		},
 		{
 			to: url(routes.MEDICINES),
-			title: 'Medicine Management',
+			title: 'Medicine Stocks',
 			icon: 'local_pharmacy',
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
@@ -37,7 +37,7 @@ const Sidebar: FC<Props> = (props) => {
 			to: url(routes.PRESCRIPTIONS),
 			title: 'Prescriptions',
 			icon: 'medication',
-			show: ['Pharmacist', 'Nurse', 'Midwife', 'Admin'].includes(user.role),
+			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
 		{
 			to: url(routes.PATIENTS),

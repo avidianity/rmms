@@ -25,10 +25,8 @@ class Patient extends Model
         'membership_nn',
         'philhealth_number',
         'contact_number',
-        'phic',
         '4ps',
         'blood_type',
-        'religion',
     ];
 
     protected $casts = [
@@ -51,5 +49,15 @@ class Patient extends Model
     public function prenatals()
     {
         return $this->hasMany(PrenatalRecord::class);
+    }
+
+    public function scopeMale($query)
+    {
+        return $query->where('sex', 'Male');
+    }
+
+    public function scopeFemale($query)
+    {
+        return $query->where('sex', 'Female');
     }
 }

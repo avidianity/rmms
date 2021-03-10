@@ -20,6 +20,7 @@ class CreateRecordsTable extends Migration
             $table->id();
             $table->date('case_number')->index();
             $table->string('diagnosis')->nullable();
+            $table->string('status')->index();
             $table->foreignIdFor(new User(), 'doctor_id')->constrained((new User())->getTable());
             $table->foreignIdFor(new Patient())->constrained();
             $table->timestamps();

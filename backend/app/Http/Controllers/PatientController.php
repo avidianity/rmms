@@ -46,10 +46,8 @@ class PatientController extends Controller
             'membership_nn' => ['nullable', 'string', 'max:255'],
             'philhealth_number' => ['nullable', 'string', 'max:255'],
             'contact_number' => ['nullable', 'string', 'max:255'],
-            'phic' => ['nullable', 'string', 'max:255'],
             '4ps' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
-            'religion' => ['nullable', 'string', 'max:255'],
         ]);
 
         $patient = Patient::where('name', $data['name'])
@@ -102,10 +100,8 @@ class PatientController extends Controller
             'membership_nn' => ['nullable', 'string', 'max:255'],
             'philhealth_number' => ['nullable', 'string', 'max:255'],
             'contact_number' => ['nullable', 'string', 'max:255'],
-            'phic' => ['nullable', 'string', 'max:255'],
             '4ps' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
-            'religion' => ['nullable', 'string', 'max:255'],
         ]);
 
         $patient = Patient::with(['records.prescriptions.items.medicine', 'prenatals.prescriptions.items.medicine'])->findOrFail($id);

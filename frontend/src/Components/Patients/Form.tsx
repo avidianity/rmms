@@ -45,10 +45,8 @@ const Form: FC<Props> = (props) => {
 			setValue('membership_nn', data.membership_nn);
 			setValue('philhealth_number', data.philhealth_number);
 			setValue('contact_number', data.contact_number);
-			setValue('phic', data.phic);
 			setValue('4ps', data['4ps']);
 			setValue('blood_type', data.blood_type);
-			setValue('religion', data.religion);
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
 		} catch (error) {
@@ -145,19 +143,13 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='membership_nn' />
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>Philhealth Number</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='philhealth_number' />
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating'>PHIC</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='phic' />
-							</div>
-						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>4Ps</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='4ps' />
@@ -176,12 +168,6 @@ const Form: FC<Props> = (props) => {
 									<option value='AB-'>AB-</option>
 									<option value='AB+'>AB+</option>
 								</select>
-							</div>
-						</div>
-						<div className='col-12 col-md-6'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating'>Religion</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='religion' />
 							</div>
 						</div>
 						<div className='col-12'>

@@ -8,3 +8,7 @@ export const RecordableMap = {
 	Record: 'Regular Record',
 	PrenatalRecord: 'Prenatal Record',
 } as FreeObject;
+
+export const STATUSES = {
+	RegularRecord: ['Pending', 'Done'],
+};

@@ -26,6 +26,8 @@ export interface PrenatalRecord extends Model {
 	deworming_dose: string | null;
 	attendee_id: number;
 	patient_id: number;
+	phic: string | null;
+	religion: string | null;
 	attendee?: User;
 	patient?: Patient;
 	prescriptions?: Prescription[];

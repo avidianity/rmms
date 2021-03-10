@@ -81,7 +81,7 @@ const Form: FC<Props> = (props) => {
 						</div>
 						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating'>Cost</label>
+								<label className='bmd-label-floating'>Estimated Unit Cost</label>
 								<input ref={register} type='number' className='form-control' disabled={processing} name='cost' />
 							</div>
 						</div>
