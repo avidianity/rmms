@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch } from 'react-router';
+import { useRouteMatch } from 'react-router-dom';
 import Form from './Form';
 import List from './List';
-import View from './View';
 
 type Props = {};
 
-const RegularRecords: FC<Props> = (props) => {
+const Users: FC<Props> = (props) => {
 	const match = useRouteMatch();
 
 	const url = (path: string) => `${match.path}${path}`;
@@ -15,10 +15,9 @@ const RegularRecords: FC<Props> = (props) => {
 		<Switch>
 			<Route path={url('')} exact component={List} />
 			<Route path={url('/add')} component={Form} />
-			<Route path={url('/:id')} exact component={View} />
 			<Route path={url('/:id/edit')} component={Form} />
 		</Switch>
 	);
 };
 
-export default RegularRecords;
+export default Users;

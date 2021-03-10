@@ -19,37 +19,36 @@ const Sidebar: FC<Props> = (props) => {
 			to: url(routes.MEDICINES),
 			title: 'Medicine Management',
 			icon: 'local_pharmacy',
-			exact: false,
 		},
 		{
 			to: url(routes.PURCHASE_REQUESTS),
 			title: 'Purchase Requests',
 			icon: 'medical_services',
-			exact: false,
 		},
 		{
 			to: url(routes.PRESCRIPTIONS),
 			title: 'Prescriptions',
 			icon: 'medication',
-			exact: false,
 		},
 		{
 			to: url(routes.PATIENTS),
 			title: 'Patients',
 			icon: 'supervised_user_circle',
-			exact: false,
 		},
 		{
 			to: url(routes.RECORDS.REGULAR),
 			title: 'Regular Records',
 			icon: 'contact_page',
-			exact: false,
 		},
 		{
 			to: url(routes.RECORDS.PRENATAL),
 			title: 'Prenatal Records',
 			icon: 'pregnant_woman',
-			exact: false,
+		},
+		{
+			to: url(routes.USERS),
+			title: 'Users',
+			icon: 'account_circle',
 		},
 	];
 

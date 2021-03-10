@@ -18,7 +18,7 @@ class PrescriptionController extends Controller
      */
     public function index()
     {
-        return Prescription::with('doctor')->paginate(15);
+        return Prescription::with(['doctor', 'recordable.patient'])->paginate(15);
     }
 
     /**

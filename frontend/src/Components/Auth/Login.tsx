@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { routes } from '../../routes';
 import styles from '../../Styles/auth.module.css';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -48,6 +48,7 @@ const Login: FC<Props> = (props) => {
 				<div className='card-header text-center'>
 					<img src='/assets/img/manifest-icon-512.png' alt='' className={`rounded-circle shadow border ${styles.icon}`} />
 					<h2 className='card-title'>RMMS</h2>
+					<p className='card-category'>Welcome back! Ready to be productive again? ⚡</p>
 				</div>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='card-body'>
@@ -80,9 +81,14 @@ const Login: FC<Props> = (props) => {
 								{processing ? <i className='material-icons spin'>refresh</i> : 'Login'}
 							</button>
 						</div>
-						<Link to={routes.REGISTER} className='btn btn-link btn-info p-0'>
-							Don't have an account? Register
-						</Link>
+						<div className='d-flex'>
+							{/* <Link to={routes.REGISTER} className='btn btn-link btn-info p-0'>
+								Don't have an account? Register
+							</Link> */}
+							<a href='/forgot-password' className='btn btn-link btn-info p-0 ml-auto'>
+								Forgot password?
+							</a>
+						</div>
 					</div>
 				</form>
 			</div>

@@ -47,4 +47,5 @@
 label.required::after {
 	content: '*';
 	color: rgb(190, 0, 0);
+	padding-left: 1px;
 }

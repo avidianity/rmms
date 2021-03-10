@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './Components/Auth/Login';
-import Register from './Components/Auth/Register';
 import Dashboard from './Components/Dashboard';
 import { routes } from './routes';
 
@@ -52,7 +51,6 @@ function App() {
 				<Route path={routes.HOME} exact component={Login} />
 				<Route path={routes.DASHBOARD} component={Dashboard} />
 				<Route path={routes.LOGIN} component={Login} />
-				<Route path={routes.REGISTER} component={Register} />
 			</Switch>
 		</Router>
 	);

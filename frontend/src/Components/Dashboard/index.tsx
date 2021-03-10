@@ -7,6 +7,7 @@ import Prescriptions from '../Pharmacy/Prescriptions';
 import Requests from '../Pharmacy/Requests';
 import PrenatalRecords from '../Records/Prenatal';
 import RegularRecords from '../Records/Regular';
+import Users from '../Users';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
 import Statistics from './Statistics';
@@ -33,6 +34,7 @@ const Dashboard: FC<Props> = (props) => {
 							<Route path={url(routes.RECORDS.REGULAR)} component={RegularRecords} />
 							<Route path={url(routes.RECORDS.PRENATAL)} component={PrenatalRecords} />
 							<Route path={url(routes.PRESCRIPTIONS)} component={Prescriptions} />
+							<Route path={url(routes.USERS)} component={Users} />
 						</Switch>
 					</div>
 				</div>

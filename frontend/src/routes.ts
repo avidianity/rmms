@@ -12,4 +12,5 @@ export const routes = {
 		PRENATAL: '/prenatal-records',
 	},
 	SETTINGS: '/settings',
+	USERS: '/users',
 };

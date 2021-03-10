@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
@@ -55,8 +54,10 @@ class UserController extends Controller
             'password' => ['nullable', 'string', 'max:255'],
         ]);
 
-        if (Arr::exists($data, 'password')) {
+        if (isset($data['password'])) {
             $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
 
         $user->update($data);

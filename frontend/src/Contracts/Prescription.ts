@@ -7,6 +7,8 @@ import { User } from './User';
 export interface Prescription extends Model {
 	released_at: string | null;
 	doctor_id: number;
+	recordable_type: string;
+	recordable_id: number;
 	doctor?: User;
 	recordable?: Record | PrenatalRecord;
 	items?: PrescriptionItem[];

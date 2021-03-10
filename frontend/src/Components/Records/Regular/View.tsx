@@ -1,7 +1,7 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
-import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import toastr from 'toastr';
 import { Record } from '../../../Contracts/Record';
 import { handleError } from '../../../helpers';
@@ -14,7 +14,7 @@ type Props = {};
 const View: FC<Props> = (props) => {
 	const [record, setRecord] = useState<Record | null>(null);
 	const history = useHistory();
-	const match = useRouteMatch<{ id: string }>();
+	const params = useParams<{ id: string }>();
 
 	const fetchRecord = async (id: any) => {
 		try {
@@ -37,7 +37,7 @@ const View: FC<Props> = (props) => {
 	};
 
 	useEffect(() => {
-		fetchRecord(match.params.id);
+		fetchRecord(params.id);
 		// eslint-disable-next-line
 	}, []);
 
@@ -47,11 +47,15 @@ const View: FC<Props> = (props) => {
 		<div className='container-fluid'>
 			<div className='card'>
 				<div className='card-header card-header-primary'>
-					<h4 className='card-title'>View Purchase Request</h4>
+					<h4 className='card-title'>View Regular Record</h4>
 					<div className='d-flex'>
+						<Link to={`${routes.DASHBOARD}${routes.PATIENTS}/${record?.patient_id}`} className='btn btn-info btn-sm ml-auto'>
+							<i className='material-icons mr-1'>visibility</i>
+							View Patient
+						</Link>
 						<Link
 							to={`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record?.id}/edit`}
-							className='btn btn-warning btn-sm ml-auto'>
+							className='btn btn-warning btn-sm ml-1'>
 							<i className='material-icons mr-1'>create</i>
 							Edit
 						</Link>

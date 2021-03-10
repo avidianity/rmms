@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Models\Prescription;
 use App\Models\Record;
 use App\Models\User;
 use App\Rules\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 
 class RecordController extends Controller
@@ -35,9 +37,18 @@ class RecordController extends Controller
             'diagnosis' => ['nullable', 'string', 'max:255'],
             'doctor_id' => ['required', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
             'patient_id' => ['required', 'numeric', Rule::exists(Patient::class, 'id')],
+            'prescriptions' => ['nullable', 'array'],
+            'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
+            'prescriptions.items.*.quantity' => ['required', 'numeric'],
         ]);
 
-        return Record::create($data);
+        $record = Record::create($data);
+
+        if (Arr::has($data, 'prescriptions')) {
+            $this->savePrescriptions($record, $data);
+        }
+
+        return $record;
     }
 
     /**
@@ -63,7 +74,17 @@ class RecordController extends Controller
         $data = $request->validate([
             'diagnosis' => ['nullable', 'string', 'max:255'],
             'doctor_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
+            'prescriptions' => ['nullable', 'array'],
+            'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
+            'prescriptions.items.*.quantity' => ['required', 'numeric'],
         ]);
+
+        if (Arr::has($data, 'prescriptions')) {
+            $record->prescriptions()
+                ->whereNotNull('released_at')
+                ->delete();
+            $this->savePrescriptions($record, $data);
+        }
 
         $record->update($data);
 
@@ -83,5 +104,22 @@ class RecordController extends Controller
         $record->delete();
 
         return response('', 204);
+    }
+
+    /**
+     * @param Record $record
+     */
+    protected function savePrescriptions($record, $data)
+    {
+        collect($data['prescriptions'])->each(function ($row) use ($record) {
+            /**
+             * @var Prescription
+             */
+            $prescription = $record->prescriptions()->create(['doctor_id' => $record->doctor_id]);
+
+            collect($row['items'])->each(function ($item) use ($prescription) {
+                $prescription->items()->create($item);
+            });
+        });
     }
 }
