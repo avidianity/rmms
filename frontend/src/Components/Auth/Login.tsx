@@ -42,6 +42,11 @@ const Login: FC<Props> = (props) => {
 		}
 	};
 
+	if (state.has('user')) {
+		history.push(routes.DASHBOARD);
+		return null;
+	}
+
 	return (
 		<div className='d-flex h-100vh align-items-center justify-content-center'>
 			<div className={`card ${styles.card}`}>

@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
-import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
+import state from '../../state';
 import Patients from '../Patients';
 import Medicine from '../Pharmacy/Medicine';
 import Prescriptions from '../Pharmacy/Prescriptions';
@@ -16,8 +17,14 @@ type Props = {};
 
 const Dashboard: FC<Props> = (props) => {
 	const match = useRouteMatch();
+	const history = useHistory();
 
 	const url = (path: string) => `${match.path}${path}`;
+
+	if (!state.has('user')) {
+		history.push(routes.LOGIN);
+		return null;
+	}
 
 	return (
 		<>

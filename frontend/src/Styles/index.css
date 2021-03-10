@@ -1,9 +1,3 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons';
-@import 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css';
-@import 'https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css';
-@import '../assets/css/material-dashboard.css';
-@import '../assets/demo/demo.css';
-
 .h-100vh {
 	height: 100vh;
 }

@@ -61,4 +61,9 @@ class AuthController extends Controller
 
         return response('', 204);
     }
+
+    public function check(Request $request)
+    {
+        return $request->user();
+    }
 }
