@@ -44,7 +44,7 @@ const View: FC<Props> = (props) => {
 	return (
 		<div className='container-fluid'>
 			<div className='card'>
-				<div className='card-header card-header-primary'>
+				<div className='card-header card-header-success'>
 					<h4 className='card-title'>View Purchase Request</h4>
 					<div className='d-flex'>
 						<Link

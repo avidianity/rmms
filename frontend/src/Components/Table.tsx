@@ -10,7 +10,7 @@ type Props = {
 const Table: FC<Props> = ({ title, subtitles, head, children, foot }) => {
 	return (
 		<div className='card'>
-			<div className='card-header card-header-primary'>
+			<div className='card-header card-header-success'>
 				<h4 className='card-title'>{title}</h4>
 				{subtitles ? <p className='card-category'>{subtitles}</p> : null}
 			</div>

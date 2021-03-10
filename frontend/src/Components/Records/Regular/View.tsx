@@ -46,7 +46,7 @@ const View: FC<Props> = (props) => {
 	return (
 		<div className='container-fluid'>
 			<div className='card'>
-				<div className='card-header card-header-primary'>
+				<div className='card-header card-header-success'>
 					<h4 className='card-title'>View Regular Record</h4>
 					<div className='d-flex'>
 						<Link to={`${routes.DASHBOARD}${routes.PATIENTS}/${record?.patient_id}`} className='btn btn-info btn-sm ml-auto'>
