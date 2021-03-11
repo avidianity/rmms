@@ -108,17 +108,15 @@ const Profile: FC<Props> = (props) => {
 					<div className='col-md-4'>
 						<div className='card card-profile'>
 							<div className='card-avatar'>
-								<a href='javascript:;'>
-									<img
-										className='img clickable'
-										src={displayPicture}
-										onClick={(e) => {
-											e.preventDefault();
-											if (fileRef.current) {
-												fileRef.current.click();
-											}
-										}}
-									/>
+								<a
+									href='/'
+									onClick={(e) => {
+										e.preventDefault();
+										if (fileRef.current) {
+											fileRef.current.click();
+										}
+									}}>
+									<img className='img' src={displayPicture} alt='Profile' />
 									<input
 										ref={fileRef}
 										type='file'

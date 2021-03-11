@@ -2,11 +2,9 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import toastr from 'toastr';
 import { Record } from '../../../Contracts/Record';
 import { handleError } from '../../../helpers';
 import Table from '../../Table';
-import swal from 'sweetalert';
 import { routes } from '../../../routes';
 
 type Props = {};
@@ -26,15 +24,15 @@ const View: FC<Props> = (props) => {
 		}
 	};
 
-	const deleteRecord = async (id: any) => {
-		try {
-			await axios.delete(`/regular-records/${id}`);
-			toastr.info('Record has been deleted.', 'Notice');
-			history.goBack();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+	// const deleteRecord = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/regular-records/${id}`);
+	// 		toastr.info('Record has been deleted.', 'Notice');
+	// 		history.goBack();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
 
 	useEffect(() => {
 		fetchRecord(params.id);

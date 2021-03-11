@@ -1,4 +1,3 @@
-import { count } from 'node:console';
 import React, { FC } from 'react';
 import { Counts as CountsContract } from '../../../Contracts/misc';
 

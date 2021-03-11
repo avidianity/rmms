@@ -2,8 +2,6 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
-import toastr from 'toastr';
-import swal from 'sweetalert';
 import { RecordableMap } from '../../../contants';
 import { Paginated } from '../../../Contracts/misc';
 import { Prescription } from '../../../Contracts/Prescription';
@@ -34,15 +32,15 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
-	const deletePrescription = async (id: any) => {
-		try {
-			await axios.delete(`/pharmacy/prescriptions/${id}`);
-			toastr.info('Prescription has been deleted.', 'Notice');
-			fetchPrescriptions();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+	// const deletePrescription = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/pharmacy/prescriptions/${id}`);
+	// 		toastr.info('Prescription has been deleted.', 'Notice');
+	// 		fetchPrescriptions();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
 
 	const user = state.get<User>('user');
 

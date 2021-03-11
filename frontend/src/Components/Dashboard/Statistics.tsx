@@ -8,6 +8,7 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
+import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
 import Daily from './Stats/Daily';
 import Months from './Stats/Months';
@@ -161,6 +162,7 @@ const Statistics: FC<Props> = (props) => {
 				<Daily daily={daily} />
 			</div>
 			<Months months={months} />
+			{loaded ? <Charts months={months} /> : null}
 		</div>
 	);
 };

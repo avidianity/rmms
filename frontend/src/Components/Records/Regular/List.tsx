@@ -2,14 +2,12 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { useRouteMatch, Link } from 'react-router-dom';
-import toastr from 'toastr';
 import { Paginated } from '../../../Contracts/misc';
 import { Record } from '../../../Contracts/Record';
 import { makeDummyPagination, handleError } from '../../../helpers';
 import state from '../../../state';
 import Pagination from '../../Pagination';
 import Table from '../../Table';
-import swal from 'sweetalert';
 import lodash from 'lodash';
 
 type Props = {};
@@ -33,15 +31,15 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
-	const deleteRecord = async (id: any) => {
-		try {
-			await axios.delete(`/regular-records/${id}`);
-			toastr.info('Record has been deleted.', 'Notice');
-			fetchRecords();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+	// const deleteRecord = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/regular-records/${id}`);
+	// 		toastr.info('Record has been deleted.', 'Notice');
+	// 		fetchRecords();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
 
 	useEffect(() => {
 		fetchRecords();

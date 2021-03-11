@@ -5,8 +5,6 @@ import { PurchaseRequest } from '../../../Contracts/PurchaseRequest';
 import { Paginated } from '../../../Contracts/misc';
 import { handleError, makeDummyPagination } from '../../../helpers';
 import Table from '../../Table';
-import swal from 'sweetalert';
-import toastr from 'toastr';
 import state from '../../../state';
 import Pagination from '../../Pagination';
 import dayjs from 'dayjs';
@@ -40,15 +38,15 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
-	const deletePurchaseRequest = async (id: any) => {
-		try {
-			await axios.delete(`/pharmacy/purchase-requests/${id}`);
-			toastr.info('Purchase Request has been deleted.', 'Notice');
-			fetchPurchaseRequests();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+	// const deletePurchaseRequest = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/pharmacy/purchase-requests/${id}`);
+	// 		toastr.info('Purchase Request has been deleted.', 'Notice');
+	// 		fetchPurchaseRequests();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
 
 	const markAsDelivered = async (id: any) => {
 		if (id > 1) {

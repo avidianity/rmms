@@ -53,7 +53,7 @@ export type Quarters = {
 	patients: number;
 };
 
-type Numbers = {
+export type Numbers = {
 	[month: string]: number;
 };
 

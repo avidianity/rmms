@@ -2,8 +2,6 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import swal from 'sweetalert';
-import toastr from 'toastr';
 import { Paginated } from '../../Contracts/misc';
 import { Patient } from '../../Contracts/Patient';
 import { User } from '../../Contracts/User';
@@ -35,15 +33,15 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
-	const deletePatient = async (id: any) => {
-		try {
-			await axios.delete(`/patients/${id}`);
-			toastr.info('Patient has been deleted.', 'Notice');
-			fetchPatients();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+	// const deletePatient = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/patients/${id}`);
+	// 		toastr.info('Patient has been deleted.', 'Notice');
+	// 		fetchPatients();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
 
 	useEffect(() => {
 		fetchPatients();
