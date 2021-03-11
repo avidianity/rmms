@@ -1,7 +1,9 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 import state from '../../state';
+import IllnessHistories from '../IllnessHistories';
+import Inventories from '../Inventories';
 import Patients from '../Patients';
 import Medicine from '../Pharmacy/Medicine';
 import Prescriptions from '../Pharmacy/Prescriptions';
@@ -19,8 +21,17 @@ type Props = {};
 const Dashboard: FC<Props> = (props) => {
 	const match = useRouteMatch();
 	const history = useHistory();
+	const [color, setColor] = useState(state.get<string>('background-color') || 'dark');
 
 	const url = (path: string) => `${match.path}${path}`;
+
+	useEffect(() => {
+		const key = state.listen<string>('background-color', (color) => setColor(color));
+		return () => {
+			state.unlisten('background-color', key);
+		};
+		//eslint-disable-next-line
+	}, []);
 
 	if (!state.has('user')) {
 		history.push(routes.LOGIN);
@@ -29,10 +40,10 @@ const Dashboard: FC<Props> = (props) => {
 
 	return (
 		<>
-			<div className='wrapper'>
+			<div className='wrapper' data-mode={color}>
 				<Sidebar />
 				<div className='main-panel'>
-					<Navbar />
+					<Navbar mode={color} />
 					<div className='content'>
 						<Switch>
 							<Route path={url('')} exact component={Statistics} />
@@ -44,6 +55,8 @@ const Dashboard: FC<Props> = (props) => {
 							<Route path={url(routes.PRESCRIPTIONS)} component={Prescriptions} />
 							<Route path={url(routes.USERS)} component={Users} />
 							<Route path={url(routes.PROFILE)} component={Profile} />
+							<Route path={url(routes.INVENTORIES)} component={Inventories} />
+							<Route path={url(routes.ILLNESS_HISTORIES)} component={IllnessHistories} />
 						</Switch>
 					</div>
 				</div>

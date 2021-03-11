@@ -69,13 +69,13 @@ const View: FC<Props> = (props) => {
 					<div className='card-title'>Sex: {patient?.sex}</div>
 					<div className='card-title'>Birthday: {dayjs(patient?.birthday).format('MMMM DD, YYYY')}</div>
 					<div className='card-title'>Address: {patient?.address}</div>
-					<div className='card-title'>Civil Status: {patient?.civil_status || 'N/A'}</div>
-					<div className='card-title'>Membership NH: {patient?.membership_nh || 'N/A'}</div>
-					<div className='card-title'>Membership NN: {patient?.membership_nn || 'N/A'}</div>
-					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || 'N/A'}</div>
-					<div className='card-title'>Contact Number: {patient?.contact_number || 'N/A'}</div>
-					<div className='card-title'>4Ps: {patient?.['4ps'] || 'N/A'}</div>
-					<div className='card-title'>Blood Type: {patient?.blood_type || 'N/A'}</div>
+					<div className='card-title'>Civil Status: {patient?.civil_status || ''}</div>
+					<div className='card-title'>Membership NH: {patient?.membership_nh || ''}</div>
+					<div className='card-title'>Membership NN: {patient?.membership_nn || ''}</div>
+					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || ''}</div>
+					<div className='card-title'>Contact Number: {patient?.contact_number || ''}</div>
+					<div className='card-title'>4Ps: {patient?.['4ps'] || ''}</div>
+					<div className='card-title'>Blood Type: {patient?.blood_type || ''}</div>
 					<p className='card-title'>Attending Doctor: {record?.doctor?.name}</p>
 					<p className='card-title'>
 						Issued: {record?.created_at ? dayjs(record.created_at).format('MMMM DD, YYYY hh:mm A') : null}
@@ -97,7 +97,7 @@ const View: FC<Props> = (props) => {
 								<tr key={index}>
 									<td>{prescription.id}</td>
 									<td>
-										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : 'N/A'}
+										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : ''}
 									</td>
 									<td>
 										<ul className='list-unstyled'>

@@ -18,7 +18,7 @@ class PurchaseRequestController extends Controller
      */
     public function index()
     {
-        return PurchaseRequest::paginate(15);
+        return PurchaseRequest::latest()->paginate(10);
     }
 
     /**

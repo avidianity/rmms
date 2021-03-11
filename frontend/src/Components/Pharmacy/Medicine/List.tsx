@@ -5,10 +5,10 @@ import { Medicine } from '../../../Contracts/Medicine';
 import { Paginated } from '../../../Contracts/misc';
 import { formatCurrency, handleError, makeDummyPagination } from '../../../helpers';
 import Table from '../../Table';
-import swal from 'sweetalert';
 import toastr from 'toastr';
 import state from '../../../state';
 import Pagination from '../../Pagination';
+import { SearchBus } from '../../../events';
 
 type Props = {};
 
@@ -31,18 +31,39 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
-	const deleteMedicine = async (id: any) => {
+	// const deleteMedicine = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/pharmacy/medicines/${id}`);
+	// 		toastr.info('Medicine has been deleted.', 'Notice');
+	// 		fetchMedicines();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
+
+	const search = async (keyword: string) => {
 		try {
-			await axios.delete(`/pharmacy/medicines/${id}`);
-			toastr.info('Medicine has been deleted.', 'Notice');
-			fetchMedicines();
+			const { data } = await axios.get(`/search?model=Medicine&keyword=${encodeURIComponent(keyword)}&paginate=false`);
+			setMedicines(data);
+			setPagination(makeDummyPagination());
 		} catch (error) {
-			handleError(error);
+			console.log(error.toJSON());
+			toastr.error('Unable to search.');
 		}
 	};
 
 	useEffect(() => {
 		fetchMedicines();
+		const key = SearchBus.listen<string>('submit', (keyword) => {
+			if (keyword.length > 0) {
+				search(keyword);
+			} else {
+				fetchMedicines();
+			}
+		});
+		return () => {
+			SearchBus.unlisten('submit', key);
+		};
 		// eslint-disable-next-line
 	}, []);
 
@@ -58,7 +79,7 @@ const List: FC<Props> = (props) => {
 						<th>ID</th>
 						<th>Name</th>
 						<th>Unit of Issue</th>
-						<th>Cost</th>
+						<th>Estimated Unit Cost</th>
 						<th>Stocks</th>
 						<th colSpan={2}>Actions</th>
 					</tr>
@@ -76,7 +97,7 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>create</i>
 								Edit
 							</Link>
-							<a
+							{/* <a
 								href={url(`/${id}/delete`)}
 								className='btn btn-danger btn-sm'
 								title='Delete'
@@ -94,7 +115,7 @@ const List: FC<Props> = (props) => {
 								}}>
 								<i className='material-icons mr-1'>remove_circle</i>
 								Delete
-							</a>
+							</a> */}
 						</td>
 					</tr>
 				))}

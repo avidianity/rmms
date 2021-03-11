@@ -6,6 +6,7 @@ use App\Models\Patient;
 use App\Models\PrenatalRecord;
 use App\Models\User;
 use App\Rules\Role;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -19,8 +20,9 @@ class PrenatalRecordController extends Controller
     public function index()
     {
         return PrenatalRecord::orderBy('case_number', 'DESC')
+            ->latest('case_number')
             ->with(['attendee', 'patient'])
-            ->paginate(15);
+            ->paginate(10);
     }
 
     /**
@@ -52,10 +54,22 @@ class PrenatalRecordController extends Controller
             'cbc_hgb_hct' => ['nullable', 'string', 'max:255'],
             'deworming_dose' => ['nullable', 'string', 'max:255'],
             'phic' => ['nullable', 'string', 'max:255'],
-            'religion' => ['nullable', 'string', 'max:255'],
+            'bmi' => ['nullable', 'string', 'max:255'],
+            'status' => ['required', 'string', 'max:255'],
             'attendee_id' => ['required', 'numeric', Rule::exists(User::class, 'id'), new Role(['Nurse', 'Midwife'])],
             'patient_id' => ['required', 'numeric', Rule::exists(Patient::class, 'id')],
+            'prescriptions' => ['nullable', 'array'],
+            'prescriptions.doctor_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
+            'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
+            'prescriptions.items.*.quantity' => ['required', 'numeric'],
         ]);
+
+        if (Patient::whereId($data['patient_id'])->whereHas('prenatals', function (Builder $query) {
+            $query->whereDate('updated_at', now())
+                ->where('status', '!=', 'Done');
+        })->count() > 0) {
+            return response(['message' => 'Patient already has a prenatal record today. Please update it instead.'], 403);
+        }
 
         return PrenatalRecord::create($data);
     }
@@ -68,7 +82,7 @@ class PrenatalRecordController extends Controller
      */
     public function show($id)
     {
-        return PrenatalRecord::with(['attendee', 'patient'])->findOrFail($id);
+        return PrenatalRecord::with(['attendee', 'patient', 'prescriptions.items.medicine'])->findOrFail($id);
     }
 
     /**
@@ -102,8 +116,13 @@ class PrenatalRecordController extends Controller
             'cbc_hgb_hct' => ['nullable', 'string', 'max:255'],
             'deworming_dose' => ['nullable', 'string', 'max:255'],
             'phic' => ['nullable', 'string', 'max:255'],
-            'religion' => ['nullable', 'string', 'max:255'],
+            'bmi' => ['nullable', 'string', 'max:255'],
+            'status' => ['nullable', 'string', 'max:255'],
             'attendee_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Nurse', 'Midwife'])],
+            'prescriptions' => ['nullable', 'array'],
+            'prescriptions.doctor_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
+            'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
+            'prescriptions.items.*.quantity' => ['required', 'numeric'],
         ]);
 
         $prenatalRecord->update($data);
@@ -124,5 +143,22 @@ class PrenatalRecordController extends Controller
         $prenatalRecord->delete();
 
         return response('', 204);
+    }
+
+    /**
+     * @param PrenatalRecord $record
+     */
+    protected function savePrescriptions($record, $data)
+    {
+        collect($data['prescriptions'])->each(function ($row) use ($record) {
+            /**
+             * @var Prescription
+             */
+            $prescription = $record->prescriptions()->create(['doctor_id' => $row['doctor_id']]);
+
+            collect($row['items'])->each(function ($item) use ($prescription) {
+                $prescription->items()->create($item);
+            });
+        });
     }
 }

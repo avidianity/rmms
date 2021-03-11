@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PrenatalRecord extends Model
@@ -32,6 +33,7 @@ class PrenatalRecord extends Model
         'deworming_dose',
         'phic',
         'religion',
+        'status',
         'attendee_id',
         'patient_id',
     ];
@@ -48,6 +50,15 @@ class PrenatalRecord extends Model
     {
         static::creating(function (self $record) {
             $record->case_number = now()->format('Y-m-d');
+        });
+    }
+
+    public static function search($keyword)
+    {
+        return static::whereHas('attendee', function (Builder $query) use ($keyword) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
+        })->orWhereHas('patient', function (Builder $query) use ($keyword) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
         });
     }
 

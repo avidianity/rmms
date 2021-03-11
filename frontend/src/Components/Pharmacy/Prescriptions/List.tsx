@@ -10,6 +10,8 @@ import state from '../../../state';
 import Pagination from '../../Pagination';
 import Table from '../../Table';
 import { User } from '../../../Contracts/User';
+import toastr from 'toastr';
+import { SearchBus } from '../../../events';
 
 type Props = {};
 
@@ -42,10 +44,31 @@ const List: FC<Props> = (props) => {
 	// 	}
 	// };
 
+	const search = async (keyword: string) => {
+		try {
+			const { data } = await axios.get(`/search?model=Prescription&keyword=${encodeURIComponent(keyword)}&paginate=false`);
+			setPrescriptions(data);
+			setPagination(makeDummyPagination());
+		} catch (error) {
+			console.log(error.toJSON());
+			toastr.error('Unable to search.');
+		}
+	};
+
 	const user = state.get<User>('user');
 
 	useEffect(() => {
 		fetchPrescriptions();
+		const key = SearchBus.listen<string>('submit', (keyword) => {
+			if (keyword.length > 0) {
+				search(keyword);
+			} else {
+				fetchPrescriptions();
+			}
+		});
+		return () => {
+			SearchBus.unlisten('submit', key);
+		};
 		// eslint-disable-next-line
 	}, []);
 

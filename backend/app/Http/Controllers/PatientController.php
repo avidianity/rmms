@@ -16,14 +16,21 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $builder = new Patient();
+
+        $builder = $builder->latest();
+
         if ($request->has('name')) {
             $name = $request->input('name');
             $builder = $builder->where('name', 'LIKE', "%{$name}%");
         }
+
+        if ($request->has('sex') && in_array($sex = $request->input('sex'), ['Male', 'Female'])) {
+            $builder = $builder->where('sex', $sex);
+        }
         if ($request->input('paginate', 'true') === 'false') {
             return $builder->get();
         } else {
-            return $builder->paginate(15);
+            return $builder->paginate(10);
         }
     }
 
@@ -47,6 +54,7 @@ class PatientController extends Controller
             'philhealth_number' => ['nullable', 'string', 'max:255'],
             'contact_number' => ['nullable', 'string', 'max:255'],
             '4ps' => ['nullable', 'string', 'max:255'],
+            'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
         ]);
 
@@ -101,6 +109,7 @@ class PatientController extends Controller
             'philhealth_number' => ['nullable', 'string', 'max:255'],
             'contact_number' => ['nullable', 'string', 'max:255'],
             '4ps' => ['nullable', 'string', 'max:255'],
+            'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
         ]);
 

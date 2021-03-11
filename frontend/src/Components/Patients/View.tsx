@@ -102,13 +102,13 @@ const View: FC<Props> = (props) => {
 					<div className='card-title'>Sex: {patient?.sex}</div>
 					<div className='card-title'>Birthday: {dayjs(patient?.birthday).format('MMMM DD, YYYY')}</div>
 					<div className='card-title'>Address: {patient?.address}</div>
-					<div className='card-title'>Civil Status: {patient?.civil_status || 'N/A'}</div>
-					<div className='card-title'>Membership NH: {patient?.membership_nh || 'N/A'}</div>
-					<div className='card-title'>Membership NN: {patient?.membership_nn || 'N/A'}</div>
-					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || 'N/A'}</div>
-					<div className='card-title'>Contact Number: {patient?.contact_number || 'N/A'}</div>
-					<div className='card-title'>4Ps: {patient?.['4ps'] || 'N/A'}</div>
-					<div className='card-title'>Blood Type: {patient?.blood_type || 'N/A'}</div>
+					<div className='card-title'>Civil Status: {patient?.civil_status || ''}</div>
+					<div className='card-title'>Membership NH: {patient?.membership_nh || ''}</div>
+					<div className='card-title'>Membership NN: {patient?.membership_nn || ''}</div>
+					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || ''}</div>
+					<div className='card-title'>Contact Number: {patient?.contact_number || ''}</div>
+					<div className='card-title'>4Ps: {patient?.['4ps'] || ''}</div>
+					<div className='card-title'>Blood Type: {patient?.blood_type || ''}</div>
 					<div className='container-fluid'>
 						<Table
 							title='Records'
@@ -117,6 +117,7 @@ const View: FC<Props> = (props) => {
 								<tr>
 									<th>ID</th>
 									<th>Case Number</th>
+									<th>Status</th>
 									<th>Physician</th>
 									<th>Diagnosis</th>
 									<th className='text-center'>Actions</th>
@@ -126,6 +127,9 @@ const View: FC<Props> = (props) => {
 								<tr key={index}>
 									<td>{record.id}</td>
 									<td>{dayjs(record.case_number).format('MMMM DD, YYYY')}</td>
+									<td>
+										<b>{record.status}</b>
+									</td>
 									<td>{record.doctor?.name}</td>
 									<td>{lodash.truncate(record.diagnosis, { length: 20 })}</td>
 									<td className='text-center'>
@@ -152,6 +156,7 @@ const View: FC<Props> = (props) => {
 									<tr>
 										<th>ID</th>
 										<th>Case Number</th>
+										<th>Status</th>
 										<th>Nurse/Midwife in Charge</th>
 										<th>Remarks</th>
 										<th>Actions</th>
@@ -161,8 +166,11 @@ const View: FC<Props> = (props) => {
 									<tr key={index}>
 										<td>{record.id}</td>
 										<td>{dayjs(record.case_number).format('MMMM DD, YYYY')}</td>
+										<td>
+											<b>{record.status}</b>
+										</td>
 										<td>{record.attendee?.name}</td>
-										<td>{record.remarks}</td>
+										<td>{lodash.truncate(record.remarks || '', { length: 10 })}</td>
 										<td>
 											<button
 												className='btn btn-info btn-sm'
@@ -185,8 +193,8 @@ const View: FC<Props> = (props) => {
 				{record ? (
 					<div className='container-fluid'>
 						<p className='card-text'>Case Number: {dayjs(record.case_number).format('MMMM DD, YYYY')}</p>
-						<p className='card-text'>Diagnosis: {record.diagnosis}</p>
 						<p className='card-text'>Physician: {record.doctor?.name}</p>
+						<p className='card-text'>Diagnosis: {record.diagnosis}</p>
 						<Table
 							title='Prescriptions'
 							subtitles={
@@ -203,7 +211,7 @@ const View: FC<Props> = (props) => {
 								<tr key={index}>
 									<td>{prescription.id}</td>
 									<td>
-										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : 'N/A'}
+										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : ''}
 									</td>
 									<td>
 										<ul>
@@ -224,7 +232,44 @@ const View: FC<Props> = (props) => {
 				{prenatal ? (
 					<div className='container-fluid'>
 						<p className='card-text'>Case Number: {dayjs(prenatal.case_number).format('MMMM DD, YYYY')}</p>
-						<p className='card-text'>Nurse/Midwife: {prenatal.attendee?.name}</p>
+						<p className='card-text'>
+							{prenatal.attendee?.role}: {prenatal.attendee?.name}
+						</p>
+						<div className='container-fluid'>
+							<div className='card'>
+								<div className='card-header card-header-info d-flex align-items-center'>
+									<h5 className='card-title'>Record Information</h5>
+								</div>
+								<div className='card-body'>
+									<p className='card-title'>LMP: {prenatal.lmp || ''}</p>
+									<p className='card-title'>EDC: {prenatal.edc || ''}</p>
+									<p className='card-title'>Age of Gestation: {prenatal.aog || ''}</p>
+									<p className='card-title'>Blood Pressure: {prenatal.bp || ''}</p>
+									<p className='card-title'>Weight: {prenatal.wt || ''}</p>
+									<p className='card-title'>Height: {prenatal.ht || ''}</p>
+									<p className='card-title'>FHT: {prenatal.fht || ''}</p>
+									<p className='card-title'>FH: {prenatal.fh || ''}</p>
+									<p className='card-title'>Toxoid: {prenatal.toxoid || ''}</p>
+									<p className='card-title'>Laboratory Requests: {prenatal.lab_requests || ''}</p>
+									<p className='card-title'>FeSO4: {prenatal.feso4 || ''}</p>
+									<p className='card-title'>Screened for Syphilis: {prenatal.screened_syphilis || ''}</p>
+									<p className='card-title'>Screened for Hepatitis: {prenatal.screened_hepatitis || ''}</p>
+									<p className='card-title'>Screened for HIV: {prenatal.screened_hiv || ''}</p>
+									<p className='card-title'>
+										Screened for Gestational Diabetes: {prenatal.screened_gestational_diabetes || ''}
+									</p>
+									<p className='card-title'>Diagnosed with Anemia: {prenatal.diagnosed_anemia || ''}</p>
+									<p className='card-title'>CBC, HGB, HCT: {prenatal.cbc_hgb_hct || ''}</p>
+									<p className='card-title'>Given one dose of Deworming: {prenatal.deworming_dose || ''}</p>
+									<p className='card-title'>PHIC: {prenatal.phic || ''}</p>
+									<p className='card-title'>BMI: {prenatal.bmi || ''}</p>
+									<p className='card-title'>
+										Status: <b>{prenatal.status || ''}</b>
+									</p>
+									<p className='card-title'>Remarks/Advice: {prenatal.remarks || ''}</p>
+								</div>
+							</div>
+						</div>
 						<Table
 							title='Prescriptions'
 							subtitles={
@@ -241,7 +286,7 @@ const View: FC<Props> = (props) => {
 								<tr key={index}>
 									<td>{prescription.id}</td>
 									<td>
-										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : 'N/A'}
+										{prescription.released_at ? dayjs(prescription.released_at).format('MMMM DD, YYYY hh:mm A') : ''}
 									</td>
 									<td>
 										<ul>

@@ -12,6 +12,7 @@ class Patient extends Model
 
     protected $searchable = [
         'name',
+        'address',
     ];
 
     protected $fillable = [
@@ -38,6 +39,7 @@ class Patient extends Model
         static::deleting(function (self $patient) {
             $patient->records()->delete();
             $patient->prenatals()->delete();
+            $patient->histories()->delete();
         });
     }
 
@@ -59,5 +61,10 @@ class Patient extends Model
     public function scopeFemale($query)
     {
         return $query->where('sex', 'Female');
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(IllnessHistory::class);
     }
 }

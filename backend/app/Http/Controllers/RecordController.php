@@ -7,6 +7,7 @@ use App\Models\Prescription;
 use App\Models\Record;
 use App\Models\User;
 use App\Rules\Role;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
@@ -21,8 +22,8 @@ class RecordController extends Controller
     public function index()
     {
         return Record::with(['doctor', 'patient'])
-            ->orderBy('case_number', 'DESC')
-            ->paginate(15);
+            ->latest('case_number')
+            ->paginate(10);
     }
 
     /**
@@ -42,6 +43,13 @@ class RecordController extends Controller
             'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
             'prescriptions.items.*.quantity' => ['required', 'numeric'],
         ]);
+
+        if (Patient::whereId($data['patient_id'])->whereHas('records', function (Builder $query) {
+            $query->whereDate('updated_at', now())
+                ->where('status', '!=', 'Done');
+        })->count() > 0) {
+            return response(['message' => 'Patient already has a record today. Please update it instead.'], 403);
+        }
 
         $record = Record::create($data);
 

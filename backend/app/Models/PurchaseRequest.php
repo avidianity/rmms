@@ -23,6 +23,12 @@ class PurchaseRequest extends Model
         'delivered' => 'datetime',
     ];
 
+    protected $searchable = [
+        'pr_number',
+        'sai_number',
+        'obr_number',
+    ];
+
     protected static function booted()
     {
         static::saved(function (self $purchaseRequest) {

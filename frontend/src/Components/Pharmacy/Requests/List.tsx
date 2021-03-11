@@ -12,6 +12,8 @@ import Modal from '../../Modal';
 import Flatpickr from 'react-flatpickr';
 import $ from 'jquery';
 import { User } from '../../../Contracts/User';
+import toastr from 'toastr';
+import { SearchBus } from '../../../events';
 
 type Props = {};
 
@@ -68,8 +70,29 @@ const List: FC<Props> = (props) => {
 
 	const user = state.get<User>('user');
 
+	const search = async (keyword: string) => {
+		try {
+			const { data } = await axios.get(`/search?model=PurchaseRequest&keyword=${encodeURIComponent(keyword)}&paginate=false`);
+			setPurchaseRequests(data);
+			setPagination(makeDummyPagination());
+		} catch (error) {
+			console.log(error.toJSON());
+			toastr.error('Unable to search.');
+		}
+	};
+
 	useEffect(() => {
 		fetchPurchaseRequests();
+		const key = SearchBus.listen<string>('submit', (keyword) => {
+			if (keyword.length > 0) {
+				search(keyword);
+			} else {
+				fetchPurchaseRequests();
+			}
+		});
+		return () => {
+			SearchBus.unlisten('submit', key);
+		};
 		// eslint-disable-next-line
 	}, []);
 

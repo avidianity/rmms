@@ -17,13 +17,21 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $builder = new User();
+        $builder = $builder->latest();
         if ($request->has('role') && in_array($role = $request->input('role'), User::ROLES)) {
             $builder = $builder->where('role', $role);
+        }
+        if ($request->has('roles')) {
+            foreach ($request->input('roles', []) as $role) {
+                if (in_array($role, User::ROLES)) {
+                    $builder = $builder->orWhere('role', $role);
+                }
+            }
         }
         if ($request->input('paginate', 'true') === 'false') {
             return $builder->get();
         } else {
-            return $builder->orderBy('role', 'ASC')->paginate(15);
+            return $builder->orderBy('role', 'ASC')->paginate(10);
         }
     }
 

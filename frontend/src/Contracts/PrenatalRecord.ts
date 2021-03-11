@@ -16,7 +16,6 @@ export interface PrenatalRecord extends Model {
 	toxoid: string | null;
 	lab_requests: string | null;
 	feso4: string | null;
-	remarks: string | null;
 	screened_syphilis: string | null;
 	screened_hepatitis: string | null;
 	screened_hiv: string | null;
@@ -24,10 +23,12 @@ export interface PrenatalRecord extends Model {
 	diagnosed_anemia: string | null;
 	cbc_hgb_hct: string | null;
 	deworming_dose: string | null;
+	phic: string | null;
+	bmi: string | null;
 	attendee_id: number;
 	patient_id: number;
-	phic: string | null;
-	religion: string | null;
+	status: string;
+	remarks: string | null;
 	attendee?: User;
 	patient?: Patient;
 	prescriptions?: Prescription[];

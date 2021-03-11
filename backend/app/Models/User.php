@@ -40,7 +40,7 @@ class User extends Authenticatable
         'Midwife',
     ];
 
-    protected $searchable = ['name'];
+    protected $searchable = ['name', 'email'];
 
     protected $with = ['picture'];
 

@@ -27,6 +27,7 @@ class CreatePatientsTable extends Migration
             $table->string('contact_number')->nullable();
             $table->string('4ps')->nullable();
             $table->string('blood_type')->nullable();
+            $table->string('religion')->nullable();
             $table->timestamps();
         });
     }

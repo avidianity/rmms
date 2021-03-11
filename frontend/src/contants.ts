@@ -11,4 +11,5 @@ export const RecordableMap = {
 
 export const STATUSES = {
 	RegularRecord: ['Pending', 'Done'],
+	PrenatalRecord: ['Pending', 'Done'],
 };

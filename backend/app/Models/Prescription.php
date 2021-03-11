@@ -20,6 +20,16 @@ class Prescription extends Model
 
     protected $appends = ['released'];
 
+    public static function search($keyword)
+    {
+        return static::whereHas('doctor', function ($query) use ($keyword) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
+        })
+            ->orWhereHas('recordable.patient', function ($query) use ($keyword) {
+                $query->where('name', 'LIKE', "%{$keyword}%");
+            });
+    }
+
     protected static function booted()
     {
         static::deleting(function (self $prescription) {

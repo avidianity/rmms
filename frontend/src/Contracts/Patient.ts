@@ -15,6 +15,7 @@ export interface Patient extends Model {
 	contact_number: string | null;
 	'4ps': string | null;
 	blood_type: string | null;
+	religion: string | null;
 	records?: Record[];
 	prenatals?: PrenatalRecord[];
 }

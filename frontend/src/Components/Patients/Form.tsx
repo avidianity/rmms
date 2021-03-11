@@ -47,6 +47,7 @@ const Form: FC<Props> = (props) => {
 			setValue('contact_number', data.contact_number);
 			setValue('4ps', data['4ps']);
 			setValue('blood_type', data.blood_type);
+			setValue('religion', data.religion);
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
 		} catch (error) {
@@ -106,7 +107,7 @@ const Form: FC<Props> = (props) => {
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Birthday</label>
 								<Flatpickr
-									value={birthday?.toISOString() || ''}
+									value={birthday || ''}
 									className='form-control'
 									onChange={(data) => {
 										setBirthday(data[0]);
@@ -149,13 +150,13 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='philhealth_number' />
 							</div>
 						</div>
-						<div className='col-12 col-md-6'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>4Ps</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='4ps' />
 							</div>
 						</div>
-						<div className='col-12 col-md-6'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating'>Blood Type</label>
 								<select ref={register} className='form-control' disabled={processing} name='blood_type'>
@@ -168,6 +169,12 @@ const Form: FC<Props> = (props) => {
 									<option value='AB-'>AB-</option>
 									<option value='AB+'>AB+</option>
 								</select>
+							</div>
+						</div>
+						<div className='col-12 col-md-4'>
+							<div className='form-group bmd-form-group'>
+								<label className='bmd-label-floating'>Religion</label>
+								<input ref={register} type='text' className='form-control' disabled={processing} name='religion' />
 							</div>
 						</div>
 						<div className='col-12'>

@@ -15,10 +15,11 @@ class MedicineController extends Controller
     public function index(Request $request)
     {
         $builder = new Medicine();
+        $builder = $builder->latest();
         if ($request->input('paginate', 'true') === 'false') {
             return $builder->get();
         } else {
-            return $builder->paginate(15);
+            return $builder->paginate(10);
         }
     }
 

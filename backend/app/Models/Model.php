@@ -16,12 +16,16 @@ class Model extends BaseModel
         return $this->searchable;
     }
 
+    /**
+     *
+     * @return static
+     */
     public static function search($keyword)
     {
-        $builder = new static();
+        $builder = null;
 
-        foreach ($builder->getSearchableColumns() as $column) {
-            $builder = $builder->orWhere($column, 'LIKE', "%{$keyword}%");
+        foreach ((new static())->getSearchableColumns() as $column) {
+            $builder = $builder !== null ? $builder->orWhere($column, 'LIKE', "%{$keyword}%") : static::where($column, 'LIKE', "%{$keyword}%");
         }
 
         return $builder;

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Record extends Model
@@ -20,7 +21,14 @@ class Record extends Model
         'case_number' => 'datetime',
     ];
 
-    protected $searchable = ['case_number'];
+    public static function search($keyword)
+    {
+        return static::whereHas('doctor', function (Builder $query) use ($keyword) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
+        })->orWhereHas('patient', function (Builder $query) use ($keyword) {
+            $query->where('name', 'LIKE', "%{$keyword}%");
+        });
+    }
 
     protected static function booted()
     {

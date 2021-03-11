@@ -6,10 +6,14 @@ import toastr from 'toastr';
 import { outIf } from '../../helpers';
 import state from '../../state';
 import { User } from '../../Contracts/User';
+import { SearchBus } from '../../events';
+import $ from 'jquery';
 
-type Props = {};
+type Props = {
+	mode: string;
+};
 
-const Navbar: FC<Props> = (props) => {
+const Navbar: FC<Props> = ({ mode }) => {
 	const [show, setShow] = useState(false);
 	const history = useHistory();
 	const match = useRouteMatch();
@@ -32,10 +36,23 @@ const Navbar: FC<Props> = (props) => {
 	return (
 		<nav className='navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top'>
 			<div className='container-fluid'>
-				<div className='navbar-wrapper'>
+				<div className='navbar-wrapper d-flex'>
 					<Link className='navbar-brand' to={routes.DASHBOARD}>
 						Dashboard - {user.role}
 					</Link>
+					<div className='ml-2 clickable mt-1'>
+						<i
+							className={`material-icons ${outIf(mode === 'dark', 'text-white')}`}
+							onClick={() => {
+								if (mode === 'light') {
+									state.set('background-color', 'dark');
+								} else {
+									state.set('background-color', 'light');
+								}
+							}}>
+							{mode === 'light' ? 'dark_mode' : 'light_mode'}
+						</i>
+					</div>
 				</div>
 				<button
 					className='navbar-toggler'
@@ -50,9 +67,30 @@ const Navbar: FC<Props> = (props) => {
 					<span className='navbar-toggler-icon icon-bar'></span>
 				</button>
 				<div className='collapse navbar-collapse justify-content-end'>
-					<form className='navbar-form'>
+					<form
+						className='navbar-form'
+						onSubmit={(e) => {
+							e.preventDefault();
+							const keyword = String($('#search').val());
+							SearchBus.dispatch('submit', keyword);
+						}}>
 						<div className='input-group no-border'>
-							<input type='text' value='' className='form-control' placeholder='Search...' />
+							<input
+								id='search'
+								type='text'
+								className='form-control'
+								placeholder='Search...'
+								onKeyUp={(e) => {
+									e.preventDefault();
+									if (e.key === 'Enter') {
+										const keyword = (e.target as HTMLInputElement).value;
+										SearchBus.dispatch('submit', keyword);
+									}
+								}}
+								onChange={(e) => {
+									SearchBus.dispatch('onChange', e);
+								}}
+							/>
 							<button type='submit' className='btn btn-white btn-round btn-just-icon'>
 								<i className='material-icons'>search</i>
 								<div className='ripple-container'></div>

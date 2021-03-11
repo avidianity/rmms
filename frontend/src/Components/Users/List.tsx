@@ -6,6 +6,7 @@ import swal from 'sweetalert';
 import toastr from 'toastr';
 import { Paginated } from '../../Contracts/misc';
 import { User } from '../../Contracts/User';
+import { SearchBus } from '../../events';
 import { makeDummyPagination, handleError } from '../../helpers';
 import state from '../../state';
 import Pagination from '../Pagination';
@@ -42,8 +43,29 @@ const List: FC<Props> = (props) => {
 		}
 	};
 
+	const search = async (keyword: string) => {
+		try {
+			const { data } = await axios.get(`/search?model=User&keyword=${encodeURIComponent(keyword)}&paginate=false`);
+			setUsers(data);
+			setPagination(makeDummyPagination());
+		} catch (error) {
+			console.log(error.toJSON());
+			toastr.error('Unable to search.');
+		}
+	};
+
 	useEffect(() => {
 		fetchUsers();
+		const key = SearchBus.listen<string>('submit', (keyword) => {
+			if (keyword.length > 0) {
+				search(keyword);
+			} else {
+				fetchUsers();
+			}
+		});
+		return () => {
+			SearchBus.unlisten('submit', key);
+		};
 		// eslint-disable-next-line
 	}, []);
 

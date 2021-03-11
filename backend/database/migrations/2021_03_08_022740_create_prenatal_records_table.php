@@ -38,7 +38,7 @@ class CreatePrenatalRecordsTable extends Migration
             $table->string('cbc_hgb_hct')->nullable();
             $table->string('deworming_dose')->nullable();
             $table->string('phic')->nullable();
-            $table->string('religion')->nullable();
+            $table->string('bmi')->nullable();
             $table->string('status')->index();
             $table->foreignIdFor(new User(), 'attendee_id')->constrained((new User())->getTable());
             $table->foreignIdFor(new Patient())->constrained();

@@ -31,9 +31,9 @@ const Login: FC<Props> = (props) => {
 			const {
 				data: { user, token },
 			} = await axios.post<{ user: User; token: string }>('/auth/login', payload);
-			toastr.success(`Welcome back, ${user.name}!`);
 			state.set('user', user);
 			state.set('token', token);
+			toastr.success(`Welcome back, ${user.name}!`);
 			history.push(routes.DASHBOARD);
 		} catch (error) {
 			handleError(error);

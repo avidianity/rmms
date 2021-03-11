@@ -36,7 +36,7 @@ const Months: FC<Props> = ({ months }) => {
 										<td>{record.patient?.name}</td>
 										<td>{record.attendee?.name}</td>
 										<td>{lodash.truncate(record.remarks || '', { length: 10 })}</td>
-										<td>{dayjs(record.updated_at!).format('MMMM DD, YYYY hh:mmm A')}</td>
+										<td>{dayjs(record.updated_at!).format('MMMM DD, YYYY hh:mm A')}</td>
 									</tr>
 								))}
 							</tbody>
@@ -68,7 +68,7 @@ const Months: FC<Props> = ({ months }) => {
 										<td>{record.patient?.name}</td>
 										<td>{record.doctor?.name}</td>
 										<td>{lodash.truncate(record.diagnosis, { length: 10 })}</td>
-										<td>{dayjs(record.updated_at!).format('MMMM DD, YYYY hh:mmm A')}</td>
+										<td>{dayjs(record.updated_at!).format('MMMM DD, YYYY hh:mm A')}</td>
 									</tr>
 								))}
 							</tbody>

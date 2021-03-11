@@ -22,6 +22,12 @@ const Sidebar: FC<Props> = (props) => {
 			show: true,
 		},
 		{
+			to: url(routes.INVENTORIES),
+			title: 'Inventory Stocks',
+			icon: 'inventory',
+			show: ['Pharmacist', 'Admin'].includes(user.role),
+		},
+		{
 			to: url(routes.MEDICINES),
 			title: 'Medicine Stocks',
 			icon: 'local_pharmacy',
@@ -40,22 +46,34 @@ const Sidebar: FC<Props> = (props) => {
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
 		{
+			to: url(routes.ILLNESS_HISTORIES),
+			title: 'Illness History',
+			icon: 'coronavirus',
+			show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
+		},
+		{
+			to: url(routes.CHILD_VACCINATIONS),
+			title: 'Child Vaccinations',
+			icon: 'child_care',
+			show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
+		},
+		{
 			to: url(routes.PATIENTS),
 			title: 'Patients',
 			icon: 'supervised_user_circle',
-			show: ['Nurse', 'Doctor', 'Admin'].includes(user.role),
+			show: ['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role),
 		},
 		{
 			to: url(routes.RECORDS.REGULAR),
 			title: 'Regular Records',
 			icon: 'contact_page',
-			show: ['Nurse', 'Doctor', 'Admin'].includes(user.role),
+			show: ['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role),
 		},
 		{
 			to: url(routes.RECORDS.PRENATAL),
 			title: 'Prenatal Records',
 			icon: 'pregnant_woman',
-			show: ['Nurse', 'Doctor', 'Admin'].includes(user.role),
+			show: ['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role),
 		},
 		{
 			to: url(routes.USERS),

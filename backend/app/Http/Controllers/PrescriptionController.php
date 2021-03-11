@@ -18,7 +18,9 @@ class PrescriptionController extends Controller
      */
     public function index()
     {
-        return Prescription::with(['doctor', 'recordable.patient'])->paginate(15);
+        return Prescription::with(['doctor', 'recordable.patient'])
+            ->latest()
+            ->paginate(10);
     }
 
     /**
@@ -70,8 +72,13 @@ class PrescriptionController extends Controller
      * @param  \App\Models\Prescription  $prescription
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Prescription $prescription)
+    public function update(Request $request, $id)
     {
+        $prescription = Prescription::with([
+            'doctor',
+            'recordable.patient',
+            'items.medicine',
+        ])->findOrFail($id);
         $data = $request->validate([
             'released_at' => ['nullable', 'date'],
             'items' => ['nullable', 'array'],

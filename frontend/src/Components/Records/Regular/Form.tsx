@@ -22,14 +22,15 @@ const Form: FC<Props> = (props) => {
 	const [patients, setPatients] = useState<Patient[]>([]);
 	const [prescriptions, setPrescriptions] = useState<Partial<Prescription>[]>([]);
 	const [medicines, setMedicines] = useState<Medicine[]>([]);
+	const user = state.get<User>('user');
 	const { register, handleSubmit, setValue } = useForm<Record>({
 		defaultValues: {
 			diagnosis: 'N/A',
+			doctor_id: user.role === 'Doctor' ? user.id! : -1,
 		},
 	});
 	const match = useRouteMatch<{ id: string }>();
 	const history = useHistory();
-	const user = state.get<User>('user');
 
 	const submit = async (data: any) => {
 		setProcessing(true);
@@ -80,7 +81,7 @@ const Form: FC<Props> = (props) => {
 			await Promise.all([fetchDoctors(), fetchPatients(), fetchMedicines()]);
 		} catch (error) {
 			console.log(error.toJSON());
-			toastr.error('Unable to fetch doctor and patient list.');
+			toastr.error('Unable to fetch doctor, patient and medicine list.');
 		}
 	};
 
@@ -160,7 +161,7 @@ const Form: FC<Props> = (props) => {
 															items: [
 																{
 																	medicine_id: medicines[0].id as number,
-																	quantity: 0,
+																	quantity: 1,
 																} as any,
 															],
 															released_at: null,
@@ -187,7 +188,7 @@ const Form: FC<Props> = (props) => {
 																		e.preventDefault();
 																		prescription.items?.push({
 																			medicine_id: medicines[0].id as number,
-																			quantity: 0,
+																			quantity: 1,
 																			prescription_id: prescription.id as number,
 																		});
 																		prescriptions.splice(prescriptionIndex, 1, prescription);

@@ -6,6 +6,10 @@
 	width: auto;
 }
 
+.clickable:hover {
+	cursor: pointer;
+}
+
 @-moz-keyframes spinning {
 	from {
 		-moz-transform: rotate(0deg);
@@ -42,4 +46,67 @@ label.required::after {
 	content: '*';
 	color: rgb(190, 0, 0);
 	padding-left: 1px;
+}
+
+.wrapper[data-mode='dark'] {
+	background-color: rgb(50, 50, 50);
+}
+
+.wrapper[data-mode='dark'] .main-panel {
+	background-color: rgb(50, 50, 50);
+}
+
+.wrapper[data-mode='dark'] h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] a:not(.nav-link) {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] .logo {
+	background-color: rgb(50, 50, 50) !important;
+}
+
+.wrapper[data-mode='dark'] .sidebar-wrapper {
+	background-color: rgb(50, 50, 50) !important;
+}
+
+.wrapper[data-mode='dark'] .nav-link:not(.active) {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] .card-title {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] .card-text {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] .card {
+	background-color: rgb(50, 50, 50) !important;
+	box-shadow: 0 1px 4px rgb(250, 250, 250);
+}
+
+.wrapper[data-mode='dark'] td,
+th {
+	color: white;
+}
+
+.wrapper[data-mode='dark'] .table-hover tr:hover > td {
+	color: rgb(50, 50, 50);
+}
+
+.wrapper[data-mode='dark'] .modal-content {
+	background-color: rgb(50, 50, 50);
+}
+
+.wrapper[data-mode='dark'] .page-link:hover {
+	color: rgb(50, 50, 50) !important;
 }

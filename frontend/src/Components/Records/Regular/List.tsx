@@ -9,6 +9,8 @@ import state from '../../../state';
 import Pagination from '../../Pagination';
 import Table from '../../Table';
 import lodash from 'lodash';
+import toastr from 'toastr';
+import { SearchBus } from '../../../events';
 
 type Props = {};
 
@@ -21,11 +23,11 @@ const List: FC<Props> = (props) => {
 
 	const fetchRecords = async (url?: string) => {
 		try {
-			const page = state.get<number>('regular-recods-page') || 1;
+			const page = state.get<number>('regular-records-page') || 1;
 			const { data } = await axios.get<Paginated<Record>>(url ? url : `/regular-records?page=${page}`);
 			setRecords(data.data);
 			setPagination(data);
-			state.set('regular-recods-page', data.current_page);
+			state.set('regular-records-page', data.current_page);
 		} catch (error) {
 			handleError(error);
 		}
@@ -41,8 +43,29 @@ const List: FC<Props> = (props) => {
 	// 	}
 	// };
 
+	const search = async (keyword: string) => {
+		try {
+			const { data } = await axios.get(`/search?model=Record&keyword=${encodeURIComponent(keyword)}&paginate=false`);
+			setRecords(data);
+			setPagination(makeDummyPagination());
+		} catch (error) {
+			console.log(error.toJSON());
+			toastr.error('Unable to search.');
+		}
+	};
+
 	useEffect(() => {
 		fetchRecords();
+		const key = SearchBus.listen<string>('submit', (keyword) => {
+			if (keyword.length > 0) {
+				search(keyword);
+			} else {
+				fetchRecords();
+			}
+		});
+		return () => {
+			SearchBus.unlisten('submit', key);
+		};
 		// eslint-disable-next-line
 	}, []);
 

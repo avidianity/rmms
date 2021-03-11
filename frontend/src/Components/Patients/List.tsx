@@ -2,9 +2,11 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
+import toastr from 'toastr';
 import { Paginated } from '../../Contracts/misc';
 import { Patient } from '../../Contracts/Patient';
 import { User } from '../../Contracts/User';
+import { SearchBus } from '../../events';
 import { makeDummyPagination, handleError } from '../../helpers';
 import state from '../../state';
 import Pagination from '../Pagination';
@@ -43,8 +45,29 @@ const List: FC<Props> = (props) => {
 	// 	}
 	// };
 
+	const search = async (keyword: string) => {
+		try {
+			const { data } = await axios.get(`/search?model=Patient&keyword=${encodeURIComponent(keyword)}&paginate=false`);
+			setPatients(data);
+			setPagination(makeDummyPagination());
+		} catch (error) {
+			console.log(error.toJSON());
+			toastr.error('Unable to search.');
+		}
+	};
+
 	useEffect(() => {
 		fetchPatients();
+		const key = SearchBus.listen<string>('submit', (keyword) => {
+			if (keyword.length > 0) {
+				search(keyword);
+			} else {
+				fetchPatients();
+			}
+		});
+		return () => {
+			SearchBus.unlisten('submit', key);
+		};
 		// eslint-disable-next-line
 	}, []);
 
