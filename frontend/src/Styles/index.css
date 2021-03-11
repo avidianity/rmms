@@ -94,8 +94,11 @@ h6 {
 	box-shadow: 0 1px 4px rgb(250, 250, 250);
 }
 
-.wrapper[data-mode='dark'] td,
-th {
+.wrapper[data-mode='dark'] td {
+	color: white;
+}
+
+.wrapper[data-mode='dark'] th {
 	color: white;
 }
 
