@@ -21,8 +21,7 @@ class CreatePatientsTable extends Migration
             $table->date('birthday');
             $table->string('address');
             $table->string('civil_status')->nullable();
-            $table->string('membership_nh')->nullable();
-            $table->string('membership_nn')->nullable();
+            $table->string('membership')->nullable();
             $table->string('philhealth_number')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('4ps')->nullable();

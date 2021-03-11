@@ -23,7 +23,7 @@ const Sidebar: FC<Props> = (props) => {
 		},
 		{
 			to: url(routes.INVENTORIES),
-			title: 'Inventory Stocks',
+			title: 'Supply Stocks',
 			icon: 'inventory',
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
@@ -33,30 +33,30 @@ const Sidebar: FC<Props> = (props) => {
 			icon: 'local_pharmacy',
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
-		{
-			to: url(routes.PURCHASE_REQUESTS),
-			title: 'Purchase Requests',
-			icon: 'medical_services',
-			show: ['Pharmacist', 'Admin'].includes(user.role),
-		},
+		// {
+		// 	to: url(routes.PURCHASE_REQUESTS),
+		// 	title: 'Purchase Requests',
+		// 	icon: 'medical_services',
+		// 	show: ['Pharmacist', 'Admin'].includes(user.role),
+		// },
 		{
 			to: url(routes.PRESCRIPTIONS),
 			title: 'Prescriptions',
 			icon: 'medication',
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
-		{
-			to: url(routes.ILLNESS_HISTORIES),
-			title: 'Illness History',
-			icon: 'coronavirus',
-			show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
-		},
-		{
-			to: url(routes.CHILD_VACCINATIONS),
-			title: 'Child Vaccinations',
-			icon: 'child_care',
-			show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
-		},
+		// {
+		// 	to: url(routes.ILLNESS_HISTORIES),
+		// 	title: 'Illness History',
+		// 	icon: 'coronavirus',
+		// 	show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
+		// },
+		// {
+		// 	to: url(routes.CHILD_VACCINATIONS),
+		// 	title: 'Child Vaccinations',
+		// 	icon: 'child_care',
+		// 	show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
+		// },
 		{
 			to: url(routes.PATIENTS),
 			title: 'Patients',

@@ -32,6 +32,16 @@ class Prescription extends Model
 
     protected static function booted()
     {
+        static::saving(function (self $prescription) {
+            if ($prescription->isDirty(['released_at']) && $prescription->released_at !== null) {
+                foreach ($prescription->items as $item) {
+                    $medicine = $item->medicine;
+                    $medicine->stocks -= $item->quantity;
+                    $medicine->save();
+                }
+            }
+        });
+
         static::deleting(function (self $prescription) {
             $prescription->items()->delete();
         });

@@ -385,7 +385,9 @@ const Form: FC<Props> = (props) => {
 																					</label>
 																					<select
 																						className='form-control'
-																						disabled={processing}
+																						disabled={
+																							processing || prescription.released_at !== null
+																						}
 																						name='medicine_id'
 																						onChange={(e) => {
 																							item.medicine_id = Number(e.target.value);
@@ -409,13 +411,22 @@ const Form: FC<Props> = (props) => {
 																					<input
 																						type='number'
 																						className='form-control'
-																						disabled={processing}
+																						disabled={
+																							processing || prescription.released_at !== null
+																						}
 																						name='quantity'
 																						placeholder='Quantity'
 																						onChange={(e) => {
-																							item.quantity = Number(e.target.value);
-																							prescription.items?.splice(itemIndex, 1, item);
-																							setPrescriptions([...prescriptions]);
+																							const value = Number(e.target.value);
+																							if (value > 0) {
+																								item.quantity = value;
+																								prescription.items?.splice(
+																									itemIndex,
+																									1,
+																									item
+																								);
+																								setPrescriptions([...prescriptions]);
+																							}
 																						}}
 																						value={item.quantity}
 																					/>

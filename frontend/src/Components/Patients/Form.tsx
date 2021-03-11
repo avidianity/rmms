@@ -41,8 +41,7 @@ const Form: FC<Props> = (props) => {
 			setBirthday(dayjs(data.birthday).toDate());
 			setValue('address', data.address);
 			setValue('civil_status', data.civil_status);
-			setValue('membership_nh', data.membership_nh);
-			setValue('membership_nn', data.membership_nn);
+			setValue('membership', data.membership);
 			setValue('philhealth_number', data.philhealth_number);
 			setValue('contact_number', data.contact_number);
 			setValue('4ps', data['4ps']);
@@ -134,14 +133,8 @@ const Form: FC<Props> = (props) => {
 						</div>
 						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating'>Membership NH</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='membership_nh' />
-							</div>
-						</div>
-						<div className='col-12 col-md-6'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating'>Membership NN</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='membership_nn' />
+								<label className='bmd-label-floating'>Membership NN/NH</label>
+								<input ref={register} type='text' className='form-control' disabled={processing} name='membership' />
 							</div>
 						</div>
 						<div className='col-12 col-md-6'>

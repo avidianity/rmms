@@ -75,11 +75,11 @@ const List: FC<Props> = (props) => {
 		<>
 			{['Admin', 'Pharmacist'].includes(user.role) ? (
 				<Link to={url('/add')} className='btn btn-info btn-sm'>
-					Add New Inventory
+					Add New Supply
 				</Link>
 			) : null}
 			<Table
-				title='Inventories'
+				title='Supplies'
 				head={() => (
 					<tr>
 						<th>ID</th>

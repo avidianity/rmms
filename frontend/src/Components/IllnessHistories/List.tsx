@@ -79,7 +79,7 @@ const List: FC<Props> = (props) => {
 				</Link>
 			) : null}
 			<Table
-				title='IllnessHistories'
+				title='Illness Histories'
 				head={() => (
 					<tr>
 						<th>ID</th>
@@ -93,7 +93,7 @@ const List: FC<Props> = (props) => {
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchIllnessHistories(url)} />}>
-				{inventorys.map(({ id, date, description, assessment, physical_exams, treatment, patient, created_at }, index) => (
+				{inventorys.map(({ id, date, description, assessment, treatment, patient, created_at }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
 						<td>{dayjs(date).format('MMMM DD, YYYY')}</td>

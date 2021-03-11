@@ -9,8 +9,7 @@ export interface Patient extends Model {
 	birthday: string;
 	address: string;
 	civil_status: string | null;
-	membership_nh: string | null;
-	membership_nn: string | null;
+	membership: string | null;
 	philhealth_number: string | null;
 	contact_number: string | null;
 	'4ps': string | null;

@@ -103,8 +103,7 @@ const View: FC<Props> = (props) => {
 					<div className='card-title'>Birthday: {dayjs(patient?.birthday).format('MMMM DD, YYYY')}</div>
 					<div className='card-title'>Address: {patient?.address}</div>
 					<div className='card-title'>Civil Status: {patient?.civil_status || ''}</div>
-					<div className='card-title'>Membership NH: {patient?.membership_nh || ''}</div>
-					<div className='card-title'>Membership NN: {patient?.membership_nn || ''}</div>
+					<div className='card-title'>Membership NH: {patient?.membership || ''}</div>
 					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || ''}</div>
 					<div className='card-title'>Contact Number: {patient?.contact_number || ''}</div>
 					<div className='card-title'>4Ps: {patient?.['4ps'] || ''}</div>

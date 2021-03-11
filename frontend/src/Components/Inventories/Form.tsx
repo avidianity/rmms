@@ -26,7 +26,7 @@ const Form: FC<Props> = (props) => {
 		setProcessing(true);
 		try {
 			await (mode === 'Add' ? axios.post(`/inventories`, data) : axios.put(`/inventories/${id}`, data));
-			toastr.success('Inventory saved successfully.');
+			toastr.success('Supply saved successfully.');
 		} catch (error) {
 			handleError(error);
 		} finally {
@@ -59,7 +59,7 @@ const Form: FC<Props> = (props) => {
 	return (
 		<div className='card'>
 			<div className='card-header card-header primary'>
-				{mode} Inventory
+				{mode} Supply
 				<p className='card-category'>Complete the form below. Leave blank if not applicable.</p>
 				<p className='card-category'>
 					Fields with <span style={{ color: 'rgb(190, 0, 0)' }}>*</span> are required.
