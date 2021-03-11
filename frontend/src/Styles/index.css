@@ -56,12 +56,27 @@ label.required::after {
 	background-color: rgb(50, 50, 50);
 }
 
-.wrapper[data-mode='dark'] h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+.wrapper[data-mode='dark'] h1 {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] h2 {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] h3 {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] h4 {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] h5 {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] h6 {
 	color: #fff !important;
 }
 
@@ -129,4 +144,8 @@ h6 {
 
 .wrapper[data-mode='dark'] .dropdown-menu {
 	background-color: rgb(50, 50, 50);
+}
+
+.wrapper[data-mode='dark'] .navbar-toggler > span {
+	background-color: #fff !important;
 }
