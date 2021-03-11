@@ -145,7 +145,7 @@ const Statistics: FC<Props> = (props) => {
 		<div className='container-fluid'>
 			{showPrint ? (
 				<button
-					className='btn btn-info btn-sm'
+					className='btn btn-info btn-sm d-none'
 					onClick={(e) => {
 						e.preventDefault();
 						print();
