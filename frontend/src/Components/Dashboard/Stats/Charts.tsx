@@ -27,7 +27,7 @@ const Charts: FC<Props> = ({ months }) => {
 
 	return (
 		<div className='row'>
-			<div className='col-12 col-xl-6'>
+			<div className='col-12 col-lg-6'>
 				<div className='card card-chart'>
 					<div className='card-header card-header-success'>
 						<div className='ct-chart' ref={patientsRef}></div>
@@ -48,7 +48,7 @@ const Charts: FC<Props> = ({ months }) => {
 					</div>
 				</div>
 			</div>
-			<div className='col-12 col-xl-6'>
+			<div className='col-12 col-lg-6'>
 				<div className='card card-chart'>
 					<div className='card-header card-header-info'>
 						<div className='ct-chart' ref={regularRecordsRef}></div>
@@ -64,7 +64,7 @@ const Charts: FC<Props> = ({ months }) => {
 					</div>
 				</div>
 			</div>
-			<div className='col-12 col-xl-6'>
+			<div className='col-12 col-lg-6'>
 				<div className='card card-chart'>
 					<div className='card-header card-header-warning'>
 						<div className='ct-chart' ref={prenatalRecordsRef}></div>

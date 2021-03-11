@@ -26,9 +26,10 @@ class RecordFactory extends Factory
     {
         return [
             'case_number' => $this->faker->dateTime->format('Y-m-d'),
-            'diagnosis' => $this->faker->paragraph,
+            'diagnosis' => $this->faker->text(255),
             'doctor_id' => User::doctor()->inRandomOrder()->firstOrFail()->id,
             'patient_id' => Patient::inRandomOrder()->firstOrFail()->id,
+            'status' => ['Pending', 'Done'][$this->faker->numberBetween(0, 1)],
             'created_at' => Carbon::parse($this->faker->dateTime)->year(now()->year),
         ];
     }
