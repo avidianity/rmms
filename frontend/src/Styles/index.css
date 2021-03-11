@@ -113,3 +113,20 @@ h6 {
 .wrapper[data-mode='dark'] .page-link:hover {
 	color: rgb(50, 50, 50) !important;
 }
+
+.wrapper[data-mode='dark'] input {
+	background-color: rgb(50, 50, 50) !important;
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] label {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] select {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] .dropdown-menu {
+	background-color: rgb(50, 50, 50);
+}

@@ -150,20 +150,6 @@ const Form: FC<Props> = (props) => {
 										{items.map((item, index) => (
 											<div className='col-12 row' key={index}>
 												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
-													<label className='bmd-label-floating'>Quantity</label>
-													<input
-														type='number'
-														className='form-control'
-														disabled={processing}
-														value={item.quantity}
-														onChange={(e) => {
-															item.quantity = e.target.value.parseNumbers();
-															items.splice(index, 1, item);
-															setItems([...items]);
-														}}
-													/>
-												</div>
-												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
 													<label className='bmd-label-floating'>Medicine</label>
 													<select
 														className='form-control'
@@ -180,6 +166,20 @@ const Form: FC<Props> = (props) => {
 															</option>
 														))}
 													</select>
+												</div>
+												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
+													<label className='bmd-label-floating'>Quantity</label>
+													<input
+														type='number'
+														className='form-control'
+														disabled={processing}
+														value={item.quantity}
+														onChange={(e) => {
+															item.quantity = e.target.value.parseNumbers();
+															items.splice(index, 1, item);
+															setItems([...items]);
+														}}
+													/>
 												</div>
 												<div className='form-group bmd-form-group is-filled col-12 col-md-3'>
 													<label className='bmd-label-floating'>Total</label>
