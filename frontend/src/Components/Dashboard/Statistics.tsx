@@ -9,7 +9,10 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
-import { sentencify } from '../../helpers';
+import { User } from '../../Contracts/User';
+import { outIf, sentencify } from '../../helpers';
+import state from '../../state';
+import Users from '../Users';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
 import Daily from './Stats/Daily';
@@ -157,6 +160,8 @@ const Statistics: FC<Props> = (props) => {
 		}
 	};
 
+	const user = state.get<User>('user');
+
 	useEffect(() => {
 		fetchRequirements();
 		// eslint-disable-next-line
@@ -175,7 +180,7 @@ const Statistics: FC<Props> = (props) => {
 					Print
 				</button>
 			) : null}
-			<div className='d-flex column-on-mobile'>
+			<div className={`d-flex column-on-mobile ${outIf(user.role === 'Pharmacist', 'd-none')}`}>
 				<button
 					className='btn btn-info btn-sm m-1'
 					onClick={(e) => {
