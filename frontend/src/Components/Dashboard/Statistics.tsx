@@ -139,6 +139,7 @@ const Statistics: FC<Props> = (props) => {
 	};
 
 	const exportAndDownload = async (name: string) => {
+		toastr.info('Exporting data. Please wait or you can do something else while waiting.', 'Notice');
 		try {
 			const { data } = await axios.get(`/exports/${name}`, {
 				responseType: 'blob',
