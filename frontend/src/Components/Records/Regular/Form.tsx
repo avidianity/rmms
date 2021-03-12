@@ -27,6 +27,7 @@ const Form: FC<Props> = (props) => {
 		defaultValues: {
 			diagnosis: 'N/A',
 			doctor_id: user.role === 'Doctor' ? user.id! : -1,
+			status: STATUSES.RegularRecord[0],
 		},
 	});
 	const match = useRouteMatch<{ id: string }>();
