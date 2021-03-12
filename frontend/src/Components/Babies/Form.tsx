@@ -7,6 +7,7 @@ import { Baby } from '../../Contracts/Baby';
 import { User } from '../../Contracts/User';
 import { handleError, validURL } from '../../helpers';
 import Flatpickr from 'react-flatpickr';
+import dayjs from 'dayjs';
 
 type Props = {};
 
@@ -76,6 +77,8 @@ const Form: FC<Props> = (props) => {
 			setValue('name_registration_location', data.name_registration_location);
 			setValue('mishaps', data.mishaps);
 			setFilePreview(data.file!.url);
+			setNameRegistrationDate(dayjs(data.name_registration_date).toDate());
+			setDateOfBirth(dayjs(data.date_of_birth).toDate());
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
 		} catch (error) {

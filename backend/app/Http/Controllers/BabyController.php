@@ -109,6 +109,7 @@ class BabyController extends Controller
             $file->save();
             $baby->file_id = $file->id;
             $baby->save();
+            $baby->load('file');
             $old->delete();
         }
 
