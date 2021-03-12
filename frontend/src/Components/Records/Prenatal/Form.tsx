@@ -36,6 +36,9 @@ const Form: FC<Props> = (props) => {
 		setProcessing(true);
 		try {
 			data.prescriptions = prescriptions;
+			if (!data.status || data.status.length === 0) {
+				data.status = STATUSES.PrenatalRecord[0];
+			}
 			await (mode === 'Add' ? axios.post(`/prenatal-records`, data) : axios.put(`/prenatal-records/${id}`, data));
 			toastr.success('Prenatal Record saved successfully.');
 		} catch (error) {
