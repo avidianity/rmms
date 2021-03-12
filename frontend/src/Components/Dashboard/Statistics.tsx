@@ -10,7 +10,7 @@ import {
 	Years as YearsContract,
 } from '../../Contracts/misc';
 import { User } from '../../Contracts/User';
-import { outIf, sentencify } from '../../helpers';
+import { sentencify } from '../../helpers';
 import state from '../../state';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
