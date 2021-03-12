@@ -15,6 +15,11 @@ window.$ = $;
 
 axios.options(`${url}`).catch(console.error);
 
+axios.interceptors.request.use((config) => {
+	config.url = config.url?.replace('http://', 'https://');
+	return config;
+});
+
 axios.get(`${url}/sanctum/csrf-cookie`).catch(console.error);
 
 if (state.has('token')) {
