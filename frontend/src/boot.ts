@@ -5,13 +5,17 @@ import 'toastr/build/toastr.css';
 import $ from 'jquery';
 import 'bootstrap';
 
+const url = process.env.REACT_APP_BACKEND_URL;
+
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = `${process.env.REACT_APP_BACKEND_URL}/api`;
+axios.defaults.baseURL = `${url}/api`;
 
 window.$ = $;
 
-axios.get(`${process.env.REACT_APP_BACKEND_URL}/sanctum/csrf-cookie`).catch(console.error);
+axios.options(`${url}`).catch(console.error);
+
+axios.get(`${url}/sanctum/csrf-cookie`).catch(console.error);
 
 if (state.has('token')) {
 	const token = state.get<string>('token');
