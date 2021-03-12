@@ -20,13 +20,15 @@ class PatientExport implements FromCollection, Responsable, WithHeadings
      */
     public function collection()
     {
-        return Patient::all()->map(function ($row) {
-            $data = $row->toArray();
-            $data['created_at'] = Carbon::parse($row->created_at)->format('F d, Y h:i A');
-            $data['updated_at'] = Carbon::parse($row->updated_at)->format('F d, Y h:i A');
+        return Patient::latest()
+            ->all()
+            ->map(function ($row) {
+                $data = $row->toArray();
+                $data['created_at'] = Carbon::parse($row->created_at)->format('F d, Y h:i A');
+                $data['updated_at'] = Carbon::parse($row->updated_at)->format('F d, Y h:i A');
 
-            return $data;
-        });
+                return $data;
+            });
     }
 
     public function headings(): array
