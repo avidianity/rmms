@@ -13,9 +13,9 @@ export class Symbol {
 export class EventBus {
 	protected callbacks: { [key: string]: Function[] } = {};
 
-	dispatch(key: string, value: any) {
+	dispatch(key: string, value?: any) {
 		if (!(key in this.callbacks)) {
-			return;
+			return this;
 		}
 
 		this.callbacks[key].forEach((callback) => callback(value));

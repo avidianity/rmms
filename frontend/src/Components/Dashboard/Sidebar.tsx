@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { NavLink as Link, useRouteMatch } from 'react-router-dom';
 import { User } from '../../Contracts/User';
+import { MainBus } from '../../events';
 import { routes } from '../../routes';
 import state from '../../state';
 
@@ -108,6 +109,18 @@ const Sidebar: FC<Props> = (props) => {
 							</li>
 						) : null
 					)}
+					<li className='nav-item'>
+						<a
+							href='/logout'
+							className='nav-link mobile-logout'
+							onClick={(e) => {
+								e.preventDefault();
+								MainBus.dispatch('logout');
+							}}>
+							<i className='material-icons'>logout</i>
+							Logout
+						</a>
+					</li>
 					<li className='nav-item active-pro'>
 						<Link className='nav-link' to={url(routes.PROFILE)}>
 							<i className='material-icons'>settings</i>

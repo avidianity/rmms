@@ -1,12 +1,12 @@
 import axios from 'axios';
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 import toastr from 'toastr';
 import { outIf } from '../../helpers';
 import state from '../../state';
 import { User } from '../../Contracts/User';
-import { SearchBus } from '../../events';
+import { MainBus, SearchBus } from '../../events';
 import $ from 'jquery';
 
 type Props = {
@@ -32,6 +32,16 @@ const Navbar: FC<Props> = ({ mode }) => {
 	};
 
 	const user = state.get<User>('user');
+
+	useEffect(() => {
+		const key = MainBus.listen('logout', () => {
+			logout();
+		});
+		return () => {
+			MainBus.unlisten('logout', key);
+		};
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<nav className='navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top'>

@@ -10,6 +10,16 @@
 	cursor: pointer;
 }
 
+.mobile-logout {
+	display: block;
+}
+
+@media screen and (min-width: 576px) {
+	.mobile-logout {
+		display: none;
+	}
+}
+
 @-moz-keyframes spinning {
 	from {
 		-moz-transform: rotate(0deg);
