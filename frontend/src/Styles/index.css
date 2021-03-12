@@ -175,3 +175,11 @@ label.required::after {
 .wrapper[data-mode='dark'] .modal-header button[data-dismiss='modal'] span {
 	color: #fff !important;
 }
+
+.wrapper[data-mode='dark'] textarea {
+	color: #fff !important;
+}
+
+.wrapper[data-mode='dark'] .form-text {
+	color: rgb(200, 200, 200) !important;
+}

@@ -17,4 +17,5 @@ export const routes = {
 	INVENTORIES: '/inventories',
 	ILLNESS_HISTORIES: '/illness-histories',
 	CHILD_VACCINATIONS: '/child-vaccinations',
+	BABIES: '/babies',
 };

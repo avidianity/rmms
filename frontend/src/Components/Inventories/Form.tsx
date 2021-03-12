@@ -34,7 +34,7 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
-	const fetchMedicine = async (id: any) => {
+	const fetchInventory = async (id: any) => {
 		try {
 			const { data } = await axios.get<Inventory>(`/inventories/${id}`);
 			setValue('name', data.name);
@@ -51,7 +51,7 @@ const Form: FC<Props> = (props) => {
 	useEffect(() => {
 		if (match.path.includes('edit')) {
 			setMode('Edit');
-			fetchMedicine(match.params.id);
+			fetchInventory(match.params.id);
 		}
 		// eslint-disable-next-line
 	}, []);

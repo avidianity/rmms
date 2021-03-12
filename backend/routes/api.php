@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BabyController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\IllnessHistoryController;
 use App\Http\Controllers\InventoryController;
@@ -39,6 +40,7 @@ Route::prefix('/auth')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('/exports')->group(function () {
         Route::get('/patients', [ExportController::class, 'patients']);
+        Route::get('/babies', [ExportController::class, 'babies']);
         Route::get('/regular-records', [ExportController::class, 'regularRecords']);
         Route::get('/prenatal-records', [ExportController::class, 'prenatalRecords']);
     });
@@ -62,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
         'prenatal-records' => PrenatalRecordController::class,
         'inventories' => InventoryController::class,
         'illness-histories' => IllnessHistoryController::class,
+        'babies' => BabyController::class,
     ]);
 
     Route::prefix('/pharmacy')->group(function () {

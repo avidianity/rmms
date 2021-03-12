@@ -82,7 +82,7 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
-	const fetchDoctors = async () => {
+	const fetchAttendees = async () => {
 		const { data } = await axios.get('/users?roles[]=Nurse&roles[]=Midwife&paginate=false');
 		setAttendees(data);
 	};
@@ -99,7 +99,7 @@ const Form: FC<Props> = (props) => {
 
 	const fetchRequirements = async () => {
 		try {
-			await Promise.all([fetchDoctors(), fetchPatients(), fetchMedicines()]);
+			await Promise.all([fetchAttendees(), fetchPatients(), fetchMedicines()]);
 		} catch (error) {
 			console.log(error.toJSON());
 			toastr.error('Unable to fetch doctor and patient list.');

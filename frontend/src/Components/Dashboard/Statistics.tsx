@@ -200,6 +200,14 @@ const Statistics: FC<Props> = (props) => {
 					}}>
 					Export Prenatal Records
 				</button>
+				<button
+					className='btn btn-warning btn-sm m-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('babies');
+					}}>
+					Export Babies
+				</button>
 			</div>
 			<Counts counts={counts} />
 			<div className='row'>

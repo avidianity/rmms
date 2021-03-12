@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 import state from '../../state';
+import Babies from '../Babies';
 import IllnessHistories from '../IllnessHistories';
 import Inventories from '../Inventories';
 import Patients from '../Patients';
@@ -25,8 +26,21 @@ const Dashboard: FC<Props> = (props) => {
 	const url = (path: string) => `${match.path}${path}`;
 
 	useEffect(() => {
-		const key = state.listen<string>('background-color', (color) => setColor(color));
+		if (color === 'dark') {
+			document.body.style.backgroundColor = 'rgb(50, 50, 50)';
+		} else {
+			document.body.style.backgroundColor = '#fff';
+		}
+		const key = state.listen<string>('background-color', (color) => {
+			setColor(color);
+			if (color === 'dark') {
+				document.body.style.backgroundColor = 'rgb(50, 50, 50)';
+			} else {
+				document.body.style.backgroundColor = '#fff';
+			}
+		});
 		return () => {
+			document.body.style.backgroundColor = '#fff';
 			state.unlisten('background-color', key);
 		};
 		//eslint-disable-next-line
@@ -55,6 +69,7 @@ const Dashboard: FC<Props> = (props) => {
 							<Route path={url(routes.PROFILE)} component={Profile} />
 							<Route path={url(routes.INVENTORIES)} component={Inventories} />
 							<Route path={url(routes.ILLNESS_HISTORIES)} component={IllnessHistories} />
+							<Route path={url(routes.BABIES)} component={Babies} />
 						</Switch>
 					</div>
 				</div>
