@@ -93,7 +93,7 @@ const Sidebar: FC<Props> = (props) => {
 						className='rounded-circle shadow-sm border mr-2'
 						style={{ height: '40px', width: '40px' }}
 					/>
-					RMMS
+					RMMS - MHCG
 				</Link>
 			</div>
 			<div className='sidebar-wrapper'>
