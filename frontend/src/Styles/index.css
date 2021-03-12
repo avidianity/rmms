@@ -163,3 +163,7 @@ label.required::after {
 .wrapper[data-mode='dark'] .navbar-toggler > span {
 	background-color: #fff !important;
 }
+
+.wrapper[data-mode='dark'] .modal-header button[data-dismiss='modal'] span {
+	color: #fff !important;
+}

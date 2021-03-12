@@ -1,3 +1,4 @@
+import { IllnessHistory } from './IllnessHistory';
 import { Model } from './Model';
 import { PrenatalRecord } from './PrenatalRecord';
 import { Record } from './Record';
@@ -17,4 +18,5 @@ export interface Patient extends Model {
 	religion: string | null;
 	records?: Record[];
 	prenatals?: PrenatalRecord[];
+	histories?: IllnessHistory[];
 }

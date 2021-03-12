@@ -8,7 +8,6 @@ export interface IllnessHistory extends Model {
 		bp: string;
 		wt: string;
 		ht: string;
-		bt: string;
 		spo2: string;
 		pr: string;
 		tt: string;

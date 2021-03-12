@@ -13,6 +13,7 @@ import { PrenatalRecord } from '../../Contracts/PrenatalRecord';
 import $ from 'jquery';
 import Modal from '../Modal';
 import lodash from 'lodash';
+import { IllnessHistory } from '../../Contracts/IllnessHistory';
 
 type Props = {};
 
@@ -22,8 +23,10 @@ const View: FC<Props> = (props) => {
 	const match = useRouteMatch<{ id: string }>();
 	const [record, setRecord] = useState<Record | null>(null);
 	const [prenatal, setPrenatal] = useState<PrenatalRecord | null>(null);
+	const [illnessHistory, setIllnessHistory] = useState<IllnessHistory | null>(null);
 	const recordRef = createRef<HTMLDivElement>();
 	const prenatalRef = createRef<HTMLDivElement>();
+	const illnessHistoryRef = createRef<HTMLDivElement>();
 
 	const showRecordModal = (record: Record) => {
 		setRecord(record);
@@ -36,6 +39,13 @@ const View: FC<Props> = (props) => {
 		setPrenatal(record);
 		if (prenatalRef.current) {
 			$(prenatalRef.current).modal('show');
+		}
+	};
+
+	const showIllnessHistory = (history: IllnessHistory) => {
+		setIllnessHistory(history);
+		if (illnessHistoryRef.current) {
+			$(illnessHistoryRef.current).modal('show');
 		}
 	};
 
@@ -140,6 +150,42 @@ const View: FC<Props> = (props) => {
 											}}>
 											<i className='material-icons mr-1'>visibility</i>
 											View
+										</button>
+									</td>
+								</tr>
+							))}
+						</Table>
+						<Table
+							title='Illness Histories'
+							head={() => (
+								<tr>
+									<th>ID</th>
+									<th>Date</th>
+									<th>History of Present Illness</th>
+									<th>Assessment/Impression</th>
+									<th>Treatment/Management Plan</th>
+									<th>Issued</th>
+									<th className='text-center'>Actions</th>
+								</tr>
+							)}>
+							{patient?.histories?.map((history, index) => (
+								<tr key={index}>
+									<td>{history.id}</td>
+									<td>{dayjs(history.date).format('MMMM DD, YYYY')}</td>
+									<td>{history.description}</td>
+									<td>{history.assessment}</td>
+									<td>{history.treatment}</td>
+									<td>{dayjs(history.created_at).format('MMMM DD, YYYY hh:mm A')}</td>
+									<td className='text-center'>
+										<button
+											className='btn btn-info btn-sm'
+											title='View'
+											onClick={(e) => {
+												e.preventDefault();
+												showIllnessHistory(history);
+											}}>
+											<i className='material-icons mr-1'>visibility</i>
+											View Physical Exams
 										</button>
 									</td>
 								</tr>
@@ -299,6 +345,30 @@ const View: FC<Props> = (props) => {
 								</tr>
 							))}
 						</Table>
+					</div>
+				) : null}
+			</Modal>
+			<Modal ref={illnessHistoryRef} title='View Illness History Exams'>
+				{illnessHistory ? (
+					<div className='container-fluid'>
+						<div className='card'>
+							<div className='card-header card-header-info d-flex align-items-center'>
+								<h5 className='card-title'>lllness History Information</h5>
+							</div>
+							<div className='card-body'>
+								<p className='card-title'>Date: {dayjs(illnessHistory.date).format('MMMM DD, YYYY')}</p>
+								<p className='card-title'>Description: {illnessHistory.description}</p>
+								<p className='card-title'>Assessment/Impression: {illnessHistory.assessment}</p>
+								<p className='card-title'>Treament/Management Plan: {illnessHistory.description}</p>
+								<p className='card-text'>Blood Pressure: {illnessHistory.physical_exams.bp}</p>
+								<p className='card-text'>Weight: {illnessHistory.physical_exams.wt}</p>
+								<p className='card-text'>Height: {illnessHistory.physical_exams.ht}</p>
+								<p className='card-text'>SPO2: {illnessHistory.physical_exams.spo2}</p>
+								<p className='card-text'>PR: {illnessHistory.physical_exams.pr}</p>
+								<p className='card-text'>TT: {illnessHistory.physical_exams.tt}</p>
+								<p className='card-text'>Issued: {dayjs(illnessHistory.updated_at!).format('MMMM DD, YYYY hh:mm A')}</p>
+							</div>
+						</div>
 					</div>
 				) : null}
 			</Modal>

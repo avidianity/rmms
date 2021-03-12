@@ -47,7 +47,6 @@ const Form: FC<Props> = (props) => {
 			setValue('physical_exams[bp]', data.physical_exams.bp);
 			setValue('physical_exams[wt]', data.physical_exams.wt);
 			setValue('physical_exams[ht]', data.physical_exams.ht);
-			setValue('physical_exams[bt]', data.physical_exams.bt);
 			setValue('physical_exams[spo2]', data.physical_exams.spo2);
 			setValue('physical_exams[pr]', data.physical_exams.pr);
 			setValue('physical_exams[tt]', data.physical_exams.tt);
@@ -195,19 +194,7 @@ const Form: FC<Props> = (props) => {
 								/>
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>BT</label>
-								<input
-									ref={register}
-									type='text'
-									className='form-control'
-									disabled={processing}
-									name='physical_exams[bt]'
-								/>
-							</div>
-						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>SPO2</label>
 								<input
@@ -219,7 +206,7 @@ const Form: FC<Props> = (props) => {
 								/>
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>PR</label>
 								<input
@@ -231,7 +218,7 @@ const Form: FC<Props> = (props) => {
 								/>
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>TT</label>
 								<input

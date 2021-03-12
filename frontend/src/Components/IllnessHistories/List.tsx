@@ -15,7 +15,7 @@ import { SearchBus } from '../../events';
 type Props = {};
 
 const List: FC<Props> = (props) => {
-	const [inventorys, setIllnessHistories] = useState<IllnessHistory[]>([]);
+	const [histories, setIllnessHistories] = useState<IllnessHistory[]>([]);
 	const [pagination, setPagination] = useState<Paginated>(makeDummyPagination());
 	const match = useRouteMatch();
 
@@ -93,7 +93,7 @@ const List: FC<Props> = (props) => {
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchIllnessHistories(url)} />}>
-				{inventorys.map(({ id, date, description, assessment, treatment, patient, created_at }, index) => (
+				{histories.map(({ id, date, description, assessment, treatment, patient, created_at }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
 						<td>{dayjs(date).format('MMMM DD, YYYY')}</td>

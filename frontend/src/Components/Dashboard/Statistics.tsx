@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { FC, useEffect, useState } from 'react';
+import toastr from 'toastr';
 import {
 	Counts as CountsContract,
 	Daily as DailyContract,
@@ -8,6 +9,7 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
+import { sentencify } from '../../helpers';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
 import Daily from './Stats/Daily';
@@ -136,6 +138,24 @@ const Statistics: FC<Props> = (props) => {
 		setTimeout(() => setShowPrint(true), 1500);
 	};
 
+	const exportAndDownload = async (name: string) => {
+		try {
+			const { data } = await axios.get(`/exports/${name}`, {
+				responseType: 'blob',
+			});
+
+			const url = URL.createObjectURL(new Blob([data]));
+			const link = document.createElement('a');
+			link.href = url;
+			link.setAttribute('download', `${name}.xlsx`);
+			document.body.append(link);
+			link.click();
+		} catch (error) {
+			console.log(error.toJSON());
+			toastr.error(`Unable to export ${sentencify(name)}.`);
+		}
+	};
+
 	useEffect(() => {
 		fetchRequirements();
 		// eslint-disable-next-line
@@ -154,6 +174,32 @@ const Statistics: FC<Props> = (props) => {
 					Print
 				</button>
 			) : null}
+			<div className='d-flex'>
+				<button
+					className='btn btn-info btn-sm mx-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('patients');
+					}}>
+					Export Patients
+				</button>
+				<button
+					className='btn btn-success btn-sm mx-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('regular-records');
+					}}>
+					Export Regular Records
+				</button>
+				<button
+					className='btn btn-primary btn-sm mx-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('prenatal-records');
+					}}>
+					Export Prenatal Records
+				</button>
+			</div>
 			<Counts counts={counts} />
 			<div className='row'>
 				<Years years={years} />

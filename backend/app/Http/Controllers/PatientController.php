@@ -58,11 +58,11 @@ class PatientController extends Controller
             'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
             'histories' => ['nullable', 'array'],
-            'histories.date' => ['required', 'date'],
-            'histories.description' => ['required', 'string', 'max:255'],
-            'histories.physical_exams' => ['required'],
-            'histories.assessment' => ['required', 'string'],
-            'histories.treatment' => ['required', 'string'],
+            'histories.*.date' => ['required', 'date'],
+            'histories.*.description' => ['required', 'string', 'max:255'],
+            'histories.*.physical_exams' => ['required'],
+            'histories.*.assessment' => ['required', 'string'],
+            'histories.*.treatment' => ['required', 'string'],
         ]);
 
         $patient = Patient::where('name', $data['name'])
@@ -95,7 +95,8 @@ class PatientController extends Controller
             'records.prescriptions.items.medicine',
             'prenatals.prescriptions.items.medicine',
             'records.doctor',
-            'prenatals.attendee'
+            'prenatals.attendee',
+            'histories',
         ])->findOrFail($id);
     }
 
@@ -122,11 +123,11 @@ class PatientController extends Controller
             'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
             'histories' => ['nullable', 'array'],
-            'histories.date' => ['required', 'date'],
-            'histories.description' => ['required', 'string', 'max:255'],
-            'histories.physical_exams' => ['required'],
-            'histories.assessment' => ['required', 'string'],
-            'histories.treatment' => ['required', 'string'],
+            'histories.*.date' => ['required', 'date'],
+            'histories.*.description' => ['required', 'string', 'max:255'],
+            'histories.*.physical_exams' => ['required'],
+            'histories.*.assessment' => ['required', 'string'],
+            'histories.*.treatment' => ['required', 'string'],
         ]);
 
         /**
