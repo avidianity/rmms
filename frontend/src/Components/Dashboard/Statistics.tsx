@@ -9,7 +9,6 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
-import { User } from '../../Contracts/User';
 import { sentencify } from '../../helpers';
 import state from '../../state';
 import Charts from './Stats/Charts';
@@ -159,8 +158,6 @@ const Statistics: FC<Props> = (props) => {
 		}
 	};
 
-	const user = state.get<User>('user');
-
 	useEffect(() => {
 		fetchRequirements();
 		// eslint-disable-next-line
@@ -179,34 +176,32 @@ const Statistics: FC<Props> = (props) => {
 					Print
 				</button>
 			) : null}
-			{user.role === 'Admin' ? (
-				<div className='d-flex column-on-mobile'>
-					<button
-						className='btn btn-info btn-sm m-1'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('patients');
-						}}>
-						Export Patients
-					</button>
-					<button
-						className='btn btn-success btn-sm m-1'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('regular-records');
-						}}>
-						Export Regular Records
-					</button>
-					<button
-						className='btn btn-primary btn-sm m-1'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('prenatal-records');
-						}}>
-						Export Prenatal Records
-					</button>
-				</div>
-			) : null}
+			<div className='d-flex column-on-mobile'>
+				<button
+					className='btn btn-info btn-sm m-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('patients');
+					}}>
+					Export Patients
+				</button>
+				<button
+					className='btn btn-success btn-sm m-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('regular-records');
+					}}>
+					Export Regular Records
+				</button>
+				<button
+					className='btn btn-primary btn-sm m-1'
+					onClick={(e) => {
+						e.preventDefault();
+						exportAndDownload('prenatal-records');
+					}}>
+					Export Prenatal Records
+				</button>
+			</div>
 			<Counts counts={counts} />
 			<div className='row'>
 				<Years years={years} />
