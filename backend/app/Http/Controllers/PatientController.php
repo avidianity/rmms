@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IllnessHistory;
 use App\Models\Patient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
 
 class PatientController extends Controller
@@ -55,17 +57,27 @@ class PatientController extends Controller
             '4ps' => ['nullable', 'string', 'max:255'],
             'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
+            'histories' => ['nullable', 'array'],
+            'histories.date' => ['required', 'date'],
+            'histories.description' => ['required', 'string', 'max:255'],
+            'histories.physical_exams' => ['required'],
+            'histories.assessment' => ['required', 'string'],
+            'histories.treatment' => ['required', 'string'],
         ]);
 
         $patient = Patient::where('name', $data['name'])
             ->where('sex', $data['sex'])
-            ->whereDate('birthday', $data['birthday'])
+            ->whereBirthday(Carbon::parse($data['birthday']))
             ->first();
 
         if (!$patient) {
             $patient = Patient::create($data);
         } else {
             $patient->update($data);
+        }
+
+        if (isset($data['histories'])) {
+            $this->saveHistories($patient, $data);
         }
 
         return $patient;
@@ -109,11 +121,25 @@ class PatientController extends Controller
             '4ps' => ['nullable', 'string', 'max:255'],
             'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
+            'histories' => ['nullable', 'array'],
+            'histories.date' => ['required', 'date'],
+            'histories.description' => ['required', 'string', 'max:255'],
+            'histories.physical_exams' => ['required'],
+            'histories.assessment' => ['required', 'string'],
+            'histories.treatment' => ['required', 'string'],
         ]);
 
+        /**
+         * @var Patient
+         */
         $patient = Patient::with(['records.prescriptions.items.medicine', 'prenatals.prescriptions.items.medicine'])->findOrFail($id);
 
         $patient->update($data);
+
+        if (isset($data['histories'])) {
+            $patient->histories()->delete();
+            $this->saveHistories($patient, $data);
+        }
 
         return $patient;
     }
@@ -129,5 +155,21 @@ class PatientController extends Controller
         $patient->delete();
 
         return response('', 204);
+    }
+
+    /**
+     * Save histories
+     *
+     * @param Patient $patient
+     * @param array $data
+     * @return void
+     */
+    protected function saveHistories($patient, $data)
+    {
+        $histories = collect($data['histories'])->map(function ($row) {
+            return new IllnessHistory($row);
+        });
+
+        $patient->histories()->saveMany($histories);
     }
 }

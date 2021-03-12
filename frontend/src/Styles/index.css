@@ -152,6 +152,10 @@ label.required::after {
 	color: #fff !important;
 }
 
+.wrapper[data-mode='dark'] option {
+	background-color: rgb(50, 50, 50);
+}
+
 .wrapper[data-mode='dark'] .dropdown-menu {
 	background-color: rgb(50, 50, 50);
 }
