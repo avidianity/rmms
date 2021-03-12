@@ -12,7 +12,6 @@ import {
 import { User } from '../../Contracts/User';
 import { outIf, sentencify } from '../../helpers';
 import state from '../../state';
-import Users from '../Users';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
 import Daily from './Stats/Daily';
@@ -180,32 +179,34 @@ const Statistics: FC<Props> = (props) => {
 					Print
 				</button>
 			) : null}
-			<div className={`d-flex column-on-mobile ${outIf(user.role === 'Pharmacist', 'd-none')}`}>
-				<button
-					className='btn btn-info btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('patients');
-					}}>
-					Export Patients
-				</button>
-				<button
-					className='btn btn-success btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('regular-records');
-					}}>
-					Export Regular Records
-				</button>
-				<button
-					className='btn btn-primary btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('prenatal-records');
-					}}>
-					Export Prenatal Records
-				</button>
-			</div>
+			{user.role === 'Admin' ? (
+				<div className='d-flex column-on-mobile'>
+					<button
+						className='btn btn-info btn-sm m-1'
+						onClick={(e) => {
+							e.preventDefault();
+							exportAndDownload('patients');
+						}}>
+						Export Patients
+					</button>
+					<button
+						className='btn btn-success btn-sm m-1'
+						onClick={(e) => {
+							e.preventDefault();
+							exportAndDownload('regular-records');
+						}}>
+						Export Regular Records
+					</button>
+					<button
+						className='btn btn-primary btn-sm m-1'
+						onClick={(e) => {
+							e.preventDefault();
+							exportAndDownload('prenatal-records');
+						}}>
+						Export Prenatal Records
+					</button>
+				</div>
+			) : null}
 			<Counts counts={counts} />
 			<div className='row'>
 				<Years years={years} />
