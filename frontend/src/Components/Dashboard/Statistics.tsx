@@ -10,7 +10,6 @@ import {
 	Years as YearsContract,
 } from '../../Contracts/misc';
 import { sentencify } from '../../helpers';
-import state from '../../state';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
 import Daily from './Stats/Daily';
