@@ -14,9 +14,17 @@
 	display: block;
 }
 
+.column-on-mobile {
+	flex-direction: column;
+}
+
 @media screen and (min-width: 576px) {
 	.mobile-logout {
 		display: none;
+	}
+
+	.column-on-mobile {
+		flex-direction: row;
 	}
 }
 

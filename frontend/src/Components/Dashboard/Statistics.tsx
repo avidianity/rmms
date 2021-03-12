@@ -175,9 +175,9 @@ const Statistics: FC<Props> = (props) => {
 					Print
 				</button>
 			) : null}
-			<div className='d-flex'>
+			<div className='d-flex column-on-mobile'>
 				<button
-					className='btn btn-info btn-sm mx-1'
+					className='btn btn-info btn-sm m-1'
 					onClick={(e) => {
 						e.preventDefault();
 						exportAndDownload('patients');
@@ -185,7 +185,7 @@ const Statistics: FC<Props> = (props) => {
 					Export Patients
 				</button>
 				<button
-					className='btn btn-success btn-sm mx-1'
+					className='btn btn-success btn-sm m-1'
 					onClick={(e) => {
 						e.preventDefault();
 						exportAndDownload('regular-records');
@@ -193,7 +193,7 @@ const Statistics: FC<Props> = (props) => {
 					Export Regular Records
 				</button>
 				<button
-					className='btn btn-primary btn-sm mx-1'
+					className='btn btn-primary btn-sm m-1'
 					onClick={(e) => {
 						e.preventDefault();
 						exportAndDownload('prenatal-records');
