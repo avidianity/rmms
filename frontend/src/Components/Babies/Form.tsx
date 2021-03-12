@@ -5,7 +5,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
 import { Baby } from '../../Contracts/Baby';
 import { User } from '../../Contracts/User';
-import { handleError } from '../../helpers';
+import { handleError, validURL } from '../../helpers';
 import Flatpickr from 'react-flatpickr';
 
 type Props = {};
@@ -42,7 +42,9 @@ const Form: FC<Props> = (props) => {
 		try {
 			data.date_of_birth = dateOfBirth.toJSON();
 			data.name_registration_date = nameRegistrationDate.toJSON();
-			data.file = filePreview as any;
+			if (!validURL(filePreview)) {
+				data.file = filePreview as any;
+			}
 			data.complete_in_months = completeInMonths;
 			await (mode === 'Add' ? axios.post(`/babies`, data) : axios.put(`/babies/${id}`, data));
 			toastr.success('Baby saved successfully.');
@@ -285,7 +287,7 @@ const Form: FC<Props> = (props) => {
 						</div>
 						<div className='col-12'>
 							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Mishaps</label>
+								<label className='bmd-label-floating'>Mishaps</label>
 								<textarea ref={register} className='form-control' disabled={processing} name='mishaps' />
 							</div>
 						</div>

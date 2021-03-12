@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Throwable;
 
 class File extends Model
 {
@@ -23,7 +24,10 @@ class File extends Model
     protected static function booted()
     {
         static::deleted(function (self $file) {
-            Storage::delete($file->path);
+            try {
+                Storage::delete($file->path);
+            } catch (Throwable $e) {
+            }
         });
     }
 
