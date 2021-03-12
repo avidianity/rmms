@@ -73,7 +73,7 @@ const List: FC<Props> = (props) => {
 
 	return (
 		<>
-			{['Admin', 'Pharmacist'].includes(user.role) ? (
+			{['Pharmacist'].includes(user.role) ? (
 				<Link to={url('/add')} className='btn btn-info btn-sm'>
 					Add New Supply
 				</Link>

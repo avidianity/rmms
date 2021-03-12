@@ -11,6 +11,7 @@ import Table from '../../Table';
 import lodash from 'lodash';
 import toastr from 'toastr';
 import { SearchBus } from '../../../events';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -69,11 +70,15 @@ const List: FC<Props> = (props) => {
 		// eslint-disable-next-line
 	}, []);
 
+	const user = state.get<User>('user');
+
 	return (
 		<>
-			<Link to={url('/add')} className='btn btn-info btn-sm'>
-				Add New Prenatal Record
-			</Link>
+			{!['Admin'].includes(user.role) ? (
+				<Link to={url('/add')} className='btn btn-info btn-sm'>
+					Add New Prenatal Record
+				</Link>
+			) : null}
 			<Table
 				title='Prenatal Records'
 				head={() => (
