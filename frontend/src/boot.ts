@@ -17,6 +17,7 @@ axios.options(`${url}`).catch(console.error);
 
 axios.interceptors.request.use((config) => {
 	config.url = config.url?.replace('http://', 'https://');
+	config.url = config.url?.replace('https://', '//');
 	return config;
 });
 
