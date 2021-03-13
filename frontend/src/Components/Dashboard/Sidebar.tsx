@@ -22,12 +22,12 @@ const Sidebar: FC<Props> = (props) => {
 			exact: true,
 			show: true,
 		},
-		{
-			to: url(routes.INVENTORIES),
-			title: 'Supply Stocks',
-			icon: 'inventory',
-			show: ['Pharmacist', 'Admin'].includes(user.role),
-		},
+		// {
+		// 	to: url(routes.INVENTORIES),
+		// 	title: 'Supply Stocks',
+		// 	icon: 'inventory',
+		// 	show: ['Pharmacist', 'Admin'].includes(user.role),
+		// },
 		{
 			to: url(routes.MEDICINES),
 			title: 'Medicine Stocks',
