@@ -40,12 +40,12 @@ const Sidebar: FC<Props> = (props) => {
 			icon: 'medication',
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},
-		{
-			to: url(routes.BABIES),
-			title: 'Babies',
-			icon: 'child_care',
-			show: ['Nurse', 'Midwife', 'Admin'].includes(user.role),
-		},
+		// {
+		// 	to: url(routes.BABIES),
+		// 	title: 'Babies',
+		// 	icon: 'child_care',
+		// 	show: ['Nurse', 'Midwife', 'Doctor' ,'Admin'].includes(user.role),
+		// },
 		{
 			to: url(routes.PATIENTS),
 			title: 'Patients',
