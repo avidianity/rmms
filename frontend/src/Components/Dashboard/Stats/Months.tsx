@@ -1,7 +1,9 @@
 import dayjs from 'dayjs';
 import lodash from 'lodash';
 import React, { FC } from 'react';
+import { useHistory } from 'react-router';
 import { Months as MonthsContract } from '../../../Contracts/misc';
+import { routes } from '../../../routes';
 
 type Props = {
 	months: MonthsContract;
@@ -9,6 +11,7 @@ type Props = {
 
 const Months: FC<Props> = ({ months }) => {
 	const month = dayjs().format('MMMM');
+	const history = useHistory();
 
 	return (
 		<div className='row'>
@@ -31,7 +34,12 @@ const Months: FC<Props> = ({ months }) => {
 							</thead>
 							<tbody>
 								{months.current.prenatal_records.map((record, index) => (
-									<tr key={index}>
+									<tr
+										key={index}
+										className='clickable'
+										onClick={() => {
+											history.push(`${routes.DASHBOARD}/${routes.RECORDS.REGULAR}/${record.id}`);
+										}}>
 										<td>{record.id}</td>
 										<td>{record.patient?.name}</td>
 										<td>{record.attendee?.name}</td>
@@ -63,7 +71,12 @@ const Months: FC<Props> = ({ months }) => {
 							</thead>
 							<tbody>
 								{months.current.regular_records.map((record, index) => (
-									<tr key={index}>
+									<tr
+										key={index}
+										className='clickable'
+										onClick={() => {
+											history.push(`${routes.DASHBOARD}/${routes.RECORDS.PRENATAL}/${record.id}`);
+										}}>
 										<td>{record.id}</td>
 										<td>{record.patient?.name}</td>
 										<td>{record.doctor?.name}</td>
