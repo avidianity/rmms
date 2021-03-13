@@ -65,6 +65,16 @@ class User extends Authenticatable
         return $builder;
     }
 
+    protected static function booted()
+    {
+        static::deleting(function (self $user) {
+            $user->records()->delete();
+            $user->prenatals()->delete();
+            $user->babies()->delete();
+            $user->prescriptions()->delete();
+        });
+    }
+
     public function isAdmin()
     {
         return $this->role === 'Admin';
@@ -78,6 +88,11 @@ class User extends Authenticatable
     public function prenatals()
     {
         return $this->hasMany(PrenatalRecord::class, 'prenatal_id');
+    }
+
+    public function babies()
+    {
+        return $this->hasMany(Baby::class);
     }
 
     public function prescriptions()

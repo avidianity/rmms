@@ -174,7 +174,7 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='religion' />
 							</div>
 						</div>
-						<div className='col-12'>
+						<div className='col-12 d-none'>
 							<div className='container-fluid'>
 								<div className='card'>
 									<div className='card-header card-header-success'>
