@@ -79,7 +79,7 @@ const List: FC<Props> = (props) => {
 				</Link>
 			) : null}
 			<Table
-				title='Supplies'
+				title='Babies'
 				head={() => (
 					<tr>
 						<th>ID</th>
