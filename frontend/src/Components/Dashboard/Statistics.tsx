@@ -201,7 +201,7 @@ const Statistics: FC<Props> = (props) => {
 					Export Prenatal Records
 				</button>
 				<button
-					className='btn btn-warning btn-sm m-1'
+					className='btn btn-warning btn-sm m-1 d-none'
 					onClick={(e) => {
 						e.preventDefault();
 						exportAndDownload('babies');
