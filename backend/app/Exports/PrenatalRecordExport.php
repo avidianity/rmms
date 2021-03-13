@@ -31,7 +31,7 @@ class PrenatalRecordExport implements FromCollection, Responsable, WithHeadings
                 $data['attendee'] = $row->attendee->name;
                 $data['patient'] = $row->patient->name;
 
-                return $row;
+                return $data;
             });;
     }
 
