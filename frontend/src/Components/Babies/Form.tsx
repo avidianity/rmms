@@ -8,6 +8,7 @@ import { User } from '../../Contracts/User';
 import { handleError, validURL } from '../../helpers';
 import Flatpickr from 'react-flatpickr';
 import dayjs from 'dayjs';
+import { BabyVaccination } from '../../Contracts/BabyVaccination';
 
 type Props = {};
 
@@ -20,6 +21,7 @@ const Form: FC<Props> = (props) => {
 	const [completeInMonths, setCompleteInMonths] = useState(true);
 	const [nameRegistrationDate, setNameRegistrationDate] = useState(new Date());
 	const [filePreview, setFilePreview] = useState('https://via.placeholder.com/200');
+	const [vaccinations, setVaccinations] = useState<BabyVaccination[]>([]);
 	const { register, handleSubmit, setValue } = useForm<Baby>({
 		defaultValues: {
 			sex: 'Male',
@@ -43,6 +45,7 @@ const Form: FC<Props> = (props) => {
 		try {
 			data.date_of_birth = dateOfBirth.toJSON();
 			data.name_registration_date = nameRegistrationDate.toJSON();
+			data.vaccinations = vaccinations;
 			if (!validURL(filePreview)) {
 				data.file = filePreview as any;
 			}
@@ -292,6 +295,104 @@ const Form: FC<Props> = (props) => {
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>Mishaps</label>
 								<textarea ref={register} className='form-control' disabled={processing} name='mishaps' />
+							</div>
+						</div>
+						<div className='col-12'>
+							<div className='row'>
+								<div className='col-12'>
+									<button
+										className='btn btn-success btn-sm'
+										disabled={processing}
+										onClick={(e) => {
+											e.preventDefault();
+											vaccinations.push({
+												name: '',
+												doses: '',
+												date: new Date().toJSON(),
+												remarks: '',
+											});
+											setVaccinations([...vaccinations]);
+										}}>
+										Add Vaccination
+									</button>
+								</div>
+								{vaccinations.map((vaccination, index) => (
+									<div className='col-12'>
+										<div className='card'>
+											<div className='card-header'>
+												<h4 className='card-title'>Vaccination {index + 1}</h4>
+											</div>
+											<div className='card-body'>
+												<div className='row'>
+													<div className='col-12 pb-4'>
+														<button
+															className='btn btn-danger btn-sm'
+															disabled={processing}
+															onClick={(e) => {
+																e.preventDefault();
+																vaccinations.splice(index, 1);
+																setVaccinations([...vaccinations]);
+															}}>
+															Remove
+														</button>
+													</div>
+													<div className='form-group bmd-form-group col-12 col-md-6 col-lg-3'>
+														<label className='bmd-label-floating required'>Name</label>
+														<input
+															type='text'
+															className='form-control'
+															onChange={(e) => {
+																vaccination.name = e.target.value;
+																vaccinations.splice(index, 1, vaccination);
+																setVaccinations([...vaccinations]);
+															}}
+															value={vaccination.name}
+														/>
+													</div>
+													<div className='form-group bmd-form-group col-12 col-md-6 col-lg-3'>
+														<label className='bmd-label-floating required'>Doses</label>
+														<input
+															type='text'
+															className='form-control'
+															onChange={(e) => {
+																vaccination.doses = e.target.value;
+																vaccinations.splice(index, 1, vaccination);
+																setVaccinations([...vaccinations]);
+															}}
+															value={vaccination.doses}
+														/>
+													</div>
+													<div className='form-group bmd-form-group col-12 col-md-6 col-lg-3 is-filled'>
+														<label className='bmd-label-floating required'>Date</label>
+														<Flatpickr
+															value={dayjs(vaccination.date).toDate()}
+															className='form-control'
+															onChange={(data) => {
+																vaccination.date = data[0].toJSON();
+																vaccinations.splice(index, 1, vaccination);
+																setVaccinations([...vaccinations]);
+															}}
+															disabled={processing}
+														/>
+													</div>
+													<div className='form-group bmd-form-group col-12 col-md-6 col-lg-3'>
+														<label className='bmd-label-floating required'>Remarks</label>
+														<input
+															type='text'
+															className='form-control'
+															onChange={(e) => {
+																vaccination.remarks = e.target.value;
+																vaccinations.splice(index, 1, vaccination);
+																setVaccinations([...vaccinations]);
+															}}
+															value={vaccination.remarks}
+														/>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								))}
 							</div>
 						</div>
 						<div className='col-12'>

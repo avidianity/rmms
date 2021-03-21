@@ -12,17 +12,16 @@ export function toBool(data: any) {
 	return data ? true : false;
 }
 
-export function validURL(str: string) {
-	var pattern = new RegExp(
-		'^(https?:\\/\\/)?' + // protocol
-			'((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // domain name
-			'((\\d{1,3}\\.){3}\\d{1,3}))' + // OR ip (v4) address
-			'(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // port and path
-			'(\\?[;&a-z\\d%_.~+=-]*)?' + // query string
-			'(\\#[-a-z\\d_]*)?$',
-		'i'
-	); // fragment locator
-	return !!pattern.test(str);
+export function validURL(url: string) {
+	let valid = false;
+	var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+	try {
+		new URL(url);
+		valid = true;
+	} catch (_) {
+		valid = false;
+	}
+	return !!pattern.test(url) && valid;
 }
 
 export function makeDummyPagination() {

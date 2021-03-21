@@ -48,6 +48,17 @@ class Baby extends Model
         'mishaps',
     ];
 
+    protected static function booted()
+    {
+        static::deleting(function (self $baby) {
+            $baby->vaccinations()->delete();
+        });
+
+        static::deleted(function (self $baby) {
+            $baby->file->delete();
+        });
+    }
+
     public function file()
     {
         return $this->belongsTo(File::class);
@@ -56,5 +67,10 @@ class Baby extends Model
     public function attendee()
     {
         return $this->belongsTo(User::class, 'attendee_id');
+    }
+
+    public function vaccinations()
+    {
+        return $this->hasMany(BabyVaccination::class);
     }
 }

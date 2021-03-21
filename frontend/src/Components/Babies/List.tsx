@@ -87,7 +87,7 @@ const List: FC<Props> = (props) => {
 						<th>Attendee</th>
 						<th>Type of Birth</th>
 						<th>Date of Birth</th>
-						<th>Complete in Months</th>
+						<th className='text-center'>Complete in Months</th>
 						<th>Issued</th>
 						<th>Last Updated</th>
 						<th colSpan={3}>Actions</th>
@@ -101,7 +101,7 @@ const List: FC<Props> = (props) => {
 						<td>{baby?.attendee?.name}</td>
 						<td>{baby.type_of_birth}</td>
 						<td>{dayjs(baby.date_of_birth).format('MMMM DD, YYYY')}</td>
-						<td>
+						<td className='text-center'>
 							{baby.complete_in_months ? (
 								<span className='badge badge-success'>Yes</span>
 							) : (

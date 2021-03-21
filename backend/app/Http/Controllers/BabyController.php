@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Baby;
+use App\Models\BabyVaccination;
 use App\Models\File;
 use App\Models\User;
 use App\Rules\Role;
@@ -50,6 +51,11 @@ class BabyController extends Controller
             'name_registration_date' => ['required', 'date'],
             'name_registration_location' => ['required', 'string', 'max:255'],
             'mishaps' => ['nullable', 'string', 'max:255'],
+            'vaccinations' => ['nullable', 'array'],
+            'vaccinations.*.name' => ['required', 'string', 'max:255'],
+            'vaccinations.*.doses' => ['required', 'string', 'max:255'],
+            'vaccinations.*.date' => ['required', 'date'],
+            'vaccinations.*.remarks' => ['required', 'string', 'max:255'],
         ]);
 
         $file = File::process($data['file']);
@@ -57,7 +63,15 @@ class BabyController extends Controller
 
         $data['file_id'] = $file->id;
 
-        return Baby::create($data);
+        $baby = Baby::create($data);
+
+        if (isset($data['vaccinations'])) {
+            $this->saveVaccinations($baby, $data);
+        }
+
+        $baby->load('vaccinations');
+
+        return $baby;
     }
 
     /**
@@ -68,7 +82,7 @@ class BabyController extends Controller
      */
     public function show($id)
     {
-        return Baby::with('attendee', 'file')->findOrFail($id);
+        return Baby::with('attendee', 'file', 'vaccinations')->findOrFail($id);
     }
 
     /**
@@ -101,6 +115,11 @@ class BabyController extends Controller
             'name_registration_date' => ['nullable', 'date'],
             'name_registration_location' => ['nullable', 'string', 'max:255'],
             'mishaps' => ['nullable', 'string', 'max:255'],
+            'vaccinations' => ['nullable', 'array'],
+            'vaccinations.*.name' => ['required', 'string', 'max:255'],
+            'vaccinations.*.doses' => ['required', 'string', 'max:255'],
+            'vaccinations.*.date' => ['required', 'date'],
+            'vaccinations.*.remarks' => ['required', 'string', 'max:255'],
         ]);
 
         if (isset($data['file'])) {
@@ -113,7 +132,13 @@ class BabyController extends Controller
             $old->delete();
         }
 
+        if (isset($data['vaccinations'])) {
+            $baby->vaccinations()->delete();
+            $this->saveVaccinations($baby, $data);
+        }
+
         $baby->update($data);
+        $baby->load('vaccinations');
 
         return $baby;
     }
@@ -129,5 +154,17 @@ class BabyController extends Controller
         $baby->delete();
 
         return response('', 204);
+    }
+
+    /**
+     * @param \App\Models\Baby $baby
+     */
+    protected function saveVaccinations($baby, $data)
+    {
+        $vaccinations = collect($data['vaccinations'])->map(function ($row) {
+            return new BabyVaccination($row);
+        });
+
+        $baby->vaccinations()->saveMany($vaccinations);
     }
 }

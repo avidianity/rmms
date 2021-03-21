@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Baby } from '../../Contracts/Baby';
 import { handleError } from '../../helpers';
 import { routes } from '../../routes';
+import Table from '../Table';
 
 type Props = {};
 
@@ -62,6 +63,30 @@ const View: FC<Props> = (props) => {
 					<p className='card-title'>Name Registration Date: {dayjs(baby?.name_registration_date).format('MMMM DD, YYYY')}</p>
 					<p className='card-title'>Name Registration Location: {baby?.name_registration_location}</p>
 					<p className='card-title'>Mishaps: {baby?.mishaps}</p>
+					<div className='container-fluid'>
+						<Table
+							title='Vaccinations'
+							subtitles={baby?.vaccinations && baby.vaccinations.length === 0 ? 'No Vaccinations Available' : undefined}
+							head={() => (
+								<tr>
+									<th>ID</th>
+									<th>Name</th>
+									<th>Doses</th>
+									<th>Date</th>
+									<th>Remarks</th>
+								</tr>
+							)}>
+							{baby?.vaccinations?.map((vaccination, index) => (
+								<tr key={index}>
+									<td>{vaccination.id}</td>
+									<td>{vaccination.name}</td>
+									<td>{vaccination.doses}</td>
+									<td>{dayjs(vaccination.date).format('MMMM DD, YYYY')}</td>
+									<td>{vaccination.remarks}</td>
+								</tr>
+							))}
+						</Table>
+					</div>
 				</div>
 			</div>
 		</div>
