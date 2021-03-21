@@ -38,7 +38,7 @@ const Months: FC<Props> = ({ months }) => {
 										key={index}
 										className='clickable'
 										onClick={() => {
-											history.push(`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record.id}`);
+											history.push(`${routes.DASHBOARD}${routes.RECORDS.PRENATAL}/${record.id}`);
 										}}>
 										<td>{record.id}</td>
 										<td>{record.patient?.name}</td>
@@ -75,7 +75,7 @@ const Months: FC<Props> = ({ months }) => {
 										key={index}
 										className='clickable'
 										onClick={() => {
-											history.push(`${routes.DASHBOARD}${routes.RECORDS.PRENATAL}/${record.id}`);
+											history.push(`${routes.DASHBOARD}${routes.RECORDS.REGULAR}/${record.id}`);
 										}}>
 										<td>{record.id}</td>
 										<td>{record.patient?.name}</td>
