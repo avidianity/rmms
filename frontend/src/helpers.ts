@@ -14,7 +14,7 @@ export function toBool(data: any) {
 
 export function validURL(url: string) {
 	let valid = false;
-	var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+	var pattern = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!-/]))?/;
 	try {
 		new URL(url);
 		valid = true;
