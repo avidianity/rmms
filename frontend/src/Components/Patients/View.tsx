@@ -155,7 +155,7 @@ const View: FC<Props> = (props) => {
 								</tr>
 							))}
 						</Table>
-						<Table
+						{/* <Table
 							title='Illness Histories'
 							subtitles={patient?.histories && patient.histories.length === 0 ? 'No Illness History Available' : undefined}
 							head={() => (
@@ -191,7 +191,7 @@ const View: FC<Props> = (props) => {
 									</td>
 								</tr>
 							))}
-						</Table>
+						</Table> */}
 						{patient?.sex === 'Female' ? (
 							<Table
 								title='Prenatal Records'
