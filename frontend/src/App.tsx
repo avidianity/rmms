@@ -10,12 +10,9 @@ import state from './state';
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
-	const [message, setMessage] = useState({ body: 'Hi!', icon: 'favorite' });
 
 	const loadScripts = async () => {
-		setMessage({ body: 'Loading assets...', icon: 'web_asset' });
 		await Promise.all([import('jquery'), import('popper.js'), import('bootstrap')]);
-		setMessage({ body: 'Loading scripts...', icon: 'subscript' });
 		const scripts = await Promise.all(
 			[
 				'/assets/js/core/jquery.min.js',
@@ -55,14 +52,12 @@ function App() {
 
 	const load = async () => {
 		await loadScripts();
-		setMessage({ body: 'Checking authentication...', icon: 'admin_panel_settings' });
 		try {
 			const { data } = await axios.get('/auth/check');
 			state.set('user', data);
 		} catch (_) {
 			state.remove('user').remove('token');
 		} finally {
-			setMessage({ body: 'Booting up...', icon: 'toll' });
 			setLoaded(true);
 		}
 	};
@@ -73,12 +68,7 @@ function App() {
 	}, []);
 
 	return !loaded ? (
-		<Loader>
-			<p className='lead d-flex align-items-center justify-content-center'>
-				<i className='material-icons mr-1'>{message.icon}</i>
-				{message.body}
-			</p>
-		</Loader>
+		<Loader />
 	) : (
 		<Router>
 			<Switch>
