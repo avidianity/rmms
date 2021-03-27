@@ -68,6 +68,11 @@ label.required::after {
 
 .wrapper[data-mode='dark'] {
 	background-color: rgb(50, 50, 50);
+	color: #fff;
+}
+
+.wrapper[data-mode='dark'] .card-header {
+	color: #fff;
 }
 
 .wrapper[data-mode='dark'] .main-panel {

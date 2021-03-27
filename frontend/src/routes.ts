@@ -10,6 +10,8 @@ export const routes = {
 	RECORDS: {
 		REGULAR: '/regular-records',
 		PRENATAL: '/prenatal-records',
+		IMMUNIZATION: '/immunization-records',
+		ARCHIVED: '/archived-records',
 	},
 	SETTINGS: '/settings',
 	USERS: '/users',

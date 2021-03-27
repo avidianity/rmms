@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
+import { SearchContext } from '../../contexts';
 import { routes } from '../../routes';
 import state from '../../state';
 import Babies from '../Babies';
@@ -9,6 +10,8 @@ import Patients from '../Patients';
 import Medicine from '../Pharmacy/Medicine';
 import Prescriptions from '../Pharmacy/Prescriptions';
 import Profile from '../Profile';
+import Archived from '../Records/Archived';
+import ImmunizationRecords from '../Records/Immunization';
 import PrenatalRecords from '../Records/Prenatal';
 import RegularRecords from '../Records/Regular';
 import Users from '../Users';
@@ -22,6 +25,7 @@ const Dashboard: FC<Props> = (props) => {
 	const match = useRouteMatch();
 	const history = useHistory();
 	const [color, setColor] = useState(state.get<string>('background-color') || 'dark');
+	const [showSearch, setShowSearch] = useState(true);
 
 	const url = (path: string) => `${match.path}${path}`;
 
@@ -52,7 +56,7 @@ const Dashboard: FC<Props> = (props) => {
 	}
 
 	return (
-		<>
+		<SearchContext.Provider value={{ show: showSearch, setShow: setShowSearch }}>
 			<div className='wrapper' data-mode={color}>
 				<Sidebar />
 				<div className='main-panel'>
@@ -64,6 +68,8 @@ const Dashboard: FC<Props> = (props) => {
 							<Route path={url(routes.PATIENTS)} component={Patients} />
 							<Route path={url(routes.RECORDS.REGULAR)} component={RegularRecords} />
 							<Route path={url(routes.RECORDS.PRENATAL)} component={PrenatalRecords} />
+							<Route path={url(routes.RECORDS.IMMUNIZATION)} component={ImmunizationRecords} />
+							<Route path={url(routes.RECORDS.ARCHIVED)} component={Archived} />
 							<Route path={url(routes.PRESCRIPTIONS)} component={Prescriptions} />
 							<Route path={url(routes.USERS)} component={Users} />
 							<Route path={url(routes.PROFILE)} component={Profile} />
@@ -74,7 +80,7 @@ const Dashboard: FC<Props> = (props) => {
 					</div>
 				</div>
 			</div>
-		</>
+		</SearchContext.Provider>
 	);
 };
 

@@ -155,43 +155,6 @@ const View: FC<Props> = (props) => {
 								</tr>
 							))}
 						</Table>
-						{/* <Table
-							title='Illness Histories'
-							subtitles={patient?.histories && patient.histories.length === 0 ? 'No Illness History Available' : undefined}
-							head={() => (
-								<tr>
-									<th>ID</th>
-									<th>Date</th>
-									<th>History of Present Illness</th>
-									<th>Assessment/Impression</th>
-									<th>Treatment/Management Plan</th>
-									<th>Issued</th>
-									<th className='text-center'>Actions</th>
-								</tr>
-							)}>
-							{patient?.histories?.map((history, index) => (
-								<tr key={index}>
-									<td>{history.id}</td>
-									<td>{dayjs(history.date).format('MMMM DD, YYYY')}</td>
-									<td>{history.description}</td>
-									<td>{history.assessment}</td>
-									<td>{history.treatment}</td>
-									<td>{dayjs(history.created_at).format('MMMM DD, YYYY hh:mm A')}</td>
-									<td className='text-center'>
-										<button
-											className='btn btn-info btn-sm'
-											title='View'
-											onClick={(e) => {
-												e.preventDefault();
-												showIllnessHistory(history);
-											}}>
-											<i className='material-icons mr-1'>visibility</i>
-											View Physical Exams
-										</button>
-									</td>
-								</tr>
-							))}
-						</Table> */}
 						{patient?.sex === 'Female' ? (
 							<Table
 								title='Prenatal Records'
@@ -232,6 +195,43 @@ const View: FC<Props> = (props) => {
 								))}
 							</Table>
 						) : null}
+						<Table
+							title='Illness Histories'
+							subtitles={patient?.histories && patient.histories.length === 0 ? 'No Illness History Available' : undefined}
+							head={() => (
+								<tr>
+									<th>ID</th>
+									<th>Date</th>
+									<th>History of Present Illness</th>
+									<th>Assessment/Impression</th>
+									<th>Treatment/Management Plan</th>
+									<th>Issued</th>
+									<th className='text-center'>Actions</th>
+								</tr>
+							)}>
+							{patient?.histories?.map((history, index) => (
+								<tr key={index}>
+									<td>{history.id}</td>
+									<td>{dayjs(history.date).format('MMMM DD, YYYY')}</td>
+									<td>{history.description}</td>
+									<td>{history.assessment}</td>
+									<td>{history.treatment}</td>
+									<td>{dayjs(history.created_at).format('MMMM DD, YYYY hh:mm A')}</td>
+									<td className='text-center'>
+										<button
+											className='btn btn-info btn-sm'
+											title='View'
+											onClick={(e) => {
+												e.preventDefault();
+												showIllnessHistory(history);
+											}}>
+											<i className='material-icons mr-1'>visibility</i>
+											View Physical Exams
+										</button>
+									</td>
+								</tr>
+							))}
+						</Table>
 					</div>
 				</div>
 			</div>

@@ -97,7 +97,7 @@ const Form: FC<Props> = (props) => {
 
 	const fetchMedicines = async () => {
 		const { data } = await axios.get<Medicine[]>(`/pharmacy/medicines?paginate=false`);
-		setMedicines(data.filter((medicine) => medicine.stocks > 0));
+		setMedicines(data.filter((medicine) => medicine.available.parseNumbers() > 0));
 	};
 
 	const fetchRequirements = async () => {
@@ -445,10 +445,13 @@ const Form: FC<Props> = (props) => {
 																						name='total'
 																						placeholder='Total'
 																						value={formatCurrency(
-																							(medicines.find(
-																								(medicine) =>
-																									medicine.id === item.medicine_id
-																							)?.cost || 0) * item.quantity
+																							(medicines
+																								.find(
+																									(medicine) =>
+																										medicine.id === item.medicine_id
+																								)
+																								?.estimated_unit_cost.parseNumbers() || 0) *
+																								item.quantity
 																						)}
 																					/>
 																				</div>

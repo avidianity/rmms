@@ -145,6 +145,14 @@ class PrenatalRecordController extends Controller
         return response('', 204);
     }
 
+    public function archived()
+    {
+        return PrenatalRecord::with(['attendee', 'patient'])
+            ->oldest('case_number')
+            ->whereYear('case_number', '<', now()->year)
+            ->paginate(10);
+    }
+
     /**
      * @param PrenatalRecord $record
      */

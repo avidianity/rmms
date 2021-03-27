@@ -16,8 +16,8 @@ class StatisticsController extends Controller
     {
         return [
             'medicine' => [
-                'on_stock' => Medicine::where('stocks', '>', 0)->sum('stocks'),
-                'out_of_stock' => Medicine::where('stocks', 0)->count(),
+                'on_stock' => Medicine::where('available', '>', 0)->sum('available'),
+                'out_of_stock' => Medicine::where('available', 0)->count(),
             ],
             'purchase_requests' => [
                 'delivered' => PurchaseRequest::whereNotNull('delivered')->count(),

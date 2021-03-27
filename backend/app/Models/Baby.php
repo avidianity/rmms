@@ -10,7 +10,6 @@ class Baby extends Model
     use HasFactory;
 
     protected $fillable = [
-        'file_id',
         'attendee_id',
         'name',
         'nickname',
@@ -53,15 +52,6 @@ class Baby extends Model
         static::deleting(function (self $baby) {
             $baby->vaccinations()->delete();
         });
-
-        static::deleted(function (self $baby) {
-            $baby->file->delete();
-        });
-    }
-
-    public function file()
-    {
-        return $this->belongsTo(File::class);
     }
 
     public function attendee()

@@ -31,7 +31,7 @@ export class State {
 			this.key = key;
 		}
 		const data = this.getAll();
-		this.setAll(data);
+		this.setAll({ ...data });
 	}
 
 	clear() {

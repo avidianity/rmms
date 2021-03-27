@@ -84,36 +84,79 @@ const List: FC<Props> = (props) => {
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
-						<th>Cost per Item</th>
-						<th>Stocks</th>
-						<th>Issued</th>
-						<th>Last Updated</th>
-						<th colSpan={3}>Actions</th>
+						<th>Description</th>
+						<th>Unit of Issue</th>
+						<th>Estimated Unit Cost</th>
+						<th>Estimated Cost</th>
+						<th>Quantity</th>
+						<th>Released</th>
+						<th>Available</th>
+						<th>Date Delivered</th>
+						<th>Expiry Date</th>
+						<th>Estimated Cost</th>
+						<th>Critical Value</th>
+						<th colSpan={2}>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchInventories(url)} />}>
-				{inventories.map(({ id, name, cost, stocks, created_at, updated_at }, index) => (
-					<tr key={index}>
-						<td>{id}</td>
-						<td>{name}</td>
-						<td>{formatCurrency(cost)}</td>
-						<td>{stocks}</td>
-						<td>{dayjs(created_at).format('MMMM DD, YYYY hh:mm A')}</td>
-						<td>{dayjs(updated_at).format('MMMM DD, YYYY hh:mm A')}</td>
-						<td>
-							{/* <Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='View'>
-								<i className='material-icons mr-1'>visibility</i>
-								View
-							</Link> */}
-							{['Pharmacist', 'Admin'].includes(user.role) ? (
+				{inventories.map(
+					(
+						{
+							id,
+							name,
+							description,
+							unit_of_issue,
+							estimated_unit_cost,
+							quantity,
+							released,
+							available,
+							date_delivered,
+							expiry_date,
+							critical_value,
+						},
+						index
+					) => (
+						<tr key={index}>
+							<td>{id}</td>
+							<td>{name}</td>
+							<td>{description}</td>
+							<td>{unit_of_issue}</td>
+							<td>{formatCurrency(estimated_unit_cost.parseNumbers())}</td>
+							<td>{quantity}</td>
+							<td>{released}</td>
+							<td>{available}</td>
+							<td>{dayjs(date_delivered).format('MMMM DD, YYYY')}</td>
+							<td>{dayjs(expiry_date).format('MMMM DD, YYYY')}</td>
+							<td>{formatCurrency(quantity * estimated_unit_cost.parseNumbers())}</td>
+							<td>{critical_value}</td>
+							<td>
 								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
 									<i className='material-icons mr-1'>create</i>
 									Edit
 								</Link>
-							) : null}
-						</td>
-					</tr>
-				))}
+								{/* <a
+								href={url(`/${id}/delete`)}
+								className='btn btn-danger btn-sm'
+								title='Delete'
+								onClick={async (e) => {
+									e.preventDefault();
+									const confirm = await swal({
+										title: `Delete ${name}?`,
+										icon: 'warning',
+										buttons: ['Cancel', 'Confirm'],
+										dangerMode: true,
+									});
+									if (confirm === true) {
+										deleteMedicine(id);
+									}
+								}}>
+								<i className='material-icons mr-1'>remove_circle</i>
+								Delete
+							</a> */}
+							</td>
+						</tr>
+					)
+				)}
 			</Table>
 		</>
 	);

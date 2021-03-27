@@ -16,9 +16,15 @@ class CreateMedicinesTable extends Migration
         Schema::create('medicines', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
+            $table->string('description');
             $table->string('unit_of_issue');
-            $table->unsignedSmallInteger('cost');
-            $table->unsignedInteger('stocks')->default(0);
+            $table->string('estimated_unit_cost');
+            $table->unsignedBigInteger('quantity');
+            $table->string('released');
+            $table->string('available');
+            $table->timestamp('date_delivered');
+            $table->timestamp('expiry_date');
+            $table->unsignedBigInteger('critical_value');
             $table->timestamps();
         });
     }

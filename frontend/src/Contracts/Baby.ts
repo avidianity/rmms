@@ -1,10 +1,8 @@
 import { BabyVaccination } from './BabyVaccination';
-import { File } from './File';
 import { Model } from './Model';
 import { User } from './User';
 
 export interface Baby extends Model {
-	file_id: number;
 	attendee_id: number;
 	name: string;
 	nickname: string | null;
@@ -24,7 +22,6 @@ export interface Baby extends Model {
 	name_registration_date: string;
 	name_registration_location: string;
 	mishaps: string | null;
-	file?: File;
 	attendee?: User;
 	vaccinations?: BabyVaccination[];
 }

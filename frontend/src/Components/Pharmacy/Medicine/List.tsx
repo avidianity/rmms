@@ -10,6 +10,7 @@ import state from '../../../state';
 import Pagination from '../../Pagination';
 import { SearchBus } from '../../../events';
 import { User } from '../../../Contracts/User';
+import dayjs from 'dayjs';
 
 type Props = {};
 
@@ -83,26 +84,58 @@ const List: FC<Props> = (props) => {
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Description</th>
 						<th>Unit of Issue</th>
 						<th>Estimated Unit Cost</th>
-						<th>Stocks</th>
+						<th>Estimated Cost</th>
+						<th>Quantity</th>
+						<th>Released</th>
+						<th>Available</th>
+						<th>Date Delivered</th>
+						<th>Expiry Date</th>
+						<th>Estimated Cost</th>
+						<th>Critical Value</th>
+						<th></th>
 						<th colSpan={2}>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchMedicines(url)} />}>
-				{medicines.map(({ id, name, unit_of_issue, cost, stocks }, index) => (
-					<tr key={index}>
-						<td>{id}</td>
-						<td>{name}</td>
-						<td>{unit_of_issue}</td>
-						<td>{formatCurrency(cost)}</td>
-						<td>{stocks}</td>
-						<td>
-							<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-								<i className='material-icons mr-1'>create</i>
-								Edit
-							</Link>
-							{/* <a
+				{medicines.map(
+					(
+						{
+							id,
+							name,
+							description,
+							unit_of_issue,
+							estimated_unit_cost,
+							quantity,
+							released,
+							available,
+							date_delivered,
+							expiry_date,
+							critical_value,
+						},
+						index
+					) => (
+						<tr key={index}>
+							<td>{id}</td>
+							<td>{name}</td>
+							<td>{description}</td>
+							<td>{unit_of_issue}</td>
+							<td>{formatCurrency(estimated_unit_cost.parseNumbers())}</td>
+							<td>{quantity}</td>
+							<td>{released}</td>
+							<td>{available}</td>
+							<td>{dayjs(date_delivered).format('MMMM DD, YYYY')}</td>
+							<td>{dayjs(expiry_date).format('MMMM DD, YYYY')}</td>
+							<td>{formatCurrency(quantity * estimated_unit_cost.parseNumbers())}</td>
+							<td>{critical_value}</td>
+							<td>
+								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+									<i className='material-icons mr-1'>create</i>
+									Edit
+								</Link>
+								{/* <a
 								href={url(`/${id}/delete`)}
 								className='btn btn-danger btn-sm'
 								title='Delete'
@@ -121,9 +154,10 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>remove_circle</i>
 								Delete
 							</a> */}
-						</td>
-					</tr>
-				))}
+							</td>
+						</tr>
+					)
+				)}
 			</Table>
 		</>
 	);

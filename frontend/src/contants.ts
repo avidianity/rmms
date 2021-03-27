@@ -12,4 +12,15 @@ export const RecordableMap = {
 export const STATUSES = {
 	RegularRecord: ['Pending', 'Done'],
 	PrenatalRecord: ['Pending', 'Done'],
+	Immunization: {
+		fields: [
+			{ key: 'bcg', name: 'BCG' },
+			{ key: 'penta', name: 'Penta' },
+			{ key: 'opv', name: 'OPV' },
+			{ key: 'hepa_b', name: 'Hepa B' },
+			{ key: 'mmr', name: 'MMR' },
+			{ key: 'other', name: 'Other' },
+		],
+		properties: ['at_birth', 'six_weeks', 'fourteen_weeks', 'nine_months'],
+	},
 };

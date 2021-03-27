@@ -120,6 +120,14 @@ class RecordController extends Controller
         return response('', 204);
     }
 
+    public function archived()
+    {
+        return Record::with(['doctor', 'patient'])
+            ->oldest('case_number')
+            ->whereYear('case_number', '<', now()->year)
+            ->paginate(10);
+    }
+
     /**
      * @param Record $record
      */

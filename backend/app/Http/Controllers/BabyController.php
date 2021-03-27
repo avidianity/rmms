@@ -31,7 +31,6 @@ class BabyController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'file' => ['required'],
             'attendee_id' => ['required', 'numeric', Rule::exists(User::class, 'id'), new Role(['Nurse', 'Midwife'])],
             'name' => ['required', 'string', 'max:255'],
             'nickname' => ['nullable', 'string', 'max:255'],
@@ -58,11 +57,6 @@ class BabyController extends Controller
             'vaccinations.*.remarks' => ['required', 'string', 'max:255'],
         ]);
 
-        $file = File::process($data['file']);
-        $file->save();
-
-        $data['file_id'] = $file->id;
-
         $baby = Baby::create($data);
 
         if (isset($data['vaccinations'])) {
@@ -82,7 +76,7 @@ class BabyController extends Controller
      */
     public function show($id)
     {
-        return Baby::with('attendee', 'file', 'vaccinations')->findOrFail($id);
+        return Baby::with('attendee', 'vaccinations')->findOrFail($id);
     }
 
     /**
@@ -95,7 +89,6 @@ class BabyController extends Controller
     public function update(Request $request, Baby $baby)
     {
         $data = $request->validate([
-            'file' => ['nullable'],
             'attendee_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Nurse', 'Midwife'])],
             'name' => ['nullable', 'string', 'max:255'],
             'nickname' => ['nullable', 'string', 'max:255'],
@@ -121,16 +114,6 @@ class BabyController extends Controller
             'vaccinations.*.date' => ['required', 'date'],
             'vaccinations.*.remarks' => ['required', 'string', 'max:255'],
         ]);
-
-        if (isset($data['file'])) {
-            $old = $baby->file;
-            $file = File::process($data['file']);
-            $file->save();
-            $baby->file_id = $file->id;
-            $baby->save();
-            $baby->load('file');
-            $old->delete();
-        }
 
         if (isset($data['vaccinations'])) {
             $baby->vaccinations()->delete();

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Casts\FloatingPoint;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -12,13 +11,19 @@ class Medicine extends Model
 
     protected $fillable = [
         'name',
+        'description',
         'unit_of_issue',
-        'cost',
-        'stocks',
+        'estimated_unit_cost',
+        'quantity',
+        'released',
+        'available',
+        'date_delivered',
+        'expiry_date',
     ];
 
     protected $casts = [
-        'cost' => FloatingPoint::class,
+        'date_delivered' => 'datetime',
+        'expiry_date' => 'datetime',
     ];
 
     protected $searchable = ['name'];

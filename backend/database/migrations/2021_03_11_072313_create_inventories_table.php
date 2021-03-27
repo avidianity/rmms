@@ -16,8 +16,15 @@ class CreateInventoriesTable extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
-            $table->unsignedInteger('cost');
-            $table->unsignedInteger('stocks')->default(0);
+            $table->string('description');
+            $table->string('unit_of_issue');
+            $table->string('estimated_unit_cost');
+            $table->unsignedBigInteger('quantity');
+            $table->string('released');
+            $table->string('available');
+            $table->timestamp('date_delivered');
+            $table->timestamp('expiry_date');
+            $table->unsignedBigInteger('critical_value');
             $table->timestamps();
         });
     }

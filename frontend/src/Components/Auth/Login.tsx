@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { routes } from '../../routes';
@@ -10,11 +10,15 @@ import { User } from '../../Contracts/User';
 import toastr from 'toastr';
 import state from '../../state';
 import { handleError, outIf } from '../../helpers';
+import bg from '../../assets/center.jpg';
+import dayjs from 'dayjs';
 
 type Props = {};
 
 const Login: FC<Props> = (props) => {
 	const [processing, setProcessing] = useState(false);
+	const [attempts, setAttempts] = useState(0);
+	const [color, setColor] = useState(state.get<string>('background-color') || 'dark');
 	const { register, handleSubmit, errors } = useForm({
 		resolver: yupResolver(
 			yup.object().shape({
@@ -28,6 +32,15 @@ const Login: FC<Props> = (props) => {
 	const submit = async (payload: any) => {
 		setProcessing(true);
 		try {
+			const authExpires = state.get('auth-expires');
+			if (authExpires) {
+				const date = dayjs(authExpires);
+				if (dayjs(new Date()).isAfter(date, 'minutes')) {
+					state.remove('auth-expires');
+				} else {
+					return toastr.info(`Authentication temporarily disabled. Please try again after a few minutes.`);
+				}
+			}
 			const {
 				data: { user, token },
 			} = await axios.post<{ user: User; token: string }>('/auth/login', payload);
@@ -36,11 +49,22 @@ const Login: FC<Props> = (props) => {
 			toastr.success(`Welcome back, ${user.name}!`);
 			history.push(routes.DASHBOARD);
 		} catch (error) {
+			setAttempts(attempts + 1);
+			if (attempts >= 3) {
+				state.set('auth-expires', dayjs(new Date()).add(5, 'minutes').toJSON());
+			}
 			handleError(error);
 		} finally {
 			setProcessing(false);
 		}
 	};
+
+	useEffect(() => {
+		const key = state.listen<string>('background-color', (color) => setColor(color));
+		return () => {
+			state.unlisten('background-color', key);
+		};
+	}, []);
 
 	if (state.has('user')) {
 		history.push(routes.DASHBOARD);
@@ -48,12 +72,19 @@ const Login: FC<Props> = (props) => {
 	}
 
 	return (
-		<div className='d-flex h-100vh align-items-center justify-content-center'>
+		<div
+			className='d-flex h-100vh align-items-center justify-content-center wrapper'
+			data-mode={color}
+			style={{
+				backgroundImage: `url(${bg})`,
+				backgroundSize: 'cover',
+				backgroundRepeat: 'no-repeat',
+			}}>
 			<div className={`card ${styles.card}`}>
 				<div className='card-header text-center'>
-					<img src='/assets/img/manifest-icon-512.png' alt='' className={`rounded-circle shadow border ${styles.icon}`} />
-					<h2 className='card-title'>RMMS</h2>
-					<p className='card-category'>Welcome back! Ready to be productive again? ⚡</p>
+					<img src='/assets/img/manifest-icon-512.png' alt='' className={`rounded-circle shadow border ${styles.icon} my-2`} />
+					<h4 className='card-title mt-1'>Records Monitoring and Management System</h4>
+					<h5 className='card-title'>MCHG</h5>
 				</div>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='card-body'>

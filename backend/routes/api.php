@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BabyController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\IllnessHistoryController;
+use App\Http\Controllers\ImmunizationRecordController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\MedicineController;
 use App\Http\Controllers\PatientController;
@@ -57,6 +58,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('/users/search', [UserController::class, 'search']);
+    Route::get('/expiring/medicines', [MedicineController::class, 'expiring']);
+    Route::get('/expiring/inventories', [InventoryController::class, 'expiring']);
     Route::apiResources([
         'patients' => PatientController::class,
         'users' => UserController::class,
@@ -65,7 +68,14 @@ Route::middleware('auth:sanctum')->group(function () {
         'inventories' => InventoryController::class,
         'illness-histories' => IllnessHistoryController::class,
         'babies' => BabyController::class,
+        'immunization-records' => ImmunizationRecordController::class,
     ]);
+
+    Route::prefix('/archived')->group(function () {
+        Route::get('/regular-records', [RecordController::class, 'archived']);
+        Route::get('/prenatal-records', [PrenatalRecordController::class, 'archived']);
+        Route::get('/immunization-records', [ImmunizationRecordController::class, 'archived']);
+    });
 
     Route::prefix('/pharmacy')->group(function () {
         Route::apiResources([

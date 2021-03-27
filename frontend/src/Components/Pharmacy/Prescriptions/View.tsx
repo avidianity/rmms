@@ -111,8 +111,8 @@ const View: FC<Props> = (props) => {
 									<td>{item.medicine?.name}</td>
 									<td>{item.quantity}</td>
 									<td>{item.medicine?.unit_of_issue}</td>
-									<td>{formatCurrency(item.medicine?.cost || 0)}</td>
-									<td>{formatCurrency((item.medicine?.cost || 0) * item.quantity)}</td>
+									<td>{formatCurrency(item.medicine?.estimated_unit_cost.parseNumbers() || 0)}</td>
+									<td>{formatCurrency((item.medicine?.estimated_unit_cost.parseNumbers() || 0) * item.quantity)}</td>
 								</tr>
 							))}
 						</Table>

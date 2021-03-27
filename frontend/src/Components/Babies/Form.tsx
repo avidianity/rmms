@@ -5,7 +5,7 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
 import { Baby } from '../../Contracts/Baby';
 import { User } from '../../Contracts/User';
-import { handleError, validURL } from '../../helpers';
+import { handleError } from '../../helpers';
 import Flatpickr from 'react-flatpickr';
 import dayjs from 'dayjs';
 import { BabyVaccination } from '../../Contracts/BabyVaccination';
@@ -20,7 +20,6 @@ const Form: FC<Props> = (props) => {
 	const [dateOfBirth, setDateOfBirth] = useState(new Date());
 	const [completeInMonths, setCompleteInMonths] = useState(true);
 	const [nameRegistrationDate, setNameRegistrationDate] = useState(new Date());
-	const [filePreview, setFilePreview] = useState('https://via.placeholder.com/200');
 	const [vaccinations, setVaccinations] = useState<BabyVaccination[]>([]);
 	const { register, handleSubmit, setValue } = useForm<Baby>({
 		defaultValues: {
@@ -31,14 +30,6 @@ const Form: FC<Props> = (props) => {
 	const match = useRouteMatch<{ id: string }>();
 	const history = useHistory();
 	const formRef = createRef<HTMLFormElement>();
-	const fileRef = createRef<HTMLInputElement>();
-	const reader = new FileReader();
-
-	reader.onload = (event) => {
-		if (event.target && event.target.result) {
-			setFilePreview(String(event.target.result));
-		}
-	};
 
 	const submit = async (data: Baby) => {
 		setProcessing(true);
@@ -46,9 +37,6 @@ const Form: FC<Props> = (props) => {
 			data.date_of_birth = dateOfBirth.toJSON();
 			data.name_registration_date = nameRegistrationDate.toJSON();
 			data.vaccinations = vaccinations;
-			if (!validURL(filePreview)) {
-				data.file = filePreview as any;
-			}
 			data.complete_in_months = completeInMonths;
 			await (mode === 'Add' ? axios.post(`/babies`, data) : axios.put(`/babies/${id}`, data));
 			toastr.success('Baby saved successfully.');
@@ -79,7 +67,6 @@ const Form: FC<Props> = (props) => {
 			setValue('order_of_birth', data.order_of_birth);
 			setValue('name_registration_location', data.name_registration_location);
 			setValue('mishaps', data.mishaps);
-			setFilePreview(data.file!.url);
 			setNameRegistrationDate(dayjs(data.name_registration_date).toDate());
 			setDateOfBirth(dayjs(data.date_of_birth).toDate());
 			setID(data.id);
@@ -116,27 +103,6 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)} ref={formRef}>
 					<div className='row'>
-						<div className='col-12 d-flex align-items-center justify-content-center p-1'>
-							<img
-								src={filePreview}
-								alt='Baby'
-								className='rounded-circle shadow border clickable'
-								onClick={() => fileRef.current?.click()}
-								style={{ height: '200px', width: '200px' }}
-							/>
-							<input
-								ref={fileRef}
-								type='file'
-								onChange={(e) => {
-									if (e.target.files && e.target.files.length > 0) {
-										const file = e.target.files[0];
-										reader.readAsDataURL(file);
-									}
-								}}
-								className='d-none'
-								accept='image/*'
-							/>
-						</div>
 						<div className='col-12'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Attendee</label>

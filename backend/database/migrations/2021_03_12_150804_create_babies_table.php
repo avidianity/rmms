@@ -17,7 +17,6 @@ class CreateBabiesTable extends Migration
     {
         Schema::create('babies', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(new File())->constrained();
             $table->foreignIdFor(new User(), 'attendee_id')->constrained((new User())->getTable());
             $table->string('sex');
             $table->string('name')->index();

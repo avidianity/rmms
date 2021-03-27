@@ -39,12 +39,6 @@ const View: FC<Props> = (props) => {
 					</Link>
 				</div>
 				<div className='card-body'>
-					<img
-						src={baby?.file?.url || 'https://via.placeholder.com/200'}
-						alt='Baby'
-						className='rounded-circle border shadow mb-2'
-						style={{ height: '200px', width: '200px' }}
-					/>
 					<p className='card-title'>Name: {baby?.name}</p>
 					<p className='card-title'>Attendee: {baby?.attendee?.name}</p>
 					<p className='card-title'>Nickname: {baby?.nickname}</p>

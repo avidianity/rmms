@@ -22,12 +22,12 @@ const Sidebar: FC<Props> = (props) => {
 			exact: true,
 			show: true,
 		},
-		// {
-		// 	to: url(routes.INVENTORIES),
-		// 	title: 'Supply Stocks',
-		// 	icon: 'inventory',
-		// 	show: ['Pharmacist', 'Admin'].includes(user.role),
-		// },
+		{
+			to: url(routes.INVENTORIES),
+			title: 'Supply Stocks',
+			icon: 'inventory',
+			show: ['Pharmacist', 'Admin'].includes(user.role),
+		},
 		{
 			to: url(routes.MEDICINES),
 			title: 'Medicine Stocks',
@@ -62,6 +62,18 @@ const Sidebar: FC<Props> = (props) => {
 			to: url(routes.RECORDS.PRENATAL),
 			title: 'Prenatal Records',
 			icon: 'pregnant_woman',
+			show: ['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role),
+		},
+		{
+			to: url(routes.RECORDS.IMMUNIZATION),
+			title: 'Immunization Records',
+			icon: 'coronavirus',
+			show: ['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role),
+		},
+		{
+			to: url(routes.RECORDS.ARCHIVED),
+			title: 'Archived Records',
+			icon: 'archive',
 			show: ['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role),
 		},
 		{

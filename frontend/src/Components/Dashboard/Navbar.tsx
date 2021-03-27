@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { routes } from '../../routes';
 import toastr from 'toastr';
@@ -8,6 +8,10 @@ import state from '../../state';
 import { User } from '../../Contracts/User';
 import { MainBus, SearchBus } from '../../events';
 import $ from 'jquery';
+import { Medicine } from '../../Contracts/Medicine';
+import dayjs from 'dayjs';
+import { Inventory } from '../../Contracts/Inventory';
+import { SearchContext } from '../../contexts';
 
 type Props = {
 	mode: string;
@@ -15,8 +19,12 @@ type Props = {
 
 const Navbar: FC<Props> = ({ mode }) => {
 	const [show, setShow] = useState(false);
+	const [showNotifications, setShowNotifications] = useState(false);
+	const [expiring, setExpiring] = useState<{ medicines: Medicine[]; inventories: Inventory[] }>({ medicines: [], inventories: [] });
 	const history = useHistory();
 	const match = useRouteMatch();
+
+	const { show: showSearch } = useContext(SearchContext);
 
 	const url = (path: string) => `${match.path}${path}`;
 
@@ -26,18 +34,35 @@ const Navbar: FC<Props> = ({ mode }) => {
 		} catch (_) {
 		} finally {
 			toastr.info('You have logged out.', 'Notice');
-			state.clear();
+			state.remove('user').remove('token');
 			history.push(routes.LOGIN);
+		}
+	};
+
+	const fetchExpiring = async () => {
+		try {
+			const [{ data: medicines }, { data: inventories }] = await Promise.all([
+				axios.get(`/expiring/medicines`),
+				axios.get(`/expiring/inventories`),
+			]);
+			setExpiring({ medicines, inventories });
+		} catch (error) {
+			console.log(error.toJSON());
 		}
 	};
 
 	const user = state.get<User>('user');
 
 	useEffect(() => {
+		fetchExpiring();
 		const key = MainBus.listen('logout', () => {
 			logout();
 		});
+
+		const handle = setInterval(() => fetchExpiring(), 10000);
+
 		return () => {
+			clearInterval(handle);
 			MainBus.unlisten('logout', key);
 		};
 		// eslint-disable-next-line
@@ -77,37 +102,71 @@ const Navbar: FC<Props> = ({ mode }) => {
 					<span className='navbar-toggler-icon icon-bar'></span>
 				</button>
 				<div className='collapse navbar-collapse justify-content-end'>
-					<form
-						className='navbar-form'
-						onSubmit={(e) => {
-							e.preventDefault();
-							const keyword = String($('#search').val());
-							SearchBus.dispatch('submit', keyword);
-						}}>
-						<div className='input-group no-border'>
-							<input
-								id='search'
-								type='text'
-								className='form-control'
-								placeholder='Search...'
-								onKeyUp={(e) => {
-									e.preventDefault();
-									if (e.key === 'Enter') {
-										const keyword = (e.target as HTMLInputElement).value;
-										SearchBus.dispatch('submit', keyword);
-									}
-								}}
-								onChange={(e) => {
-									SearchBus.dispatch('onChange', e);
-								}}
-							/>
-							<button type='submit' className='btn btn-white btn-round btn-just-icon'>
-								<i className='material-icons'>search</i>
-								<div className='ripple-container'></div>
-							</button>
-						</div>
-					</form>
+					{showSearch ? (
+						<form
+							className='navbar-form'
+							onSubmit={(e) => {
+								e.preventDefault();
+								const keyword = String($('#search').val());
+								SearchBus.dispatch('submit', keyword);
+							}}>
+							<div className='input-group no-border'>
+								<input
+									id='search'
+									type='text'
+									className='form-control'
+									placeholder='Search...'
+									onKeyUp={(e) => {
+										e.preventDefault();
+										if (e.key === 'Enter') {
+											const keyword = (e.target as HTMLInputElement).value;
+											SearchBus.dispatch('submit', keyword);
+										}
+									}}
+									onChange={(e) => {
+										SearchBus.dispatch('onChange', e);
+									}}
+								/>
+								<button type='submit' className='btn btn-white btn-round btn-just-icon'>
+									<i className='material-icons'>search</i>
+									<div className='ripple-container'></div>
+								</button>
+							</div>
+						</form>
+					) : null}
 					<ul className='navbar-nav'>
+						<li className='nav-item dropdown'>
+							<a
+								className='nav-link'
+								href='/'
+								onClick={(e) => {
+									e.preventDefault();
+									setShowNotifications(!showNotifications);
+								}}>
+								<i className='material-icons'>notifications</i>
+								<span className='notification'>{expiring.medicines.length}</span>
+								<p className='d-lg-none d-md-block'>Notifications</p>
+								<div className='ripple-container'></div>
+							</a>
+							<div className={`dropdown-menu dropdown-menu-right ${outIf(showNotifications, 'show')}`}>
+								{expiring.medicines.map((medicine, index) => (
+									<Link
+										to={`${routes.DASHBOARD}${routes.MEDICINES}/${medicine.id}`}
+										className='dropdown-item'
+										key={index}>
+										Medicine '{medicine.name}' is about to expire {dayjs(medicine.expiry_date).fromNow()}.
+									</Link>
+								))}
+								{expiring.inventories.map((inventory, index) => (
+									<Link
+										to={`${routes.DASHBOARD}${routes.INVENTORIES}/${inventory.id}`}
+										className='dropdown-item'
+										key={index}>
+										Supply '{inventory.name}' is about to expire {dayjs(inventory.expiry_date).fromNow()}.
+									</Link>
+								))}
+							</div>
+						</li>
 						<li className='nav-item dropdown'>
 							<a
 								className='nav-link'
