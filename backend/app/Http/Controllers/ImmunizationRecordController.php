@@ -170,8 +170,8 @@ class ImmunizationRecordController extends Controller
 
     public function archived()
     {
-        return ImmunizationRecord::oldest('case_number')
-            ->whereYear('case_number', '<', now()->year)
+        return ImmunizationRecord::oldest('created_at')
+            ->whereYear('created_at', '<', now()->year - 1)
             ->paginate(10);
     }
 }

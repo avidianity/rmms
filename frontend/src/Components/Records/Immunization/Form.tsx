@@ -5,9 +5,11 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
 import { ImmunizationRecord } from '../../../Contracts/ImmunizationRecord';
-import { handleError, sentencify } from '../../../helpers';
+import { handleError, outIf, sentencify } from '../../../helpers';
 import Flatpickr from 'react-flatpickr';
 import { STATUSES } from '../../../contants';
+import state from '../../../state';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -81,6 +83,8 @@ const Form: FC<Props> = (props) => {
 			history.goBack();
 		}
 	};
+
+	const user = state.get<User>('user');
 
 	useEffect(() => {
 		if (match.path.includes('edit')) {
@@ -181,7 +185,7 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='place_of_del' />
 							</div>
 						</div>
-						<div className='col-12'>
+						<div className={`col-12 ${outIf(user.role !== 'Doctor', 'd-none')}`}>
 							<div className='card'>
 								<div className='card-body table-responsive'>
 									<table className='table'>

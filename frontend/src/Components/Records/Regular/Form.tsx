@@ -3,7 +3,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
-import { formatCurrency, handleError } from '../../../helpers';
+import { handleError } from '../../../helpers';
 import { Record } from '../../../Contracts/Record';
 import { User } from '../../../Contracts/User';
 import { Patient } from '../../../Contracts/Patient';
@@ -226,7 +226,7 @@ const Form: FC<Props> = (props) => {
 																	<div className='col-12'>
 																		{prescription.items?.map((item, itemIndex) => (
 																			<div className='row' key={itemIndex}>
-																				<div className='col-12 col-md-3'>
+																				<div className='col-12 col-md-4'>
 																					<div className='form-group bmd-form-group is-filled'>
 																						<label className='bmd-label-floating required'>
 																							Medicine
@@ -253,7 +253,7 @@ const Form: FC<Props> = (props) => {
 																						</select>
 																					</div>
 																				</div>
-																				<div className='col-12 col-md-3'>
+																				<div className='col-12 col-md-4'>
 																					<div className='form-group bmd-form-group is-filled'>
 																						<label className='bmd-label-floating required'>
 																							Quantity
@@ -277,28 +277,7 @@ const Form: FC<Props> = (props) => {
 																						/>
 																					</div>
 																				</div>
-																				<div className='col-12 col-md-3'>
-																					<div className='form-group bmd-form-group is-filled'>
-																						<label className='bmd-label-floating'>Total</label>
-																						<input
-																							type='text'
-																							className='form-control'
-																							readOnly
-																							name='total'
-																							placeholder='Total'
-																							value={formatCurrency(
-																								(medicines
-																									.find(
-																										(medicine) =>
-																											medicine.id === item.medicine_id
-																									)
-																									?.estimated_unit_cost.parseNumbers() ||
-																									0) * item.quantity
-																							)}
-																						/>
-																					</div>
-																				</div>
-																				<div className='col-12 col-md-3 pt-1'>
+																				<div className='col-12 col-md-4 pt-1'>
 																					<button
 																						className='btn btn-danger btn-sm'
 																						disabled={prescription.released_at !== null}

@@ -95,7 +95,7 @@ const List: FC<Props> = (props) => {
 						<th>Expiry Date</th>
 						<th>Estimated Cost</th>
 						<th>Critical Value</th>
-						<th colSpan={2}>Actions</th>
+						<th>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchInventories(url)} />}>
@@ -122,6 +122,7 @@ const List: FC<Props> = (props) => {
 							<td>{description}</td>
 							<td>{unit_of_issue}</td>
 							<td>{formatCurrency(estimated_unit_cost.parseNumbers())}</td>
+							<td>{formatCurrency(quantity * estimated_unit_cost.parseNumbers())}</td>
 							<td>{quantity}</td>
 							<td>{released}</td>
 							<td>{available}</td>

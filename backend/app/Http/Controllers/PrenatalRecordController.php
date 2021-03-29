@@ -148,8 +148,8 @@ class PrenatalRecordController extends Controller
     public function archived()
     {
         return PrenatalRecord::with(['attendee', 'patient'])
-            ->oldest('case_number')
-            ->whereYear('case_number', '<', now()->year)
+            ->oldest('created_at')
+            ->whereYear('created_at', '<', now()->year - 1)
             ->paginate(10);
     }
 

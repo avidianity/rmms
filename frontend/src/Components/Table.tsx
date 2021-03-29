@@ -5,11 +5,12 @@ type Props = {
 	subtitles?: string;
 	head: () => JSX.Element;
 	foot?: () => JSX.Element;
+	className?: string;
 };
 
-const Table: FC<Props> = ({ title, subtitles, head, children, foot }) => {
+const Table: FC<Props> = ({ title, subtitles, head, children, foot, className }) => {
 	return (
-		<div className='card'>
+		<div className={`card ${className}`}>
 			<div className='card-header card-header-success'>
 				<h4 className='card-title'>{title}</h4>
 				{subtitles ? <p className='card-category'>{subtitles}</p> : null}

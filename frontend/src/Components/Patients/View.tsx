@@ -196,6 +196,7 @@ const View: FC<Props> = (props) => {
 							</Table>
 						) : null}
 						<Table
+							className='d-none'
 							title='Illness Histories'
 							subtitles={patient?.histories && patient.histories.length === 0 ? 'No Illness History Available' : undefined}
 							head={() => (
