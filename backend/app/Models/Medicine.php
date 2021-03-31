@@ -15,16 +15,17 @@ class Medicine extends Model
         'unit_of_issue',
         'estimated_unit_cost',
         'quantity',
-        'released',
-        'available',
         'date_delivered',
         'expiry_date',
+        'critical_value',
     ];
 
     protected $casts = [
         'date_delivered' => 'datetime',
         'expiry_date' => 'datetime',
     ];
+
+    protected $appends = ['released', 'available'];
 
     protected $searchable = ['name'];
 
@@ -35,8 +36,31 @@ class Medicine extends Model
         });
     }
 
+    public function getReleasedAttribute()
+    {
+        $released = 0;
+
+        foreach ($this->prescriptions as $item) {
+            if ($item->prescription->released) {
+                $released += $item->quantity;
+            }
+        }
+
+        return $released;
+    }
+
+    public function getAvailableAttribute()
+    {
+        return $this->quantity - $this->getReleasedAttribute();
+    }
+
     public function items()
     {
         return $this->hasMany(PurchaseRequestItem::class);
+    }
+
+    public function prescriptions()
+    {
+        return $this->hasMany(PrescriptionItem::class);
     }
 }

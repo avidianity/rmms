@@ -42,8 +42,6 @@ const Form: FC<Props> = (props) => {
 			setValue('unit_of_issue', data.unit_of_issue);
 			setValue('estimated_unit_cost', data.estimated_unit_cost);
 			setValue('quantity', data.quantity);
-			setValue('released', data.released);
-			setValue('available', data.available);
 			setDateDelivered(dayjs(data.date_delivered).toDate());
 			setExpiryDate(dayjs(data.expiry_date).toDate());
 			setValue('critical_value', data.critical_value);
@@ -102,21 +100,15 @@ const Form: FC<Props> = (props) => {
 								/>
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Quantity</label>
 								<input ref={register} type='number' className='form-control' disabled={processing} name='quantity' />
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Released</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='released' />
-							</div>
-						</div>
-						<div className='col-12 col-md-4'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Available</label>
+								<label className='bmd-label-floating required'>Stocks</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='available' />
 							</div>
 						</div>

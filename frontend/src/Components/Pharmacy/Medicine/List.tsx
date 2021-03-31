@@ -90,7 +90,7 @@ const List: FC<Props> = (props) => {
 						<th>Estimated Cost</th>
 						<th>Quantity</th>
 						<th>Released</th>
-						<th>Available</th>
+						<th>Stocks</th>
 						<th>Date Delivered</th>
 						<th>Expiry Date</th>
 						<th>Estimated Cost</th>
