@@ -70,25 +70,25 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='row'>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Name</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='name' />
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Description</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='description' />
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Unit of Issue</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='unit_of_issue' />
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Estimated Unit Cost</label>
 								<input
@@ -104,12 +104,6 @@ const Form: FC<Props> = (props) => {
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Quantity</label>
 								<input ref={register} type='number' className='form-control' disabled={processing} name='quantity' />
-							</div>
-						</div>
-						<div className='col-12 col-md-6'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Stocks</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='available' />
 							</div>
 						</div>
 						<div className='col-12 col-md-4'>

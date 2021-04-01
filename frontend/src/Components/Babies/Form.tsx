@@ -303,7 +303,7 @@ const Form: FC<Props> = (props) => {
 														</button>
 													</div>
 													<div className='form-group bmd-form-group col-12 col-md-6 col-lg-3'>
-														<label className='bmd-label-floating required'>Name</label>
+														<label className='bmd-label-floating required'>Vaccine Name</label>
 														<input
 															type='text'
 															className='form-control'

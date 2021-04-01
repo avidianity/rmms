@@ -37,7 +37,7 @@ const List: FC<Props> = (props) => {
 	const fetchimmunizationRecords = async (url?: string) => {
 		try {
 			const page = state.get<number>('immunization-record-page') || 1;
-			const { data } = await axios.get<Paginated<ImmunizationRecord>>(url ? url : `/immunization-records?page=${page}`);
+			const { data } = await axios.get<Paginated<ImmunizationRecord>>(url ? url : `/archived/immunization-records?page=${page}`);
 			setImmunizationRecords(data.data);
 			setPaginations({ ...paginations, immunizationRecords: data });
 			state.set('immunization-record-page', data.current_page);
@@ -49,7 +49,7 @@ const List: FC<Props> = (props) => {
 	const fetchPrenatalRecords = async (url?: string) => {
 		try {
 			const page = state.get<number>('prenatal-records-page') || 1;
-			const { data } = await axios.get<Paginated<PrenatalRecord>>(url ? url : `/prenatal-records?page=${page}`);
+			const { data } = await axios.get<Paginated<PrenatalRecord>>(url ? url : `/archived/prenatal-records?page=${page}`);
 			setPrenatalRecords(data.data);
 			setPaginations({ ...paginations, prenatalRecords: data });
 			state.set('prenatal-records-page', data.current_page);
@@ -61,7 +61,7 @@ const List: FC<Props> = (props) => {
 	const fetchRecords = async (url?: string) => {
 		try {
 			const page = state.get<number>('regular-records-page') || 1;
-			const { data } = await axios.get<Paginated<Record>>(url ? url : `/regular-records?page=${page}`);
+			const { data } = await axios.get<Paginated<Record>>(url ? url : `/archived/regular-records?page=${page}`);
 			setRecords(data.data);
 			setPaginations({ ...paginations, regularRecords: data });
 			state.set('regular-records-page', data.current_page);

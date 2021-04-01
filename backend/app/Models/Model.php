@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model as BaseModel;
 
 class Model extends BaseModel
 {
-    use HasFactory;
-
     protected $searchable = [];
 
     public function getSearchableColumns()
