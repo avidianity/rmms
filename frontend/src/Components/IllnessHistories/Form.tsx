@@ -1,12 +1,10 @@
 import axios from 'axios';
-import dayjs from 'dayjs';
 import React, { FC, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
 import { IllnessHistory } from '../../Contracts/IllnessHistory';
 import { handleError, outIf } from '../../helpers';
-import Flatpickr from 'react-flatpickr';
 import { Patient } from '../../Contracts/Patient';
 
 type Props = {};
@@ -15,7 +13,6 @@ const Form: FC<Props> = (props) => {
 	const [processing, setProcessing] = useState(false);
 	const [mode, setMode] = useState('Add');
 	const [id, setID] = useState<number>();
-	const [date, setDate] = useState(new Date());
 	const [patients, setPatients] = useState<Patient[]>([]);
 	const [patientID, setPatientID] = useState(-1);
 	const [patientName, setPatientName] = useState('');
@@ -26,7 +23,6 @@ const Form: FC<Props> = (props) => {
 	const submit = async (data: IllnessHistory) => {
 		setProcessing(true);
 		try {
-			data.date = date.toJSON();
 			data.patient_id = patientID;
 			await (mode === 'Add' ? axios.post(`/illness-histories`, data) : axios.put(`/illness-histories/${id}`, data));
 			toastr.success('Illness History saved successfully.');
@@ -40,18 +36,15 @@ const Form: FC<Props> = (props) => {
 	const fetchMedicine = async (id: any) => {
 		try {
 			const { data } = await axios.get<IllnessHistory>(`/illness-histories/${id}`);
-			setDate(dayjs(data.date).toDate());
 			setPatientID(data.patient_id);
 			setPatientName(data.patient?.name || '');
-			setValue('description', data.description);
+			setValue('chief_complaint', data.chief_complaint);
 			setValue('physical_exams[bp]', data.physical_exams.bp);
 			setValue('physical_exams[wt]', data.physical_exams.wt);
 			setValue('physical_exams[ht]', data.physical_exams.ht);
 			setValue('physical_exams[spo2]', data.physical_exams.spo2);
 			setValue('physical_exams[pr]', data.physical_exams.pr);
 			setValue('physical_exams[tt]', data.physical_exams.tt);
-			setValue('assessment', data.assessment);
-			setValue('treatment', data.treatment);
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
 		} catch (error) {
@@ -123,35 +116,15 @@ const Form: FC<Props> = (props) => {
 								</datalist>
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group is-filled'>
-								<label className='bmd-label-floating required'>Date</label>
-								<Flatpickr
-									value={date}
-									className='form-control'
-									onChange={(data) => {
-										setDate(data[0]);
-									}}
-									disabled={processing}
+						<div className='col-12'>
+							<div className='form-group bmd-form-group'>
+								<label className='bmd-label-floating required'>Chief Complaint</label>
+								<input
+									className={`form-control ${outIf(mode === 'Edit', 'disabled')}`}
+									disabled={processing || mode === 'Edit'}
+									ref={register}
+									name='chief_complaint'
 								/>
-							</div>
-						</div>
-						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>History of Present Illness</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='description' />
-							</div>
-						</div>
-						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Assessment/Impression</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='assessment' />
-							</div>
-						</div>
-						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Treatment/Management Plan</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='treatment' />
 							</div>
 						</div>
 						<div className='col-12'>

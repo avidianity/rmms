@@ -47,7 +47,7 @@ const Form: FC<Props> = (props) => {
 		try {
 			data.birthday = birthday.toJSON();
 			await (mode === 'Add' ? axios.post(`/immunization-records`, data) : axios.put(`/immunization-records/${id}`, data));
-			toastr.success('Immunization Record saved successfully.');
+			toastr.success('Immunization Patient saved successfully.');
 		} catch (error) {
 			handleError(error);
 		} finally {
@@ -97,7 +97,7 @@ const Form: FC<Props> = (props) => {
 	return (
 		<div className='card'>
 			<div className='card-header card-header'>
-				{mode} Immunization Record
+				{mode} Immunization Patient
 				<p className='card-category'>Complete the form below. Leave blank if not applicable.</p>
 				<p className='card-category'>
 					Fields with <span style={{ color: 'rgb(190, 0, 0)' }}>*</span> are required.

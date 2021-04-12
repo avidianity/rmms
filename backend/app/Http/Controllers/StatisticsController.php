@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ImmunizationRecord;
 use App\Models\Medicine;
 use App\Models\Patient;
 use App\Models\PrenatalRecord;
@@ -14,10 +15,20 @@ class StatisticsController extends Controller
 {
     public function counts()
     {
+        $medicines = Medicine::all();
         return [
             'medicine' => [
-                'on_stock' => Medicine::where('available', '>', 0)->sum('available'),
-                'out_of_stock' => Medicine::where('available', 0)->count(),
+                'on_stock' => $medicines->filter(function (Medicine $medicine) {
+                    return $medicine->available > 0;
+                })
+                    ->map(function (Medicine $medicine) {
+                        return $medicine->available;
+                    })->reduce(function ($previous, $next) {
+                        return $previous + $next;
+                    }, 0),
+                'out_of_stock' => $medicines->filter(function (Medicine $medicine) {
+                    return $medicine->available === 0;
+                })->count(),
             ],
             'purchase_requests' => [
                 'delivered' => PurchaseRequest::whereNotNull('delivered')->count(),
@@ -31,6 +42,7 @@ class StatisticsController extends Controller
             'regular_records' => Record::count(),
             'prenatal_records' => PrenatalRecord::count(),
             'users' => User::count(),
+            'immunization_records' => ImmunizationRecord::count(),
         ];
     }
 

@@ -197,15 +197,11 @@ const View: FC<Props> = (props) => {
 						) : null}
 						<Table
 							className='d-none'
-							title='Illness Histories'
-							subtitles={patient?.histories && patient.histories.length === 0 ? 'No Illness History Available' : undefined}
+							title='Physical Exams'
+							subtitles={patient?.histories && patient.histories.length === 0 ? 'No Physical Exams Available' : undefined}
 							head={() => (
 								<tr>
 									<th>ID</th>
-									<th>Date</th>
-									<th>History of Present Illness</th>
-									<th>Assessment/Impression</th>
-									<th>Treatment/Management Plan</th>
 									<th>Issued</th>
 									<th className='text-center'>Actions</th>
 								</tr>
@@ -213,10 +209,6 @@ const View: FC<Props> = (props) => {
 							{patient?.histories?.map((history, index) => (
 								<tr key={index}>
 									<td>{history.id}</td>
-									<td>{dayjs(history.date).format('MMMM DD, YYYY')}</td>
-									<td>{history.description}</td>
-									<td>{history.assessment}</td>
-									<td>{history.treatment}</td>
 									<td>{dayjs(history.created_at).format('MMMM DD, YYYY hh:mm A')}</td>
 									<td className='text-center'>
 										<button
@@ -227,7 +219,7 @@ const View: FC<Props> = (props) => {
 												showIllnessHistory(history);
 											}}>
 											<i className='material-icons mr-1'>visibility</i>
-											View Physical Exams
+											View
 										</button>
 									</td>
 								</tr>
@@ -264,7 +256,7 @@ const View: FC<Props> = (props) => {
 										<ul>
 											{prescription.items?.map((item, index) => (
 												<li key={index}>
-													{item.medicine?.name} ({item.quantity})
+													{item.medicine?.description} ({item.quantity})
 												</li>
 											))}
 										</ul>
@@ -339,7 +331,7 @@ const View: FC<Props> = (props) => {
 										<ul>
 											{prescription.items?.map((item, index) => (
 												<li key={index}>
-													{item.medicine?.name} ({item.quantity})
+													{item.medicine?.description} ({item.quantity})
 												</li>
 											))}
 										</ul>
@@ -355,13 +347,9 @@ const View: FC<Props> = (props) => {
 					<div className='container-fluid'>
 						<div className='card'>
 							<div className='card-header card-header-info d-flex align-items-center'>
-								<h5 className='card-title'>lllness History Information</h5>
+								<h5 className='card-title'>Physical Exam Information</h5>
 							</div>
 							<div className='card-body'>
-								<p className='card-title'>Date: {dayjs(illnessHistory.date).format('MMMM DD, YYYY')}</p>
-								<p className='card-title'>Description: {illnessHistory.description}</p>
-								<p className='card-title'>Assessment/Impression: {illnessHistory.assessment}</p>
-								<p className='card-title'>Treament/Management Plan: {illnessHistory.description}</p>
 								<p className='card-text'>Blood Pressure: {illnessHistory.physical_exams.bp}</p>
 								<p className='card-text'>Weight: {illnessHistory.physical_exams.wt}</p>
 								<p className='card-text'>Height: {illnessHistory.physical_exams.ht}</p>

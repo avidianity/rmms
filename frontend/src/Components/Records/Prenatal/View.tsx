@@ -138,7 +138,7 @@ const View: FC<Props> = (props) => {
 										<ul className='list-unstyled'>
 											{prescription.items?.map((item, index) => (
 												<li key={index}>
-													{item.medicine?.name} ({item.quantity} {item.medicine?.unit_of_issue})
+													{item.medicine?.description} ({item.quantity} {item.medicine?.unit_of_issue})
 												</li>
 											))}
 										</ul>

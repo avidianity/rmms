@@ -10,8 +10,8 @@ class Medicine extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'description',
+        'number_of_units',
         'unit_of_issue',
         'estimated_unit_cost',
         'quantity',
@@ -25,9 +25,9 @@ class Medicine extends Model
         'expiry_date' => 'datetime',
     ];
 
-    protected $appends = ['released', 'available'];
+    protected $appends = ['released', 'available', 'estimated_cost'];
 
-    protected $searchable = ['name'];
+    protected $searchable = ['description'];
 
     protected static function booted()
     {
@@ -49,9 +49,14 @@ class Medicine extends Model
         return $released;
     }
 
+    public function getEstimatedCostAttribute()
+    {
+        return $this->number_of_units * $this->estimated_unit_cost;
+    }
+
     public function getAvailableAttribute()
     {
-        return $this->quantity - $this->getReleasedAttribute();
+        return $this->quantity - $this->released;
     }
 
     public function items()

@@ -1,3 +1,7 @@
+* {
+	transition: background-color 0.25s linear;
+}
+
 .h-100vh {
 	height: 100vh;
 }
@@ -19,12 +23,14 @@
 }
 
 @media screen and (min-width: 576px) {
-	.mobile-logout {
-		display: none;
-	}
-
 	.column-on-mobile {
 		flex-direction: row;
+	}
+}
+
+@media screen and (min-width: 992px) {
+	.mobile-logout {
+		display: none;
 	}
 }
 

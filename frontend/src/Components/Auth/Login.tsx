@@ -31,16 +31,16 @@ const Login: FC<Props> = (props) => {
 
 	const submit = async (payload: any) => {
 		setProcessing(true);
-		try {
-			const authExpires = state.get('auth-expires');
-			if (authExpires) {
-				const date = dayjs(authExpires);
-				if (dayjs(new Date()).isAfter(date, 'minutes')) {
-					state.remove('auth-expires');
-				} else {
-					return toastr.info(`Authentication temporarily disabled. Please try again after a few minutes.`);
-				}
+		const authExpires = state.get('auth-expires');
+		if (authExpires) {
+			const date = dayjs(authExpires);
+			if (dayjs(new Date()).isAfter(date)) {
+				state.remove('auth-expires');
+			} else {
+				return toastr.info(`Authentication temporarily disabled. Please try again after a few minutes.`);
 			}
+		}
+		try {
 			const {
 				data: { user, token },
 			} = await axios.post<{ user: User; token: string }>('/auth/login', payload);
@@ -50,8 +50,9 @@ const Login: FC<Props> = (props) => {
 			history.push(routes.DASHBOARD);
 		} catch (error) {
 			setAttempts(attempts + 1);
-			if (attempts >= 3) {
-				state.set('auth-expires', dayjs(new Date()).add(5, 'minutes').toJSON());
+			if (attempts >= 3 || attempts + 1 >= 3) {
+				state.set('auth-expires', dayjs(new Date()).add(2, 'minutes').toJSON());
+				setTimeout(() => state.remove('auth-expires'), 1000 * 60 * 2);
 			}
 			handleError(error);
 		} finally {
@@ -121,9 +122,6 @@ const Login: FC<Props> = (props) => {
 							{/* <Link to={routes.REGISTER} className='btn btn-link btn-success p-0'>
 								Don't have an account? Register
 							</Link> */}
-							<a href='/forgot-password' className='btn btn-link btn-success p-0 ml-auto'>
-								Forgot password?
-							</a>
 						</div>
 					</div>
 				</form>

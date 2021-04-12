@@ -5,13 +5,14 @@ import toastr from 'toastr';
 import { User } from '../Contracts/User';
 import { handleError } from '../helpers';
 import state from '../state';
+import Logo from '../assets/logo.svg';
 
 type Props = {};
 
 const Profile: FC<Props> = (props) => {
 	const user = state.get<User>('user');
 	const [picture, setPicture] = useState<File | null>(null);
-	const [displayPicture, setDisplayPicture] = useState(user?.picture?.url || '//via.placeholder.com/200');
+	const [displayPicture, setDisplayPicture] = useState(user?.picture?.url || Logo);
 	const [processing, setProcessing] = useState(false);
 	const { register, handleSubmit } = useForm<User>({
 		defaultValues: {
@@ -108,6 +109,21 @@ const Profile: FC<Props> = (props) => {
 					<div className='col-md-4'>
 						<div className='card card-profile'>
 							<div className='card-avatar'>
+								<input
+									ref={fileRef}
+									type='file'
+									className='d-none'
+									name='picture'
+									disabled={processing}
+									accept='image/*'
+									onChange={(e) => {
+										if (e.target.files && e.target.files.length > 0) {
+											const file = e.target.files[0];
+											reader.readAsDataURL(file);
+											setPicture(file);
+										}
+									}}
+								/>
 								<a href='/' onClick={(e) => e.preventDefault()}>
 									<img
 										className='img'
@@ -117,21 +133,6 @@ const Profile: FC<Props> = (props) => {
 											e.preventDefault();
 											if (fileRef.current) {
 												fileRef.current.click();
-											}
-										}}
-									/>
-									<input
-										ref={fileRef}
-										type='file'
-										className='d-none'
-										name='picture'
-										disabled={processing}
-										accept='image/*'
-										onChange={(e) => {
-											if (e.target.files && e.target.files.length > 0) {
-												const file = e.target.files[0];
-												reader.readAsDataURL(file);
-												setPicture(file);
 											}
 										}}
 									/>

@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\Patient;
+use App\Models\Inventory;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateIllnessHistoriesTable extends Migration
+class CreateInventoryReleasesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,11 +14,12 @@ class CreateIllnessHistoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('illness_histories', function (Blueprint $table) {
+        Schema::create('inventory_releases', function (Blueprint $table) {
             $table->id();
-            $table->string('chief_complaint');
-            $table->json('physical_exams');
-            $table->foreignIdFor(new Patient())->constrained();
+            $table->string('name');
+            $table->foreignIdFor(new Inventory())->constrained();
+            $table->unsignedBigInteger('quantity');
+            $table->timestamp('date');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ class CreateIllnessHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('illness_histories');
+        Schema::dropIfExists('inventory_releases');
     }
 }

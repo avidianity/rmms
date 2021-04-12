@@ -38,6 +38,7 @@ export type Counts = {
 	patients: number;
 	regular_records: number;
 	prenatal_records: number;
+	immunization_records: number;
 	users: number;
 };
 

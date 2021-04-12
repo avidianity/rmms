@@ -21,6 +21,7 @@ const Navbar: FC<Props> = ({ mode }) => {
 	const [show, setShow] = useState(false);
 	const [showNotifications, setShowNotifications] = useState(false);
 	const [expiring, setExpiring] = useState<{ medicines: Medicine[]; inventories: Inventory[] }>({ medicines: [], inventories: [] });
+	const [criticals, setCriticals] = useState<{ medicines: Medicine[]; inventories: Inventory[] }>({ medicines: [], inventories: [] });
 	const history = useHistory();
 	const match = useRouteMatch();
 
@@ -51,19 +52,42 @@ const Navbar: FC<Props> = ({ mode }) => {
 		}
 	};
 
+	const fetchCriticals = async () => {
+		try {
+			const [{ data: medicines }, { data: inventories }] = await Promise.all([
+				axios.get(`/criticals/medicines`),
+				axios.get(`/criticals/inventories`),
+			]);
+			setCriticals({ medicines, inventories });
+		} catch (error) {
+			console.log(error.toJSON());
+		}
+	};
+
 	const user = state.get<User>('user');
 
 	useEffect(() => {
 		fetchExpiring();
+		fetchCriticals();
+
 		const key = MainBus.listen('logout', () => {
 			logout();
 		});
 
-		const handle = setInterval(() => fetchExpiring(), 10000);
+		const searchKey = SearchBus.listen('submit', () => {
+			if ($(window).width() || 0 <= 992) {
+				$('.close-layer').trigger('click');
+			}
+		});
+
+		const expiringHandle = setInterval(() => fetchExpiring(), 10000);
+		const criticalsHandle = setInterval(() => fetchCriticals(), 10000);
 
 		return () => {
-			clearInterval(handle);
+			clearInterval(expiringHandle);
+			clearInterval(criticalsHandle);
 			MainBus.unlisten('logout', key);
+			SearchBus.unlisten('submit', searchKey);
 		};
 		// eslint-disable-next-line
 	}, []);
@@ -144,27 +168,61 @@ const Navbar: FC<Props> = ({ mode }) => {
 									setShowNotifications(!showNotifications);
 								}}>
 								<i className='material-icons'>notifications</i>
-								<span className='notification'>{expiring.medicines.length}</span>
+								{expiring.medicines.length > 0 ||
+								expiring.inventories.length > 0 ||
+								criticals.inventories.length > 0 ||
+								criticals.medicines.length > 0 ? (
+									<span className='notification'>
+										{expiring.medicines.length +
+											expiring.inventories.length +
+											criticals.inventories.length +
+											criticals.medicines.length}
+									</span>
+								) : null}
 								<p className='d-lg-none d-md-block'>Notifications</p>
 								<div className='ripple-container'></div>
 							</a>
 							<div className={`dropdown-menu dropdown-menu-right ${outIf(showNotifications, 'show')}`}>
 								{expiring.medicines.map((medicine, index) => (
 									<Link
-										to={`${routes.DASHBOARD}${routes.MEDICINES}/${medicine.id}`}
+										to={`${routes.DASHBOARD}${routes.MEDICINES}/${medicine.id}/edit`}
 										className='dropdown-item'
 										key={index}>
-										Medicine '{medicine.name}' is about to expire {dayjs(medicine.expiry_date).fromNow()}.
+										Medicine '{medicine.description}' is about to expire {dayjs(medicine.expiry_date).fromNow()}.
 									</Link>
 								))}
 								{expiring.inventories.map((inventory, index) => (
 									<Link
-										to={`${routes.DASHBOARD}${routes.INVENTORIES}/${inventory.id}`}
+										to={`${routes.DASHBOARD}${routes.INVENTORIES}/${inventory.id}/edit`}
 										className='dropdown-item'
 										key={index}>
-										Supply '{inventory.name}' is about to expire {dayjs(inventory.expiry_date).fromNow()}.
+										Supply '{inventory.description}' is about to expire {dayjs(inventory.expiry_date).fromNow()}.
 									</Link>
 								))}
+								{criticals.medicines.map((medicine, index) => (
+									<Link
+										to={`${routes.DASHBOARD}${routes.MEDICINES}/${medicine.id}/edit`}
+										className='dropdown-item'
+										key={index}>
+										Medicine '{medicine.description}' is in it's critical value of {medicine.available}.
+									</Link>
+								))}
+								{criticals.inventories.map((inventory, index) => (
+									<Link
+										to={`${routes.DASHBOARD}${routes.INVENTORIES}/${inventory.id}/edit`}
+										className='dropdown-item'
+										key={index}>
+										Supply '{inventory.description}' is in it's critical value of {inventory.available}.
+									</Link>
+								))}
+								{expiring.medicines.length === 0 &&
+								expiring.inventories.length === 0 &&
+								criticals.medicines.length === 0 &&
+								criticals.inventories.length === 0 ? (
+									<a className='dropdown-item' href='/' onClick={(e) => e.preventDefault()}>
+										No Notifications
+									</a>
+								) : null}
 							</div>
 						</li>
 						<li className='nav-item dropdown'>

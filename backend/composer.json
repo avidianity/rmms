@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
+        "mpdf/mpdf": "^8.0",
         "spatie/flysystem-dropbox": "^1.2"
     },
     "require-dev": {

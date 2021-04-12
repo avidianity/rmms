@@ -50,7 +50,7 @@ const Form: FC<Props> = (props) => {
 			setValue('4ps', data['4ps']);
 			setValue('blood_type', data.blood_type);
 			setValue('religion', data.religion);
-			setHistories(data.histories!);
+			setHistories(data.histories!.reverse());
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
 		} catch (error) {
@@ -174,11 +174,11 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='religion' />
 							</div>
 						</div>
-						<div className='col-12 d-none'>
+						<div className='col-12'>
 							<div className='container-fluid'>
 								<div className='card'>
 									<div className='card-header card-header-success'>
-										<h5 className='card-title'>Illness Histories</h5>
+										<h5 className='card-title'>Physical Exams</h5>
 									</div>
 									<div className='card-body'>
 										<button
@@ -188,8 +188,6 @@ const Form: FC<Props> = (props) => {
 												setHistories([
 													...histories,
 													{
-														date: new Date().toJSON(),
-														description: '',
 														physical_exams: {
 															bp: '',
 															wt: '',
@@ -198,18 +196,17 @@ const Form: FC<Props> = (props) => {
 															pr: '',
 															tt: '',
 														},
-														assessment: '',
-														treatment: '',
 														patient_id: -1,
+														chief_complaint: '',
 													},
 												]);
 											}}>
-											Add History
+											Add Physical Exam
 										</button>
 										{histories.map((history, index) => (
 											<div className='card' key={index}>
 												<div className='card-header d-flex align-items-center'>
-													<h5 className='card-title'>History {index + 1}</h5>
+													<h5 className='card-title'>Physical Exam {index + 1}</h5>
 													<button
 														className='btn btn-danger btn-sm ml-auto'
 														onClick={(e) => {
@@ -217,84 +214,11 @@ const Form: FC<Props> = (props) => {
 															histories.splice(index, 1);
 															setHistories([...histories]);
 														}}>
-														Remove History
+														Remove Physical Exam
 													</button>
 												</div>
 												<div className='card-body'>
 													<div className='row'>
-														<div className='col-12 col-md-3'>
-															<div className='form-group bmd-form-group is-filled'>
-																<label className='bmd-label-floating required'>Date</label>
-																<Flatpickr
-																	value={dayjs(history.date).toDate()}
-																	className='form-control'
-																	onChange={(data) => {
-																		history.date = data[0].toJSON();
-																		histories.splice(index, 1, history);
-																		setHistories([...histories]);
-																	}}
-																	disabled={processing}
-																/>
-															</div>
-														</div>
-														<div className='col-12 col-md-3'>
-															<div className='form-group bmd-form-group'>
-																<label className='bmd-label-floating required'>
-																	History of Present Illness
-																</label>
-																<input
-																	ref={register}
-																	type='text'
-																	className='form-control'
-																	disabled={processing}
-																	name='description'
-																	onChange={(e) => {
-																		history.description = e.target.value;
-																		histories.splice(index, 1, history);
-																		setHistories([...histories]);
-																	}}
-																	value={history.description}
-																/>
-															</div>
-														</div>
-														<div className='col-12 col-md-3'>
-															<div className='form-group bmd-form-group'>
-																<label className='bmd-label-floating required'>Assessment/Impression</label>
-																<input
-																	ref={register}
-																	type='text'
-																	className='form-control'
-																	disabled={processing}
-																	name='assessment'
-																	onChange={(e) => {
-																		history.assessment = e.target.value;
-																		histories.splice(index, 1, history);
-																		setHistories([...histories]);
-																	}}
-																	value={history.assessment}
-																/>
-															</div>
-														</div>
-														<div className='col-12 col-md-3'>
-															<div className='form-group bmd-form-group'>
-																<label className='bmd-label-floating required'>
-																	Treatment/Management Plan
-																</label>
-																<input
-																	ref={register}
-																	type='text'
-																	className='form-control'
-																	disabled={processing}
-																	name='treatment'
-																	onChange={(e) => {
-																		history.treatment = e.target.value;
-																		histories.splice(index, 1, history);
-																		setHistories([...histories]);
-																	}}
-																	value={history.treatment}
-																/>
-															</div>
-														</div>
 														<div className='col-12'>
 															<hr className='my-3' />
 															<h3>Physical Exams</h3>
@@ -398,6 +322,17 @@ const Form: FC<Props> = (props) => {
 																		setHistories([...histories]);
 																	}}
 																	value={history.physical_exams.tt}
+																/>
+															</div>
+														</div>
+														<div className='col-12'>
+															<div className='form-group bmd-form-group'>
+																<label className='bmd-label-floating required'>Chief Complaint</label>
+																<input
+																	className='form-control'
+																	disabled={processing}
+																	ref={register}
+																	name='chief_complaint'
 																/>
 															</div>
 														</div>

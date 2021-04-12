@@ -40,7 +40,7 @@ const Form: FC<Props> = (props) => {
 				data.status = STATUSES.PrenatalRecord[0];
 			}
 			await (mode === 'Add' ? axios.post(`/prenatal-records`, data) : axios.put(`/prenatal-records/${id}`, data));
-			toastr.success('Prenatal Record saved successfully.');
+			toastr.success('Prenatal Patient saved successfully.');
 		} catch (error) {
 			handleError(error);
 		} finally {
@@ -91,13 +91,13 @@ const Form: FC<Props> = (props) => {
 	};
 
 	const fetchPatients = async () => {
-		const { data } = await axios.get('/patients?paginate=false&sex=Female');
-		setPatients(data);
+		const { data } = await axios.get<Patient[]>('/patients?paginate=false&sex=Female');
+		setPatients(data.filter((patient) => patient.age >= 12));
 	};
 
 	const fetchMedicines = async () => {
 		const { data } = await axios.get<Medicine[]>(`/pharmacy/medicines?paginate=false`);
-		setMedicines(data.filter((medicine) => medicine.available.parseNumbers() > 0));
+		setMedicines(data.filter((medicine) => medicine.available > 0));
 	};
 
 	const fetchRequirements = async () => {
@@ -121,7 +121,7 @@ const Form: FC<Props> = (props) => {
 	return (
 		<div className='card'>
 			<div className='card-header card-header primary'>
-				{mode} Prenatal Record
+				Consultation
 				<p className='card-category'>Complete the form below. Leave blank if not applicable.</p>
 				<p className='card-category'>
 					Fields with <span style={{ color: 'rgb(190, 0, 0)' }}>*</span> are required.
@@ -400,7 +400,7 @@ const Form: FC<Props> = (props) => {
 																						value={item.medicine_id}>
 																						{medicines.map((medicine, index) => (
 																							<option key={index} value={medicine.id}>
-																								{medicine.name}
+																								{medicine.description}
 																							</option>
 																						))}
 																					</select>

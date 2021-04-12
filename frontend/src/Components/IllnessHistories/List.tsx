@@ -83,24 +83,16 @@ const List: FC<Props> = (props) => {
 				head={() => (
 					<tr>
 						<th>ID</th>
-						<th>Date</th>
 						<th>Patient</th>
-						<th>History of Present Illness</th>
-						<th>Assessment/Impression</th>
-						<th>Treatment/Management Plan</th>
 						<th>Issued</th>
 						<th colSpan={3}>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchIllnessHistories(url)} />}>
-				{histories.map(({ id, date, description, assessment, treatment, patient, created_at }, index) => (
+				{histories.map(({ id, patient, created_at }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
-						<td>{dayjs(date).format('MMMM DD, YYYY')}</td>
 						<td>{patient?.name}</td>
-						<td>{description}</td>
-						<td>{assessment}</td>
-						<td>{treatment}</td>
 						<td>{dayjs(created_at).format('MMMM DD, YYYY hh:mm A')}</td>
 						<td>
 							<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='View'>

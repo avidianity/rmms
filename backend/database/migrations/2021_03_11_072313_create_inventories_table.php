@@ -15,14 +15,12 @@ class CreateInventoriesTable extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->index();
-            $table->string('description');
+            $table->string('description')->index();
+            $table->unsignedBigInteger('number_of_units');
             $table->string('unit_of_issue');
-            $table->string('estimated_unit_cost');
+            $table->unsignedBigInteger('estimated_unit_cost');
             $table->unsignedBigInteger('quantity');
-            $table->string('released');
-            $table->string('available');
-            $table->timestamp('date_delivered');
+            $table->timestamp('date_delivered')->nullable();
             $table->timestamp('expiry_date');
             $table->unsignedBigInteger('critical_value');
             $table->timestamps();

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
-import toastr from 'toastr';
+import React, { createRef, FC, useContext, useEffect, useState } from 'react';
+import { SearchContext } from '../../contexts';
 import {
 	Counts as CountsContract,
 	Daily as DailyContract,
@@ -9,7 +9,7 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
-import { sentencify } from '../../helpers';
+import Exports from '../Exports';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
 import Daily from './Stats/Daily';
@@ -39,6 +39,7 @@ const Statistics: FC<Props> = (props) => {
 		patients: 0,
 		regular_records: 0,
 		prenatal_records: 0,
+		immunization_records: 0,
 		users: 0,
 	});
 	const [years, setYears] = useState<YearsContract>({
@@ -71,6 +72,10 @@ const Statistics: FC<Props> = (props) => {
 		prenatal_records: 0,
 		patients: 0,
 	});
+
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
+	const modalRef = createRef<HTMLDivElement>();
 
 	const fetchCounts = async () => {
 		try {
@@ -138,27 +143,12 @@ const Statistics: FC<Props> = (props) => {
 		setTimeout(() => setShowPrint(true), 1500);
 	};
 
-	const exportAndDownload = async (name: string) => {
-		toastr.info('Exporting data. Please wait or you can do something else while waiting.', 'Notice');
-		try {
-			const { data } = await axios.get(`/exports/${name}`, {
-				responseType: 'blob',
-			});
-
-			const url = URL.createObjectURL(new Blob([data]));
-			const link = document.createElement('a');
-			link.href = url;
-			link.setAttribute('download', `${name}.xlsx`);
-			document.body.append(link);
-			link.click();
-		} catch (error) {
-			console.log(error.toJSON());
-			toastr.error(`Unable to export ${sentencify(name)}.`);
-		}
-	};
-
 	useEffect(() => {
 		fetchRequirements();
+		setShowSearch(false);
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 
@@ -175,39 +165,36 @@ const Statistics: FC<Props> = (props) => {
 					Print
 				</button>
 			) : null}
-			<div className='d-flex column-on-mobile'>
-				<button
-					className='btn btn-info btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('patients');
-					}}>
-					Export Patients
-				</button>
-				<button
-					className='btn btn-success btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('regular-records');
-					}}>
-					Export Regular Records
-				</button>
-				<button
-					className='btn btn-primary btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('prenatal-records');
-					}}>
-					Export Prenatal Records
-				</button>
-				<button
-					className='btn btn-warning btn-sm m-1'
-					onClick={(e) => {
-						e.preventDefault();
-						exportAndDownload('babies');
-					}}>
-					Export Babies
-				</button>
+			<button
+				type='button'
+				className='btn btn-info btn-sm'
+				onClick={(e) => {
+					e.preventDefault();
+					if (modalRef.current) {
+						$(modalRef.current).modal('toggle');
+					}
+				}}>
+				Exports
+			</button>
+			<div className='modal fade' tabIndex={-1} ref={modalRef}>
+				<div className='modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg'>
+					<div className='modal-content'>
+						<div className='modal-header'>
+							<h5 className='modal-title'>Exports</h5>
+							<button type='button' className='close'>
+								<span aria-hidden='true'>&times;</span>
+							</button>
+						</div>
+						<div className='modal-body'>
+							<Exports />
+						</div>
+						<div className='modal-footer'>
+							<button type='button' className='btn btn-secondary btn-sm' data-dismiss='modal'>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
 			<Counts counts={counts} />
 			<div className='row'>

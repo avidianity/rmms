@@ -108,11 +108,11 @@ const View: FC<Props> = (props) => {
 							{prescription?.items?.map((item, index) => (
 								<tr key={index}>
 									<td>{item.id}</td>
-									<td>{item.medicine?.name}</td>
+									<td>{item.medicine?.description}</td>
 									<td>{item.quantity}</td>
 									<td>{item.medicine?.unit_of_issue}</td>
-									<td>{formatCurrency(item.medicine?.estimated_unit_cost.parseNumbers() || 0)}</td>
-									<td>{formatCurrency((item.medicine?.estimated_unit_cost.parseNumbers() || 0) * item.quantity)}</td>
+									<td>{formatCurrency(item.medicine?.estimated_cost || 0)}</td>
+									<td>{formatCurrency((item.medicine?.estimated_cost || 0) * item.quantity)}</td>
 								</tr>
 							))}
 						</Table>

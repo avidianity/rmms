@@ -11,21 +11,13 @@ class IllnessHistory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
-        'description',
         'physical_exams',
-        'assessment',
-        'treatment',
         'patient_id',
+        'chief_complaint',
     ];
 
     protected $casts = [
-        'date' => 'datetime',
         'physical_exams' => JSON::class,
-    ];
-
-    protected $searchable = [
-        'description',
     ];
 
     public function patient()

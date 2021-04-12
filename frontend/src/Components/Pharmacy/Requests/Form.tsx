@@ -63,7 +63,7 @@ const Form: FC<Props> = (props) => {
 	};
 
 	const getMedicineCost = (id: any) => {
-		return medicines.find((medicine) => Number(medicine.id) === Number(id))?.estimated_unit_cost.parseNumbers() || 0;
+		return medicines.find((medicine) => Number(medicine.id) === Number(id))?.estimated_unit_cost || 0;
 	};
 
 	const fetchMedicines = async () => {
@@ -162,7 +162,7 @@ const Form: FC<Props> = (props) => {
 														}}>
 														{medicines.map((medicine, index) => (
 															<option key={index} value={medicine.id}>
-																{medicine.name}
+																{medicine.description}
 															</option>
 														))}
 													</select>

@@ -6,6 +6,7 @@ import state from '../../state';
 import Babies from '../Babies';
 import IllnessHistories from '../IllnessHistories';
 import Inventories from '../Inventories';
+import InventoryReleases from '../InventoryReleases';
 import Patients from '../Patients';
 import Medicine from '../Pharmacy/Medicine';
 import Prescriptions from '../Pharmacy/Prescriptions';
@@ -76,6 +77,7 @@ const Dashboard: FC<Props> = (props) => {
 							<Route path={url(routes.INVENTORIES)} component={Inventories} />
 							<Route path={url(routes.ILLNESS_HISTORIES)} component={IllnessHistories} />
 							<Route path={url(routes.BABIES)} component={Babies} />
+							<Route path={url(routes.INVENTORY_RELEASES)} component={InventoryReleases} />
 						</Switch>
 					</div>
 				</div>

@@ -3,17 +3,16 @@
 namespace App\Exports;
 
 use App\Models\Record;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class RegularRecordExport implements FromCollection, Responsable, WithHeadings
+class RegularRecordExport implements FromCollection, WithHeadings
 {
     use Exportable;
 
-    private $fileName = 'regular-records.xlsx';
+    private $fileName = 'regular-records.pdf';
 
     /**
      * @return \Illuminate\Support\Collection

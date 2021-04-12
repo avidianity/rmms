@@ -3,17 +3,16 @@
 namespace App\Exports;
 
 use App\Models\Patient;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class PatientExport implements FromCollection, Responsable, WithHeadings
+class PatientExport implements FromCollection, WithHeadings
 {
     use Exportable;
 
-    private $fileName = 'patients.xlsx';
+    private $fileName = 'patients.pdf';
 
     /**
      * @return \Illuminate\Support\Collection

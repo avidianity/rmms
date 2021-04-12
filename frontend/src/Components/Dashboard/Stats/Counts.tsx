@@ -65,23 +65,23 @@ const Counts: FC<Props> = ({ counts }) => {
 					</div>
 				</div>
 			</div>
-			<div className='col-lg-3 col-md-6 col-sm-12'>
+			<div className='col-lg-4 col-md-6 col-sm-12'>
 				<div className='card card-stats'>
 					<div className='card-header card-header-success card-header-icon'>
 						<div className='card-icon'>
-							<i className='material-icons'>supervised_user_circle</i>
+							<i className='material-icons'>favorite</i>
 						</div>
-						<p className='card-category'>Patients</p>
-						<h4 className='card-title'>{counts.patients}</h4>
+						<p className='card-category'>Immunization Records</p>
+						<h4 className='card-title'>{counts.immunization_records}</h4>
 					</div>
 					<div className='card-footer'>
 						<div className='stats'>
-							<i className='material-icons'>filter_alt</i> Total
+							<i className='material-icons'>star_rate</i> Total
 						</div>
 					</div>
 				</div>
 			</div>
-			<div className='col-lg-3 col-md-6 col-sm-12'>
+			<div className='col-lg-4 col-md-6 col-sm-12'>
 				<div className='card card-stats'>
 					<div className='card-header card-header-danger card-header-icon'>
 						<div className='card-icon'>
@@ -97,7 +97,7 @@ const Counts: FC<Props> = ({ counts }) => {
 					</div>
 				</div>
 			</div>
-			<div className='col-lg-3 col-md-6 col-sm-12'>
+			<div className='col-lg-4 col-md-6 col-sm-12'>
 				<div className='card card-stats'>
 					<div className='card-header card-header-info card-header-icon'>
 						<div className='card-icon'>
@@ -113,7 +113,7 @@ const Counts: FC<Props> = ({ counts }) => {
 					</div>
 				</div>
 			</div>
-			<div className='col-lg-3 col-md-6 col-sm-12'>
+			<div className='col-md-6 col-sm-12'>
 				<div className='card card-stats'>
 					<div className='card-header card-header-warning card-header-icon'>
 						<div className='card-icon'>
@@ -125,6 +125,22 @@ const Counts: FC<Props> = ({ counts }) => {
 					<div className='card-footer'>
 						<div className='stats'>
 							<i className='material-icons'>lightbulb</i> Total
+						</div>
+					</div>
+				</div>
+			</div>
+			<div className='col-md-6 col-sm-12'>
+				<div className='card card-stats'>
+					<div className='card-header card-header-success card-header-icon'>
+						<div className='card-icon'>
+							<i className='material-icons'>supervised_user_circle</i>
+						</div>
+						<p className='card-category'>Patients</p>
+						<h4 className='card-title'>{counts.patients}</h4>
+					</div>
+					<div className='card-footer'>
+						<div className='stats'>
+							<i className='material-icons'>filter_alt</i> Total
 						</div>
 					</div>
 				</div>

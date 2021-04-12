@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('role', User::ROLES);
             $table->foreignIdFor(new File(), 'profile_picture_id')->nullable()->constrained((new File())->getTable());
+            $table->softDeletes();
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

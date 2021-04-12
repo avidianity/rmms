@@ -1,14 +1,17 @@
+import { InventoryRelease } from './InventoryRelease';
 import { Model } from './Model';
 
 export interface Inventory extends Model {
-	name: string;
 	description: string;
+	number_of_units: number;
 	unit_of_issue: string;
-	estimated_unit_cost: string;
+	estimated_unit_cost: number;
 	quantity: number;
-	released: string;
-	available: string;
-	date_delivered: string;
+	date_delivered: string | null;
 	expiry_date: string;
 	critical_value: number;
+	readonly released: number;
+	readonly available: number;
+	readonly estimated_cost: number;
+	releases?: InventoryRelease[];
 }

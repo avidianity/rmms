@@ -32,12 +32,12 @@ class MedicineController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
+            'number_of_units' => ['required', 'numeric'],
             'unit_of_issue' => ['required', 'string', 'max:255'],
-            'estimated_unit_cost' => ['required', 'string', 'max:255'],
+            'estimated_unit_cost' => ['required', 'numeric'],
             'quantity' => ['required', 'numeric'],
-            'date_delivered' => ['required', 'date'],
+            'date_delivered' => ['nullable', 'date'],
             'expiry_date' => ['required', 'date'],
             'critical_value' => ['required', 'numeric'],
         ]);
@@ -66,10 +66,10 @@ class MedicineController extends Controller
     public function update(Request $request, Medicine $medicine)
     {
         $data = $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:255'],
+            'number_of_units' => ['nullable', 'numeric'],
             'unit_of_issue' => ['nullable', 'string', 'max:255'],
-            'estimated_unit_cost' => ['nullable', 'string', 'max:255'],
+            'estimated_unit_cost' => ['nullable', 'numeric'],
             'quantity' => ['nullable', 'numeric'],
             'date_delivered' => ['nullable', 'date'],
             'expiry_date' => ['nullable', 'date'],
@@ -102,5 +102,14 @@ class MedicineController extends Controller
             ->whereMonth('expiry_date', $now->month)
             ->whereYear('expiry_date', $now->year)
             ->get();
+    }
+
+    public function critical()
+    {
+        return Medicine::latest('expiry_date')
+            ->get()
+            ->filter(function (Medicine $medicine) {
+                return $medicine->available <= $medicine->critical_value;
+            });
     }
 }

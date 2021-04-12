@@ -2,8 +2,7 @@ import { Model } from './Model';
 import { Patient } from './Patient';
 
 export interface IllnessHistory extends Model {
-	date: string;
-	description: string;
+	chief_complaint: string;
 	physical_exams: {
 		bp: string;
 		wt: string;
@@ -12,8 +11,6 @@ export interface IllnessHistory extends Model {
 		pr: string;
 		tt: string;
 	};
-	assessment: string;
-	treatment: string;
 	patient_id: number;
 	patient?: Patient;
 }

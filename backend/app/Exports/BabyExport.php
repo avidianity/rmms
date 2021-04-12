@@ -3,15 +3,16 @@
 namespace App\Exports;
 
 use App\Models\Baby;
-use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Support\Carbon;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 
-class BabyExport implements FromCollection, Responsable, WithHeadings
+class BabyExport implements FromCollection, WithHeadings
 {
     use Exportable;
+
+    private $fileName = 'babies.pdf';
 
     /**
      * @return \Illuminate\Support\Collection

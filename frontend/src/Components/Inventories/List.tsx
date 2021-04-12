@@ -83,59 +83,41 @@ const List: FC<Props> = (props) => {
 				head={() => (
 					<tr>
 						<th>ID</th>
-						<th>Name</th>
 						<th>Description</th>
+						<th>Number of Units</th>
 						<th>Unit of Issue</th>
 						<th>Estimated Unit Cost</th>
-						<th>Estimated Cost</th>
 						<th>Quantity</th>
-						<th>Released</th>
-						<th>Available</th>
 						<th>Date Delivered</th>
 						<th>Expiry Date</th>
-						<th>Estimated Cost</th>
 						<th>Critical Value</th>
+						<th>Released</th>
+						<th>Available</th>
+						<th>Estimated Cost</th>
 						<th>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchInventories(url)} />}>
-				{inventories.map(
-					(
-						{
-							id,
-							name,
-							description,
-							unit_of_issue,
-							estimated_unit_cost,
-							quantity,
-							released,
-							available,
-							date_delivered,
-							expiry_date,
-							critical_value,
-						},
-						index
-					) => (
-						<tr key={index}>
-							<td>{id}</td>
-							<td>{name}</td>
-							<td>{description}</td>
-							<td>{unit_of_issue}</td>
-							<td>{formatCurrency(estimated_unit_cost.parseNumbers())}</td>
-							<td>{formatCurrency(quantity * estimated_unit_cost.parseNumbers())}</td>
-							<td>{quantity}</td>
-							<td>{released}</td>
-							<td>{available}</td>
-							<td>{dayjs(date_delivered).format('MMMM DD, YYYY')}</td>
-							<td>{dayjs(expiry_date).format('MMMM DD, YYYY')}</td>
-							<td>{formatCurrency(quantity * estimated_unit_cost.parseNumbers())}</td>
-							<td>{critical_value}</td>
-							<td>
-								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-									<i className='material-icons mr-1'>create</i>
-									Edit
-								</Link>
-								{/* <a
+				{inventories.map((inventory, index) => (
+					<tr key={index}>
+						<td>{inventory.id}</td>
+						<td>{inventory.description}</td>
+						<td>{inventory.number_of_units}</td>
+						<td>{inventory.unit_of_issue}</td>
+						<td>{formatCurrency(inventory.estimated_unit_cost)}</td>
+						<td>{inventory.quantity}</td>
+						<td>{inventory.date_delivered ? dayjs(inventory.date_delivered).format('MMMM DD, YYYY') : 'N/A'}</td>
+						<td>{dayjs(inventory.expiry_date).format('MMMM DD, YYYY')}</td>
+						<td>{inventory.critical_value}</td>
+						<td>{inventory.released}</td>
+						<td>{inventory.available}</td>
+						<td>{formatCurrency(inventory.estimated_cost)}</td>
+						<td>
+							<Link to={url(`/${inventory.id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+								<i className='material-icons mr-1'>create</i>
+								Edit
+							</Link>
+							{/* <a
 								href={url(`/${id}/delete`)}
 								className='btn btn-danger btn-sm'
 								title='Delete'
@@ -148,16 +130,15 @@ const List: FC<Props> = (props) => {
 										dangerMode: true,
 									});
 									if (confirm === true) {
-										deleteMedicine(id);
+										deleteinventory(id);
 									}
 								}}>
 								<i className='material-icons mr-1'>remove_circle</i>
 								Delete
 							</a> */}
-							</td>
-						</tr>
-					)
-				)}
+						</td>
+					</tr>
+				))}
 			</Table>
 		</>
 	);

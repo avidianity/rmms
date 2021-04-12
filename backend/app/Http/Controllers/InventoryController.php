@@ -12,8 +12,11 @@ class InventoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->input('paginate', 'true') === 'false') {
+            return Inventory::latest()->get();
+        }
         return Inventory::latest()->paginate(10);
     }
 
@@ -26,14 +29,12 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string', 'max:255'],
+            'number_of_units' => ['required', 'numeric'],
             'unit_of_issue' => ['required', 'string', 'max:255'],
-            'estimated_unit_cost' => ['required', 'string', 'max:255'],
+            'estimated_unit_cost' => ['required', 'numeric'],
             'quantity' => ['required', 'numeric'],
-            'released' => ['required', 'string', 'max:255'],
-            'available' => ['required', 'string', 'max:255'],
-            'date_delivered' => ['required', 'date'],
+            'date_delivered' => ['nullable', 'date'],
             'expiry_date' => ['required', 'date'],
             'critical_value' => ['required', 'numeric'],
         ]);
@@ -62,13 +63,11 @@ class InventoryController extends Controller
     public function update(Request $request, Inventory $inventory)
     {
         $data = $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:255'],
+            'number_of_units' => ['nullable', 'numeric'],
             'unit_of_issue' => ['nullable', 'string', 'max:255'],
-            'estimated_unit_cost' => ['nullable', 'string', 'max:255'],
+            'estimated_unit_cost' => ['nullable', 'numeric'],
             'quantity' => ['nullable', 'numeric'],
-            'released' => ['nullable', 'string', 'max:255'],
-            'available' => ['nullable', 'string', 'max:255'],
             'date_delivered' => ['nullable', 'date'],
             'expiry_date' => ['nullable', 'date'],
             'critical_value' => ['nullable', 'numeric'],
@@ -100,5 +99,14 @@ class InventoryController extends Controller
             ->whereMonth('expiry_date', $now->month)
             ->whereYear('expiry_date', $now->year)
             ->get();
+    }
+
+    public function critical()
+    {
+        return Inventory::latest('expiry_date')
+            ->get()
+            ->filter(function (Inventory $medicine) {
+                return $medicine->available <= $medicine->critical_value;
+            });
     }
 }

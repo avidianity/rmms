@@ -37,9 +37,9 @@ const Form: FC<Props> = (props) => {
 		setProcessing(true);
 		try {
 			data.prescriptions = prescriptions;
-			if (!data.status || data.status.length === 0) {
-				data.status = STATUSES.RegularRecord[0];
-			}
+
+			data.status = String(data.diagnosis).length > 0 ? 'Done' : 'Pending';
+
 			await (mode === 'Add' ? axios.post(`/regular-records`, data) : axios.put(`/regular-records/${id}`, data));
 			toastr.success('Record saved successfully.');
 		} catch (error) {
@@ -77,7 +77,7 @@ const Form: FC<Props> = (props) => {
 
 	const fetchMedicines = async () => {
 		const { data } = await axios.get<Medicine[]>(`/pharmacy/medicines?paginate=false`);
-		setMedicines(data.filter((medicine) => medicine.available.parseNumbers() > 0));
+		setMedicines(data.filter((medicine) => medicine.available > 0));
 	};
 
 	const fetchRequirements = async () => {
@@ -101,7 +101,7 @@ const Form: FC<Props> = (props) => {
 	return (
 		<div className='card'>
 			<div className='card-header card-header primary'>
-				{mode} Record
+				{mode} Regular Patient
 				<p className='card-category'>Complete the form below.</p>
 			</div>
 			<div className='card-body'>
@@ -133,7 +133,7 @@ const Form: FC<Props> = (props) => {
 						</div>
 						{user.role === 'Doctor' ? (
 							<>
-								<div className='col-12 col-md-6'>
+								<div className='col-12 col-md-6 d-none'>
 									<div className='form-group bmd-form-group is-filled'>
 										<label className='bmd-label-floating required'>Status</label>
 										<select ref={register} className='form-control' disabled={processing} name='status'>
@@ -145,7 +145,7 @@ const Form: FC<Props> = (props) => {
 										</select>
 									</div>
 								</div>
-								<div className='col-12 col-md-6'>
+								<div className='col-12'>
 									<div className='form-group bmd-form-group is-filled'>
 										<label className='bmd-label-floating required'>Diagnosis</label>
 										<textarea ref={register} className='form-control' disabled={processing} name='diagnosis' />
@@ -247,7 +247,7 @@ const Form: FC<Props> = (props) => {
 																							value={item.medicine_id}>
 																							{medicines.map((medicine, index) => (
 																								<option key={index} value={medicine.id}>
-																									{medicine.name}
+																									{medicine.description}
 																								</option>
 																							))}
 																						</select>

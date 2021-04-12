@@ -30,12 +30,9 @@ class IllnessHistoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'date' => ['required', 'date'],
-            'description' => ['required', 'string', 'max:255'],
             'physical_exams' => ['required'],
-            'assessment' => ['required', 'string'],
-            'treatment' => ['required', 'string'],
             'patient_id' => ['required', 'numeric', Rule::exists(Patient::class, 'id')],
+            'chief_complaint' => ['required', 'string', 'max:255'],
         ]);
 
         return IllnessHistory::create($data);
@@ -62,11 +59,8 @@ class IllnessHistoryController extends Controller
     public function update(Request $request, IllnessHistory $illnessHistory)
     {
         $data = $request->validate([
-            'date' => ['nullable', 'date'],
-            'description' => ['nullable', 'string', 'max:255'],
             'physical_exams' => ['nullable'],
-            'assessment' => ['nullable', 'string'],
-            'treatment' => ['nullable', 'string'],
+            'chief_complaint' => ['nullable', 'string', 'max:255'],
         ]);
 
         $illnessHistory->update($data);
