@@ -9,42 +9,41 @@ use App\Exports\MedicineExport;
 use App\Exports\PatientExport;
 use App\Exports\PrenatalRecordExport;
 use App\Exports\RegularRecordExport;
-use Maatwebsite\Excel\Excel;
 
 class ExportController extends Controller
 {
     public function patients()
     {
-        return (new PatientExport())->download('patients.pdf', Excel::MPDF);
+        return (new PatientExport())->download('patients.xlsx');
     }
 
     public function regularRecords()
     {
-        return (new RegularRecordExport())->download('regular-records.pdf', Excel::MPDF);
+        return (new RegularRecordExport())->download('regular-records.xlsx');
     }
 
     public function prenatalRecords()
     {
-        return (new PrenatalRecordExport())->download('prenatal-records.pdf', Excel::MPDF);
+        return (new PrenatalRecordExport())->download('prenatal-records.xlsx');
     }
 
     public function babies()
     {
-        return (new BabyExport())->download('babies.pdf', Excel::MPDF);
+        return (new BabyExport())->download('babies.xlsx');
     }
 
     public function immunizations()
     {
-        return (new ImmunizationExport())->download('immunization-records.pdf', Excel::MPDF);
+        return (new ImmunizationExport())->download('immunization-records.xlsx');
     }
 
     public function inventories()
     {
-        return (new InventoryExport())->download('supplies.pdf', Excel::MPDF);
+        return (new InventoryExport())->download('supplies.xlsx');
     }
 
     public function medicines()
     {
-        return (new MedicineExport())->download('medicines.pdf', Excel::MPDF);
+        return (new MedicineExport())->download('medicines.xlsx');
     }
 }
