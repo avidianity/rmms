@@ -72,7 +72,7 @@ const Exports: FC<Props> = (props) => {
 						Export Immunization Records
 					</button>
 				</div>
-				{user?.role === 'Pharmacist' ? (
+				{['Pharmacist', 'Admin'].includes(user?.role) ? (
 					<>
 						<div className='col-12 col-md-6 col-lg-4'>
 							<button
