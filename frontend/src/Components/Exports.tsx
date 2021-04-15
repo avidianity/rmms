@@ -2,10 +2,14 @@ import axios from 'axios';
 import React, { FC } from 'react';
 import { sentencify } from '../helpers';
 import toastr from 'toastr';
+import state from '../state';
+import { User } from '../Contracts/User';
 
 type Props = {};
 
 const Exports: FC<Props> = (props) => {
+	const user = state.get<User>('user');
+
 	const exportAndDownload = async (name: string) => {
 		toastr.info('Exporting data. Please wait or you can do something else while waiting.', 'Notice');
 		try {
@@ -16,7 +20,7 @@ const Exports: FC<Props> = (props) => {
 			const url = URL.createObjectURL(new Blob([data]));
 			const link = document.createElement('a');
 			link.href = url;
-			link.setAttribute('download', `${name}.pdf`);
+			link.setAttribute('download', `${name}.xlsx`);
 			document.body.append(link);
 			link.click();
 		} catch (error) {
@@ -68,26 +72,30 @@ const Exports: FC<Props> = (props) => {
 						Export Immunization Records
 					</button>
 				</div>
-				<div className='col-12 col-md-6 col-lg-4'>
-					<button
-						className='btn btn-danger btn-sm m-1 w-100'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('medicines');
-						}}>
-						Export Medicines
-					</button>
-				</div>
-				<div className='col-12 col-md-6 col-lg-4'>
-					<button
-						className='btn btn-warning btn-sm m-1 w-100'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('inventories');
-						}}>
-						Export Inventories
-					</button>
-				</div>
+				{user?.role === 'Pharmacist' ? (
+					<>
+						<div className='col-12 col-md-6 col-lg-4'>
+							<button
+								className='btn btn-danger btn-sm m-1 w-100'
+								onClick={(e) => {
+									e.preventDefault();
+									exportAndDownload('medicines');
+								}}>
+								Export Medicines
+							</button>
+						</div>
+						<div className='col-12 col-md-6 col-lg-4'>
+							<button
+								className='btn btn-warning btn-sm m-1 w-100'
+								onClick={(e) => {
+									e.preventDefault();
+									exportAndDownload('inventories');
+								}}>
+								Export Supplies
+							</button>
+						</div>
+					</>
+				) : null}
 			</div>
 		</div>
 	);

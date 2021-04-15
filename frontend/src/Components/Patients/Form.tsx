@@ -330,9 +330,12 @@ const Form: FC<Props> = (props) => {
 																<label className='bmd-label-floating required'>Chief Complaint</label>
 																<input
 																	className='form-control'
-																	disabled={processing}
-																	ref={register}
-																	name='chief_complaint'
+																	onChange={(e) => {
+																		history.chief_complaint = e.target.value;
+																		histories.splice(index, 1, history);
+																		setHistories([...histories]);
+																	}}
+																	value={history.chief_complaint}
 																/>
 															</div>
 														</div>

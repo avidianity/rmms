@@ -15,7 +15,7 @@ const Form: FC<Props> = (props) => {
 	const [mode, setMode] = useState('Add');
 	const [id, setID] = useState<number>();
 	const [dateDelivered, setDateDelivered] = useState<Date | null>(null);
-	const [expiryDate, setExpiryDate] = useState(new Date());
+	const [expiryDate, setExpiryDate] = useState<Date | null>(null);
 	const { register, handleSubmit, setValue } = useForm<Medicine>();
 	const match = useRouteMatch<{ id: string }>();
 	const history = useHistory();
@@ -24,7 +24,7 @@ const Form: FC<Props> = (props) => {
 		setProcessing(true);
 		try {
 			data.date_delivered = dateDelivered?.toJSON() || null;
-			data.expiry_date = expiryDate.toJSON();
+			data.expiry_date = expiryDate?.toJSON() || new Date().toJSON();
 			await (mode === 'Add' ? axios.post(`/pharmacy/medicines`, data) : axios.put(`/pharmacy/medicines/${id}`, data));
 			toastr.success('Medicine saved successfully.');
 		} catch (error) {
@@ -121,7 +121,11 @@ const Form: FC<Props> = (props) => {
 						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Expiry Date</label>
-								<Flatpickr value={expiryDate} className='form-control' onChange={(dates) => setExpiryDate(dates[0])} />
+								<Flatpickr
+									value={expiryDate || undefined}
+									className='form-control'
+									onChange={(dates) => setExpiryDate(dates[0])}
+								/>
 							</div>
 						</div>
 						<div className='col-12 col-md-6'>
