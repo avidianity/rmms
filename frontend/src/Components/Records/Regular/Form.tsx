@@ -38,7 +38,7 @@ const Form: FC<Props> = (props) => {
 		try {
 			data.prescriptions = prescriptions;
 
-			data.status = String(data.diagnosis).length > 0 ? 'Done' : 'Pending';
+			data.status = String(data.diagnosis || '').length > 0 ? 'Done' : 'Pending';
 
 			await (mode === 'Add' ? axios.post(`/regular-records`, data) : axios.put(`/regular-records/${id}`, data));
 			toastr.success('Record saved successfully.');

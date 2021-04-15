@@ -189,12 +189,12 @@ const Form: FC<Props> = (props) => {
 													...histories,
 													{
 														physical_exams: {
-															bp: '',
-															wt: '',
-															ht: '',
-															spo2: '',
-															pr: '',
-															tt: '',
+															bp: 'N/A',
+															wt: 'N/A',
+															ht: 'N/A',
+															spo2: 'N/A',
+															pr: 'N/A',
+															tt: 'N/A',
 														},
 														patient_id: -1,
 														chief_complaint: '',

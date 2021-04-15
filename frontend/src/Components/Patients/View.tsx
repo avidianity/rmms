@@ -7,8 +7,6 @@ import { Record } from '../../Contracts/Record';
 import { handleError } from '../../helpers';
 import { routes } from '../../routes';
 import Table from '../Table';
-import swal from 'sweetalert';
-import toastr from 'toastr';
 import { PrenatalRecord } from '../../Contracts/PrenatalRecord';
 import $ from 'jquery';
 import Modal from '../Modal';
@@ -59,15 +57,15 @@ const View: FC<Props> = (props) => {
 		}
 	};
 
-	const deletePatient = async (id: any) => {
-		try {
-			await axios.delete(`/patients/${id}`);
-			toastr.info('Patient has been deleted.', 'Notice');
-			history.goBack();
-		} catch (error) {
-			handleError(error);
-		}
-	};
+	// const deletePatient = async (id: any) => {
+	// 	try {
+	// 		await axios.delete(`/patients/${id}`);
+	// 		toastr.info('Patient has been deleted.', 'Notice');
+	// 		history.goBack();
+	// 	} catch (error) {
+	// 		handleError(error);
+	// 	}
+	// };
 
 	useEffect(() => {
 		fetchPatient(match.params.id);
