@@ -85,26 +85,6 @@ const View: FC<Props> = (props) => {
 							<i className='material-icons mr-1'>create</i>
 							Edit
 						</Link>
-						<a
-							href={`${routes.DASHBOARD}${routes.PATIENTS}/${patient?.id}/delete`}
-							className='btn btn-danger btn-sm ml-1'
-							onClick={async (e) => {
-								e.preventDefault();
-								if (patient) {
-									const confirm = await swal({
-										title: `Delete ${patient.name}?`,
-										icon: 'warning',
-										buttons: ['Cancel', 'Confirm'],
-										dangerMode: true,
-									});
-									if (confirm === true) {
-										deletePatient(patient.id);
-									}
-								}
-							}}>
-							<i className='material-icons mr-1'>remove_circle</i>
-							Delete
-						</a>
 					</div>
 				</div>
 				<div className='card-body'>
