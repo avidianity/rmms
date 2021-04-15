@@ -32,46 +32,50 @@ const Exports: FC<Props> = (props) => {
 	return (
 		<div className='container-fluid'>
 			<div className='row'>
-				<div className='col-12 col-md-6 col-lg-4'>
-					<button
-						className='btn btn-info btn-sm m-1 w-100'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('patients');
-						}}>
-						Export Patients
-					</button>
-				</div>
-				<div className='col-12 col-md-6 col-lg-4'>
-					<button
-						className='btn btn-success btn-sm m-1 w-100'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('regular-records');
-						}}>
-						Export Regular Records
-					</button>
-				</div>
-				<div className='col-12 col-md-6 col-lg-4'>
-					<button
-						className='btn btn-primary btn-sm m-1 w-100'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('prenatal-records');
-						}}>
-						Export Prenatal Records
-					</button>
-				</div>
-				<div className='col-12 col-md-6 col-lg-4'>
-					<button
-						className='btn btn-secondary btn-sm m-1 w-100'
-						onClick={(e) => {
-							e.preventDefault();
-							exportAndDownload('immunization-records');
-						}}>
-						Export Immunization Records
-					</button>
-				</div>
+				{!['Pharmacist'].includes(user?.role) ? (
+					<>
+						<div className='col-12 col-md-6 col-lg-4'>
+							<button
+								className='btn btn-info btn-sm m-1 w-100'
+								onClick={(e) => {
+									e.preventDefault();
+									exportAndDownload('patients');
+								}}>
+								Export Patients
+							</button>
+						</div>
+						<div className='col-12 col-md-6 col-lg-4'>
+							<button
+								className='btn btn-success btn-sm m-1 w-100'
+								onClick={(e) => {
+									e.preventDefault();
+									exportAndDownload('regular-records');
+								}}>
+								Export Regular Records
+							</button>
+						</div>
+						<div className='col-12 col-md-6 col-lg-4'>
+							<button
+								className='btn btn-primary btn-sm m-1 w-100'
+								onClick={(e) => {
+									e.preventDefault();
+									exportAndDownload('prenatal-records');
+								}}>
+								Export Prenatal Records
+							</button>
+						</div>
+						<div className='col-12 col-md-6 col-lg-4'>
+							<button
+								className='btn btn-secondary btn-sm m-1 w-100'
+								onClick={(e) => {
+									e.preventDefault();
+									exportAndDownload('immunization-records');
+								}}>
+								Export Immunization Records
+							</button>
+						</div>
+					</>
+				) : null}
 				{['Pharmacist', 'Admin'].includes(user?.role) ? (
 					<>
 						<div className='col-12 col-md-6 col-lg-4'>
