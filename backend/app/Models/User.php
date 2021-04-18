@@ -94,12 +94,12 @@ class User extends Authenticatable
 
     public function prenatals()
     {
-        return $this->hasMany(PrenatalRecord::class, 'prenatal_id');
+        return $this->hasMany(PrenatalRecord::class, 'attendee_id');
     }
 
     public function babies()
     {
-        return $this->hasMany(Baby::class);
+        return $this->hasMany(Baby::class, 'attendee_id');
     }
 
     public function prescriptions()

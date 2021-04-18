@@ -181,7 +181,15 @@ const Statistics: FC<Props> = (props) => {
 					<div className='modal-content'>
 						<div className='modal-header'>
 							<h5 className='modal-title'>Exports</h5>
-							<button type='button' className='close'>
+							<button
+								type='button'
+								className='close'
+								onClick={(e) => {
+									e.preventDefault();
+									if (modalRef.current) {
+										$(modalRef.current).modal('hide');
+									}
+								}}>
 								<span aria-hidden='true'>&times;</span>
 							</button>
 						</div>
@@ -189,7 +197,15 @@ const Statistics: FC<Props> = (props) => {
 							<Exports />
 						</div>
 						<div className='modal-footer'>
-							<button type='button' className='btn btn-secondary btn-sm' data-dismiss='modal'>
+							<button
+								type='button'
+								className='btn btn-secondary btn-sm'
+								onClick={(e) => {
+									e.preventDefault();
+									if (modalRef.current) {
+										$(modalRef.current).modal('hide');
+									}
+								}}>
 								Close
 							</button>
 						</div>

@@ -44,12 +44,12 @@ class Patient extends Model
 
     public function records()
     {
-        return $this->hasMany(Record::class);
+        return $this->hasMany(Record::class)->latest();
     }
 
     public function prenatals()
     {
-        return $this->hasMany(PrenatalRecord::class);
+        return $this->hasMany(PrenatalRecord::class)->latest();
     }
 
     public function scopeMale($query)
@@ -64,6 +64,6 @@ class Patient extends Model
 
     public function histories()
     {
-        return $this->hasMany(IllnessHistory::class);
+        return $this->hasMany(IllnessHistory::class)->latest();
     }
 }

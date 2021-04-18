@@ -1,12 +1,13 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import Login from './Components/Auth/Login';
-import Dashboard from './Components/Dashboard';
-import Loader from './Components/Loader';
 import { routes } from './routes';
 import state from './state';
+import Loader from './Components/Loader';
+
+const Login = lazy(() => import('./Components/Auth/Login'));
+const Dashboard = lazy(() => import('./Components/Dashboard'));
 
 function App() {
 	const [loaded, setLoaded] = useState(false);
@@ -70,13 +71,15 @@ function App() {
 	return !loaded ? (
 		<Loader />
 	) : (
-		<Router>
-			<Switch>
-				<Route path={routes.HOME} exact component={Login} />
-				<Route path={routes.DASHBOARD} component={Dashboard} />
-				<Route path={routes.LOGIN} component={Login} />
-			</Switch>
-		</Router>
+		<Suspense fallback={Loader}>
+			<Router>
+				<Switch>
+					<Route path={routes.HOME} exact component={Login} />
+					<Route path={routes.DASHBOARD} component={Dashboard} />
+					<Route path={routes.LOGIN} component={Login} />
+				</Switch>
+			</Router>
+		</Suspense>
 	);
 }
 

@@ -6,10 +6,12 @@ import toastr from 'toastr';
 import { RecordableMap } from '../../../contants';
 import { Prescription } from '../../../Contracts/Prescription';
 import { Record } from '../../../Contracts/Record';
-import { formatCurrency, handleError } from '../../../helpers';
+import { handleError } from '../../../helpers';
 import Modal from '../../Modal';
 import Table from '../../Table';
 import Flatpickr from 'react-flatpickr';
+import state from '../../../state';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -20,6 +22,8 @@ const View: FC<Props> = (props) => {
 	const [released, setReleased] = useState(new Date());
 	const [releasing, setReleasing] = useState(false);
 	const modalRef = createRef<HTMLDivElement>();
+
+	const user = state.get<User>('user');
 
 	const fetchPrescription = async (id: any) => {
 		try {
@@ -56,22 +60,27 @@ const View: FC<Props> = (props) => {
 			<div className='card'>
 				<div className='card-header card-header-success d-flex align-items-center'>
 					<h4 className='card-title'>View Prescription</h4>
-					<button
-						className='btn btn-info btn-sm ml-auto'
-						disabled={releasing || prescription?.released_at !== null}
-						onClick={(e) => {
-							e.preventDefault();
-							if (modalRef.current && prescription?.released_at === null) {
-								$(modalRef.current).modal('show');
-							}
-						}}>
-						<i className='material-icons mr-1'>local_shipping</i>
-						{prescription?.released_at === null ? 'Mark as Released' : 'Released'}
-					</button>
+					{user?.role === 'Pharmacist' ? (
+						<button
+							className='btn btn-info btn-sm ml-auto'
+							disabled={releasing || prescription?.released_at !== null}
+							onClick={(e) => {
+								e.preventDefault();
+								if (modalRef.current && prescription?.released_at === null) {
+									$(modalRef.current).modal('show');
+								}
+							}}>
+							<i className='material-icons mr-1'>local_shipping</i>
+							{prescription?.released_at === null ? 'Mark as Released' : 'Released'}
+						</button>
+					) : null}
 				</div>
 				<div className='card-body'>
 					<p className='card-text'>Patient: {prescription?.recordable?.patient?.name}</p>
 					<p className='card-text'>Doctor: {prescription?.doctor?.name}</p>
+					<p className='card-text'>
+						Status: {prescription?.released_at ? dayjs(prescription?.released_at).format('MMMM DD, YYYY hh:mm A') : 'Pending'}
+					</p>
 					<div className='container-fluid'>
 						<div className='card'>
 							<div className='card-header'>
@@ -100,9 +109,6 @@ const View: FC<Props> = (props) => {
 									<th>ID</th>
 									<th>Medicine</th>
 									<th>Quantity</th>
-									<th>Unit of Issue</th>
-									<th>Cost</th>
-									<th>Total</th>
 								</tr>
 							)}>
 							{prescription?.items?.map((item, index) => (
@@ -110,9 +116,6 @@ const View: FC<Props> = (props) => {
 									<td>{item.id}</td>
 									<td>{item.medicine?.description}</td>
 									<td>{item.quantity}</td>
-									<td>{item.medicine?.unit_of_issue}</td>
-									<td>{formatCurrency(item.medicine?.estimated_cost || 0)}</td>
-									<td>{formatCurrency((item.medicine?.estimated_cost || 0) * item.quantity)}</td>
 								</tr>
 							))}
 						</Table>

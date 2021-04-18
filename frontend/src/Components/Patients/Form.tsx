@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
 import { Patient } from '../../Contracts/Patient';
-import { handleError } from '../../helpers';
+import { handleError, outIf } from '../../helpers';
 import Flatpickr from 'react-flatpickr';
 import dayjs from 'dayjs';
 import { IllnessHistory } from '../../Contracts/IllnessHistory';
+import state from '../../state';
+import { User } from '../../Contracts/User';
 
 type Props = {};
 
@@ -58,6 +60,8 @@ const Form: FC<Props> = (props) => {
 			history.goBack();
 		}
 	};
+
+	const user = state.get<User>('user');
 
 	useEffect(() => {
 		if (match.path.includes('edit')) {
@@ -174,7 +178,7 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='religion' />
 							</div>
 						</div>
-						<div className='col-12'>
+						<div className={`col-12 ${outIf(user.role !== 'Nurse', 'd-none')}`}>
 							<div className='container-fluid'>
 								<div className='card'>
 									<div className='card-header card-header-success'>

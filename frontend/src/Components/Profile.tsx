@@ -1,11 +1,12 @@
 import axios from 'axios';
-import React, { createRef, FC, useState } from 'react';
+import React, { createRef, FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toastr from 'toastr';
 import { User } from '../Contracts/User';
 import { handleError } from '../helpers';
 import state from '../state';
 import Logo from '../assets/logo.svg';
+import { SearchContext } from '../contexts';
 
 type Props = {};
 
@@ -29,6 +30,8 @@ const Profile: FC<Props> = (props) => {
 		}
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	const submit = async (data: any) => {
 		setProcessing(true);
 		try {
@@ -49,6 +52,14 @@ const Profile: FC<Props> = (props) => {
 			setProcessing(false);
 		}
 	};
+
+	useEffect(() => {
+		setShowSearch(false);
+		return () => {
+			setShowSearch(true);
+		};
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		<div className='container-fluid'>

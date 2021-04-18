@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Str;
 
 class Record extends Model
 {
@@ -34,6 +35,10 @@ class Record extends Model
     {
         static::creating(function (self $record) {
             $record->case_number = now()->format('Y-m-d');
+        });
+
+        static::saving(function (self $record) {
+            $record->status = trim($record->status) === '' ? 'Pending' : 'Done';
         });
     }
 

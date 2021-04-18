@@ -38,7 +38,6 @@ class RecordController extends Controller
             'diagnosis' => ['nullable', 'string', 'max:255'],
             'doctor_id' => ['required', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
             'patient_id' => ['required', 'numeric', Rule::exists(Patient::class, 'id')],
-            'status' => ['required', 'string', 'max:255'],
             'prescriptions' => ['nullable', 'array'],
             'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
             'prescriptions.items.*.quantity' => ['required', 'numeric'],
@@ -83,7 +82,6 @@ class RecordController extends Controller
         $data = $request->validate([
             'diagnosis' => ['nullable', 'string', 'max:255'],
             'doctor_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
-            'status' => ['nullable', 'string', 'max:255'],
             'prescriptions' => ['nullable', 'array'],
             'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],
             'prescriptions.items.*.quantity' => ['required', 'numeric'],

@@ -38,8 +38,6 @@ const Form: FC<Props> = (props) => {
 		try {
 			data.prescriptions = prescriptions;
 
-			data.status = String(data.diagnosis || '').length > 0 ? 'Done' : 'Pending';
-
 			await (mode === 'Add' ? axios.post(`/regular-records`, data) : axios.put(`/regular-records/${id}`, data));
 			toastr.success('Record saved successfully.');
 		} catch (error) {
@@ -83,6 +81,10 @@ const Form: FC<Props> = (props) => {
 	const fetchRequirements = async () => {
 		try {
 			await Promise.all([fetchDoctors(), fetchPatients(), fetchMedicines()]);
+			if (match.path.includes('edit')) {
+				setMode('Edit');
+				await fetchRecord(match.params.id);
+			}
 		} catch (error) {
 			console.log(error.toJSON());
 			toastr.error('Unable to fetch doctor, patient and medicine list.');
@@ -91,10 +93,6 @@ const Form: FC<Props> = (props) => {
 
 	useEffect(() => {
 		fetchRequirements();
-		if (match.path.includes('edit')) {
-			setMode('Edit');
-			fetchRecord(match.params.id);
-		}
 		// eslint-disable-next-line
 	}, []);
 
