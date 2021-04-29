@@ -5,7 +5,7 @@ import 'toastr/build/toastr.css';
 import $ from 'jquery';
 import 'bootstrap';
 
-const url = process.env.REACT_APP_BACKEND_URL;
+const url = process.env.REACT_APP_BACKEND_URL || window.location.origin;
 
 axios.defaults.headers.common['Accept'] = 'application/json';
 axios.defaults.withCredentials = true;
