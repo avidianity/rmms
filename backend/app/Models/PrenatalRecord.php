@@ -51,6 +51,10 @@ class PrenatalRecord extends Model
         static::creating(function (self $record) {
             $record->case_number = now()->format('Y-m-d');
         });
+
+        static::saving(function (self $record) {
+            $record->status = trim($record->remarks ? $record->remarks : '') === '' ? 'Pending' : 'Done';
+        });
     }
 
     public static function search($keyword)

@@ -84,6 +84,7 @@ const List: FC<Props> = (props) => {
 					<tr>
 						<th>ID</th>
 						<th>Name</th>
+						<th>Gender</th>
 						<th>Birthday</th>
 						<th>Address</th>
 						<th>Date Issued</th>
@@ -91,10 +92,11 @@ const List: FC<Props> = (props) => {
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchimmunizationRecords(url)} />}>
-				{immunizationRecords.map(({ id, name, birthday, address, created_at }, index) => (
+				{immunizationRecords.map(({ id, name, birthday, gender, address, created_at }, index) => (
 					<tr key={index}>
 						<td>{id}</td>
 						<td>{name}</td>
+						<td>{gender}</td>
 						<td>{dayjs(birthday).format('MMMM DD, YYYY')}</td>
 						<td>{address}</td>
 						<td>{dayjs(created_at).format('MMMM DD, YYYY hh:mm A')}</td>
@@ -103,7 +105,7 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>
-							{['Nurse', 'Midwife', 'Doctor', 'Admin'].includes(user.role) ? (
+							{['Nurse', 'Midwife', 'Doctor'].includes(user.role) ? (
 								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
 									<i className='material-icons mr-1'>create</i>
 									Edit

@@ -74,8 +74,9 @@ const Form: FC<Props> = (props) => {
 			setValue('phic', data.phic);
 			setValue('attendee_id', data.attendee_id);
 			setValue('patient_id', data.patient_id);
-			setValue('status', data.status);
 			setValue('bmi', data.bmi);
+			setValue('delivery_status', data.delivery_status);
+			setValue('delivery_outcome', data.delivery_outcome);
 			setPrescriptions(data.prescriptions!);
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
@@ -130,7 +131,7 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='row'>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Patient</label>
 								<select ref={register} className='form-control' disabled={processing} name='patient_id'>
@@ -142,25 +143,13 @@ const Form: FC<Props> = (props) => {
 								</select>
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Attendee</label>
 								<select ref={register} className='form-control' disabled={processing} name='attendee_id'>
 									{attendees.map((attendee, index) => (
 										<option key={index} value={attendee.id}>
 											{attendee.name} - {attendee.role}
-										</option>
-									))}
-								</select>
-							</div>
-						</div>
-						<div className='col-12 col-md-4'>
-							<div className='form-group bmd-form-group is-filled'>
-								<label className='bmd-label-floating required'>Status</label>
-								<select ref={register} className='form-control' disabled={processing} name='status'>
-									{STATUSES.PrenatalRecord.map((status, index) => (
-										<option key={index} value={status}>
-											{status}
 										</option>
 									))}
 								</select>
@@ -298,7 +287,25 @@ const Form: FC<Props> = (props) => {
 								<input ref={register} type='text' className='form-control' disabled={processing} name='bmi' />
 							</div>
 						</div>
-						<div className='col-12 col-md-12'>
+						<div className='col-12 col-md-4'>
+							<div className='form-group bmd-form-group'>
+								<label className='bmd-label-floating required'>Delivery Status</label>
+								<select ref={register} className='form-control' disabled={processing} name='delivery_status'>
+									<option value='Alive'>Alive</option>
+									<option value='Deceased'>Deceased</option>
+								</select>
+							</div>
+						</div>
+						<div className='col-12 col-md-4'>
+							<div className='form-group bmd-form-group'>
+								<label className='bmd-label-floating required'>Delivery Outcome</label>
+								<select ref={register} className='form-control' disabled={processing} name='delivery_outcome'>
+									<option value='Male'>Male</option>
+									<option value='Female'>Female</option>
+								</select>
+							</div>
+						</div>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Remarks/Advice</label>
 								<textarea ref={register} className='form-control' disabled={processing} name='remarks' rows={3} />

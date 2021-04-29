@@ -9,6 +9,7 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
+import { routes } from '../../routes';
 import Exports from '../Exports';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
@@ -75,7 +76,8 @@ const Statistics: FC<Props> = (props) => {
 
 	const { setShow: setShowSearch } = useContext(SearchContext);
 
-	const modalRef = createRef<HTMLDivElement>();
+	const exportModalRef = createRef<HTMLDivElement>();
+	const reportModalRef = createRef<HTMLDivElement>();
 
 	const fetchCounts = async () => {
 		try {
@@ -167,16 +169,16 @@ const Statistics: FC<Props> = (props) => {
 			) : null}
 			<button
 				type='button'
-				className='btn btn-info btn-sm'
+				className='btn btn-info btn-sm mx-1'
 				onClick={(e) => {
 					e.preventDefault();
-					if (modalRef.current) {
-						$(modalRef.current).modal('toggle');
+					if (exportModalRef.current) {
+						$(exportModalRef.current).modal('toggle');
 					}
 				}}>
 				Exports
 			</button>
-			<div className='modal fade' tabIndex={-1} ref={modalRef}>
+			<div className='modal fade' tabIndex={-1} ref={exportModalRef}>
 				<div className='modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg'>
 					<div className='modal-content'>
 						<div className='modal-header'>
@@ -186,8 +188,8 @@ const Statistics: FC<Props> = (props) => {
 								className='close'
 								onClick={(e) => {
 									e.preventDefault();
-									if (modalRef.current) {
-										$(modalRef.current).modal('hide');
+									if (exportModalRef.current) {
+										$(exportModalRef.current).modal('hide');
 									}
 								}}>
 								<span aria-hidden='true'>&times;</span>
@@ -202,8 +204,118 @@ const Statistics: FC<Props> = (props) => {
 								className='btn btn-secondary btn-sm'
 								onClick={(e) => {
 									e.preventDefault();
-									if (modalRef.current) {
-										$(modalRef.current).modal('hide');
+									if (exportModalRef.current) {
+										$(exportModalRef.current).modal('hide');
+									}
+								}}>
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button
+				type='button'
+				className='btn btn-primary btn-sm mx-1'
+				onClick={(e) => {
+					e.preventDefault();
+					if (reportModalRef.current) {
+						$(reportModalRef.current).modal('toggle');
+					}
+				}}>
+				Reports
+			</button>
+			<div className='modal fade' tabIndex={-1} ref={reportModalRef}>
+				<div className='modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg'>
+					<div className='modal-content'>
+						<div className='modal-header'>
+							<h5 className='modal-title'>Exports</h5>
+							<button
+								type='button'
+								className='close'
+								onClick={(e) => {
+									e.preventDefault();
+									if (reportModalRef.current) {
+										$(reportModalRef.current).modal('hide');
+									}
+								}}>
+								<span aria-hidden='true'>&times;</span>
+							</button>
+						</div>
+						<div className='modal-body'>
+							<div className='container-fluid'>
+								<div className='row'>
+									<div className='col-12 col-md-6 col-lg-4'>
+										<button
+											className='btn btn-primary btn-sm w-100'
+											onClick={(e) => {
+												e.preventDefault();
+												window.open(routes.EXPORTS.PATIENTS);
+											}}>
+											Patients
+										</button>
+									</div>
+									<div className='col-12 col-md-6 col-lg-4'>
+										<button
+											className='btn btn-info btn-sm w-100'
+											onClick={(e) => {
+												e.preventDefault();
+												window.open(routes.EXPORTS.MEDICINES);
+											}}>
+											Medicines
+										</button>
+									</div>
+									<div className='col-12 col-md-6 col-lg-4'>
+										<button
+											className='btn btn-warning btn-sm w-100'
+											onClick={(e) => {
+												e.preventDefault();
+												window.open(routes.EXPORTS.INVENTORIES);
+											}}>
+											Supplies
+										</button>
+									</div>
+									<div className='col-12 col-md-6 col-lg-4'>
+										<button
+											className='btn btn-success btn-sm w-100'
+											onClick={(e) => {
+												e.preventDefault();
+												window.open(routes.EXPORTS.IMMUNIZATIONS);
+											}}>
+											Immunizations
+										</button>
+									</div>
+									<div className='col-12 col-md-6 col-lg-4'>
+										<button
+											className='btn btn-danger btn-sm w-100'
+											onClick={(e) => {
+												e.preventDefault();
+												window.open(routes.EXPORTS.RECORDS);
+											}}>
+											Regular Patients
+										</button>
+									</div>
+									<div className='col-12 col-md-6 col-lg-4'>
+										<button
+											className='btn btn-secondary btn-sm w-100'
+											onClick={(e) => {
+												e.preventDefault();
+												window.open(routes.EXPORTS.PRENATALS);
+											}}>
+											Prenatal Patients
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className='modal-footer'>
+							<button
+								type='button'
+								className='btn btn-secondary btn-sm'
+								onClick={(e) => {
+									e.preventDefault();
+									if (reportModalRef.current) {
+										$(reportModalRef.current).modal('hide');
 									}
 								}}>
 								Close

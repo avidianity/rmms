@@ -16,6 +16,7 @@ class CreateImmunizationRecordsTable extends Migration
         Schema::create('immunization_records', function (Blueprint $table) {
             $table->id();
             $table->string('name')->index();
+            $table->string('gender');
             $table->timestamp('birthday');
             $table->string('outcome');
             $table->string('address')->index();

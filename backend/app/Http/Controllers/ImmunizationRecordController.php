@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ImmunizationRecord;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ImmunizationRecordController extends Controller
 {
@@ -32,6 +33,7 @@ class ImmunizationRecordController extends Controller
             'address' => ['required', 'string', 'max:255'],
             'weight' => ['required', 'string', 'max:255'],
             'nbs' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', Rule::in(['Male', 'Female'])],
             'mother' => ['required', 'string', 'max:255'],
             'father' => ['required', 'string', 'max:255'],
             'tt_injection' => ['required', 'string', 'max:255'],
@@ -106,6 +108,7 @@ class ImmunizationRecordController extends Controller
             'address' => ['nullable', 'string', 'max:255'],
             'weight' => ['nullable', 'string', 'max:255'],
             'nbs' => ['nullable', 'string', 'max:255'],
+            'gender' => ['nullable', 'string', Rule::in(['Male', 'Female'])],
             'mother' => ['nullable', 'string', 'max:255'],
             'father' => ['nullable', 'string', 'max:255'],
             'tt_injection' => ['nullable', 'string', 'max:255'],

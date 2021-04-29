@@ -70,6 +70,7 @@ const Form: FC<Props> = (props) => {
 			setValue('time_of_del', data.time_of_del);
 			setValue('type_of_del', data.type_of_del);
 			setValue('place_of_del', data.place_of_del);
+			setValue('gender', data.gender);
 
 			STATUSES.Immunization.fields.forEach((field) => {
 				STATUSES.Immunization.properties.forEach((property) => {
@@ -106,13 +107,13 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='row'>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Name</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='name' />
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Birthday</label>
 								<Flatpickr
@@ -121,14 +122,23 @@ const Form: FC<Props> = (props) => {
 									onChange={(data) => {
 										setBirthday(data[0]);
 									}}
-									disabled={processing}
+									disabled={processing || mode === 'Edit'}
 								/>
 							</div>
 						</div>
-						<div className='col-12 col-md-4'>
+						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Address</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='address' />
+							</div>
+						</div>
+						<div className='col-12 col-md-3'>
+							<div className='form-group bmd-form-group is-filled'>
+								<label className='bmd-label-floating required'>Gender</label>
+								<select ref={register} name='gender' className='form-control' disabled={processing}>
+									<option value='Male'>Male</option>
+									<option value='Female'>Female</option>
+								</select>
 							</div>
 						</div>
 						<div className='col-12 col-md-3'>
@@ -210,7 +220,7 @@ const Form: FC<Props> = (props) => {
 																	ref={register}
 																	type='text'
 																	className='form-control'
-																	disabled={processing}
+																	disabled={processing || mode === 'Edit'}
 																	name={`info[${field.key}][${property}]`}
 																/>
 															</div>

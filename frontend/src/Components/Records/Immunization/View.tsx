@@ -7,6 +7,8 @@ import { handleError, sentencify } from '../../../helpers';
 import Table from '../../Table';
 import { routes } from '../../../routes';
 import { STATUSES } from '../../../contants';
+import state from '../../../state';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -40,18 +42,22 @@ const View: FC<Props> = (props) => {
 		// eslint-disable-next-line
 	}, []);
 
+	const user = state.get<User>('user');
+
 	return (
 		<div className='container-fluid'>
 			<div className='card'>
 				<div className='card-header card-header-success'>
 					<div className='d-flex align-items-center'>
 						<h4 className='card-title'>View Immunization Record</h4>
-						<Link
-							to={`${routes.DASHBOARD}${routes.RECORDS.IMMUNIZATION}/${immunizationRecord?.id}/edit`}
-							className='btn btn-warning btn-sm ml-auto'>
-							<i className='material-icons mr-1'>create</i>
-							Edit
-						</Link>
+						{!['Admin'].includes(user.role) ? (
+							<Link
+								to={`${routes.DASHBOARD}${routes.RECORDS.IMMUNIZATION}/${immunizationRecord?.id}/edit`}
+								className='btn btn-warning btn-sm ml-auto'>
+								<i className='material-icons mr-1'>create</i>
+								Edit
+							</Link>
+						) : null}
 					</div>
 				</div>
 				<div className='card-body'>

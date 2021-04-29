@@ -106,10 +106,10 @@ class MedicineController extends Controller
 
     public function critical()
     {
-        return Medicine::latest('expiry_date')
+        return array_values(Medicine::latest('expiry_date')
             ->get()
             ->filter(function (Medicine $medicine) {
                 return $medicine->available <= $medicine->critical_value;
-            });
+            })->toArray());
     }
 }

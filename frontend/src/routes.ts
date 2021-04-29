@@ -21,4 +21,12 @@ export const routes = {
 	CHILD_VACCINATIONS: '/child-vaccinations',
 	BABIES: '/babies',
 	INVENTORY_RELEASES: '/supply-releases',
+	EXPORTS: {
+		PATIENTS: '/reports/patients',
+		MEDICINES: '/reports/medicines',
+		INVENTORIES: '/reports/inventories',
+		IMMUNIZATIONS: '/reports/immunizations',
+		RECORDS: '/reports/regular-records',
+		PRENATALS: '/reports/prenatal-records',
+	},
 };

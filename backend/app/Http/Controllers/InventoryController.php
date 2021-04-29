@@ -103,10 +103,10 @@ class InventoryController extends Controller
 
     public function critical()
     {
-        return Inventory::latest('expiry_date')
+        return array_values(Inventory::latest('expiry_date')
             ->get()
             ->filter(function (Inventory $medicine) {
                 return $medicine->available <= $medicine->critical_value;
-            });
+            })->toArray());
     }
 }

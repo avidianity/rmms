@@ -88,39 +88,45 @@ const List: FC<Props> = (props) => {
 						<th>Patient</th>
 						<th>Attendee</th>
 						<th>Status</th>
+						<th>Delivery Status</th>
+						<th>Delivery Outcome</th>
 						<th>Remarks</th>
 						<th>Last Updated</th>
 						<th colSpan={3}>Actions</th>
 					</tr>
 				)}
 				foot={() => <Pagination pagination={pagination} onChange={(url) => fetchPrenatalRecords(url)} />}>
-				{records.map(({ id, case_number, updated_at, patient, attendee, status, remarks }, index) => (
-					<tr key={index}>
-						<td>{id}</td>
-						<td>{dayjs(case_number!).format('MMMM DD, YYYY')}</td>
-						<td>{patient?.name}</td>
-						<td>{attendee?.name}</td>
-						<td>
-							<b>{status}</b>
-						</td>
-						<td>{lodash.truncate(remarks || '', { length: 10 })}</td>
-						<td>{dayjs(updated_at!).format('MMMM DD, YYYY hh:mm A')}</td>
-						<td>
-							<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='View'>
-								<i className='material-icons mr-1'>visibility</i>
-								View
-							</Link>
-							{status !== 'Done' ? (
-								<>
-									<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-										<i className='material-icons mr-1'>create</i>
-										Edit
-									</Link>
-								</>
-							) : null}
-						</td>
-					</tr>
-				))}
+				{records.map(
+					({ id, case_number, updated_at, delivery_status, delivery_outcome, patient, attendee, status, remarks }, index) => (
+						<tr key={index}>
+							<td>{id}</td>
+							<td>{dayjs(case_number!).format('MMMM DD, YYYY')}</td>
+							<td>{patient?.name}</td>
+							<td>{attendee?.name}</td>
+							<td>
+								<b>{status}</b>
+							</td>
+							<td>{delivery_status}</td>
+							<td>{delivery_outcome}</td>
+							<td>{lodash.truncate(remarks || '', { length: 10 })}</td>
+							<td>{dayjs(updated_at!).format('MMMM DD, YYYY hh:mm A')}</td>
+							<td>
+								<Link to={url(`/${id}`)} className='btn btn-info btn-sm' title='View'>
+									<i className='material-icons mr-1'>visibility</i>
+									View
+								</Link>
+								{status !== 'Done' && !['Admin'].includes(user.role) ? (
+									<>
+										<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+											<i className='material-icons mr-1'>create</i>
+											Edit
+										</Link>
+									</>
+								) : null}
+							</td>
+						</tr>
+					)
+				)}
 			</Table>
 		</>
 	);

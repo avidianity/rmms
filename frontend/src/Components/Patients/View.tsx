@@ -86,16 +86,26 @@ const View: FC<Props> = (props) => {
 					</div>
 				</div>
 				<div className='card-body'>
-					<div className='card-title'>Age: {patient?.age}</div>
-					<div className='card-title'>Sex: {patient?.sex}</div>
-					<div className='card-title'>Birthday: {dayjs(patient?.birthday).format('MMMM DD, YYYY')}</div>
-					<div className='card-title'>Address: {patient?.address}</div>
-					<div className='card-title'>Civil Status: {patient?.civil_status || ''}</div>
-					<div className='card-title'>Membership NH: {patient?.membership || ''}</div>
-					<div className='card-title'>Philhealth Number: {patient?.philhealth_number || ''}</div>
-					<div className='card-title'>Contact Number: {patient?.contact_number || ''}</div>
-					<div className='card-title'>4Ps: {patient?.['4ps'] || ''}</div>
-					<div className='card-title'>Blood Type: {patient?.blood_type || ''}</div>
+					<div className='container-fluid'>
+						<div className='row'>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>Age: {patient?.age}</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>Sex: {patient?.sex}</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>
+								Birthday: {dayjs(patient?.birthday).format('MMMM DD, YYYY')}
+							</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>Address: {patient?.address}</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>Civil Status: {patient?.civil_status || ''}</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>Membership NH: {patient?.membership || ''}</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>
+								Philhealth Number: {patient?.philhealth_number || ''}
+							</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>
+								Contact Number: {patient?.contact_number || ''}
+							</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>4Ps: {patient?.['4ps'] || ''}</div>
+							<div className='card-title col-12 col-md-6 col-lg-4 col-xl-3'>Blood Type: {patient?.blood_type || ''}</div>
+						</div>
+					</div>
 					<div className='container-fluid'>
 						<Table
 							title='Records'

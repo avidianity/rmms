@@ -32,12 +32,15 @@ const Form: FC<Props> = (props) => {
 	});
 	const match = useRouteMatch<{ id: string }>();
 	const history = useHistory();
+	const [patient, setPatient] = useState<Patient | string>('');
 
 	const submit = async (data: any) => {
 		setProcessing(true);
 		try {
 			data.prescriptions = prescriptions;
-
+			if (typeof patient !== 'string') {
+				data.patient_id = patient.id;
+			}
 			await (mode === 'Add' ? axios.post(`/regular-records`, data) : axios.put(`/regular-records/${id}`, data));
 			toastr.success('Record saved successfully.');
 		} catch (error) {
@@ -55,6 +58,7 @@ const Form: FC<Props> = (props) => {
 			setValue('patient_id', data.patient_id);
 			setValue('status', data.status);
 			setPrescriptions(data.prescriptions!);
+			setPatient(data.patient!);
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
 		} catch (error) {
@@ -108,13 +112,27 @@ const Form: FC<Props> = (props) => {
 						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Patient</label>
-								<select ref={register} className='form-control' disabled={processing} name='patient_id'>
+								<input
+									className='form-control'
+									disabled={processing}
+									list='patientList'
+									onChange={(e) => {
+										const patient = patients.find((patient) => patient.id === e.target.value.parseNumbers());
+										if (patient) {
+											setPatient(patient);
+										} else {
+											setPatient(e.target.value);
+										}
+									}}
+									value={typeof patient === 'string' ? patient : patient.name}
+								/>
+								<datalist id='patientList'>
 									{patients.map((patient, index) => (
 										<option key={index} value={patient.id}>
 											{patient.name}
 										</option>
 									))}
-								</select>
+								</datalist>
 							</div>
 						</div>
 						<div className='col-12 col-md-6'>
@@ -243,11 +261,15 @@ const Form: FC<Props> = (props) => {
 																								setPrescriptions([...prescriptions]);
 																							}}
 																							value={item.medicine_id}>
-																							{medicines.map((medicine, index) => (
-																								<option key={index} value={medicine.id}>
-																									{medicine.description}
-																								</option>
-																							))}
+																							{medicines
+																								.filter(
+																									(medicine) => medicine.available > 0
+																								)
+																								.map((medicine, index) => (
+																									<option key={index} value={medicine.id}>
+																										{medicine.description}
+																									</option>
+																								))}
 																						</select>
 																					</div>
 																				</div>

@@ -19,6 +19,7 @@ export const STATUSES = {
 			{ key: 'opv', name: 'OPV' },
 			{ key: 'hepa_b', name: 'Hepa B' },
 			{ key: 'mmr', name: 'MMR' },
+			{ key: 'measles', name: 'Measles' },
 			{ key: 'other', name: 'Other' },
 		],
 		properties: ['at_birth', 'six_weeks', 'fourteen_weeks', 'nine_months'],

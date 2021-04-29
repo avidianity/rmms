@@ -6,6 +6,8 @@ import { PrenatalRecord } from '../../../Contracts/PrenatalRecord';
 import { handleError } from '../../../helpers';
 import Table from '../../Table';
 import { routes } from '../../../routes';
+import state from '../../../state';
+import { User } from '../../../Contracts/User';
 
 type Props = {};
 
@@ -40,6 +42,7 @@ const View: FC<Props> = (props) => {
 	}, []);
 
 	const patient = record?.patient;
+	const user = state.get<User>('user');
 
 	return (
 		<div className='container-fluid'>
@@ -51,7 +54,7 @@ const View: FC<Props> = (props) => {
 							<i className='material-icons mr-1'>visibility</i>
 							View Patient
 						</Link>
-						{record?.status !== 'Done' ? (
+						{record?.status !== 'Done' && !['Admin'].includes(user.role) ? (
 							<>
 								<Link
 									to={`${routes.DASHBOARD}${routes.RECORDS.PRENATAL}/${record?.id}/edit`}
@@ -111,6 +114,8 @@ const View: FC<Props> = (props) => {
 								<p className='card-title'>
 									Status: <b>{record?.status || ''}</b>
 								</p>
+								<p className='card-title'>Delivery Status: {record?.delivery_status}</p>
+								<p className='card-title'>Delivery Outcome: {record?.delivery_outcome}</p>
 								<p className='card-title'>Remarks/Advice: {record?.remarks || ''}</p>
 							</div>
 						</div>

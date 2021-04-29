@@ -5,6 +5,12 @@ import './App.css';
 import { routes } from './routes';
 import state from './state';
 import Loader from './Components/Loader';
+import Patients from './Components/Reports/Patients';
+import Medicines from './Components/Reports/Medicines';
+import Inventories from './Components/Reports/Inventory';
+import ImmunizationRecords from './Components/Reports/ImmunizationRecords';
+import Records from './Components/Reports/Records';
+import PrenatalRecords from './Components/Reports/PrenatalRecords';
 
 const Login = lazy(() => import('./Components/Auth/Login'));
 const Dashboard = lazy(() => import('./Components/Dashboard'));
@@ -77,6 +83,12 @@ function App() {
 					<Route path={routes.HOME} exact component={Login} />
 					<Route path={routes.DASHBOARD} component={Dashboard} />
 					<Route path={routes.LOGIN} component={Login} />
+					<Route path={routes.EXPORTS.PATIENTS} component={Patients} />
+					<Route path={routes.EXPORTS.MEDICINES} component={Medicines} />
+					<Route path={routes.EXPORTS.INVENTORIES} component={Inventories} />
+					<Route path={routes.EXPORTS.IMMUNIZATIONS} component={ImmunizationRecords} />
+					<Route path={routes.EXPORTS.RECORDS} component={Records} />
+					<Route path={routes.EXPORTS.PRENATALS} component={PrenatalRecords} />
 				</Switch>
 			</Router>
 		</Suspense>

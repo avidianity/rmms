@@ -64,6 +64,7 @@ const Form: FC<Props> = (props) => {
 	const user = state.get<User>('user');
 
 	useEffect(() => {
+		$('.form-group').addClass('is-filled');
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchPatient(match.params.id);
@@ -90,7 +91,7 @@ const Form: FC<Props> = (props) => {
 							</div>
 						</div>
 						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group'>
+							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Age</label>
 								<input ref={register} type='number' className='form-control' disabled={processing} name='age' />
 							</div>
@@ -117,7 +118,9 @@ const Form: FC<Props> = (props) => {
 									value={birthday || ''}
 									className='form-control'
 									onChange={(data) => {
-										setBirthday(data[0]);
+										const date = data[0];
+										setBirthday(date);
+										setValue('age', dayjs(new Date()).year() - dayjs(date).year());
 									}}
 									disabled={processing}
 								/>

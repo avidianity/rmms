@@ -110,11 +110,11 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>
-							{status !== 'Done' ? (
+							{status !== 'Done' && !['Admin'].includes(user.role) ? (
 								<>
 									<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
 										<i className='material-icons mr-1'>create</i>
-										Edit
+										{user.role === 'Doctor' ? 'Add Diagnosis and Prescription' : 'Edit'}
 									</Link>
 								</>
 							) : null}

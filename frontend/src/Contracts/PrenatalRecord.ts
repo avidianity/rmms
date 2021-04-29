@@ -29,6 +29,8 @@ export interface PrenatalRecord extends Model {
 	patient_id: number;
 	status: string;
 	remarks: string | null;
+	delivery_status: string | null;
+	delivery_outcome: string | null;
 	attendee?: User;
 	patient?: Patient;
 	prescriptions?: Prescription[];

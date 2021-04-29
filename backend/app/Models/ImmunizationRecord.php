@@ -13,6 +13,7 @@ class ImmunizationRecord extends Model
     protected $fillable = [
         'name',
         'birthday',
+        'gender',
         'outcome',
         'address',
         'weight',

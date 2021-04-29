@@ -28,7 +28,7 @@ const Sidebar: FC<Props> = (props) => {
 		},
 		{
 			to: url(routes.INVENTORIES),
-			title: 'Supply Stocks',
+			title: 'Medical Equipment',
 			icon: 'inventory',
 			show: ['Pharmacist', 'Admin'].includes(user.role),
 		},

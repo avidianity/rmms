@@ -97,7 +97,7 @@ const Navbar: FC<Props> = ({ mode }) => {
 			<div className='container-fluid'>
 				<div className='navbar-wrapper d-flex'>
 					<Link className='navbar-brand' to={routes.DASHBOARD}>
-						Dashboard - {user.role}
+						Dashboard - {user?.role}
 					</Link>
 					<div className='ml-2 clickable mt-1'>
 						<i
