@@ -105,7 +105,7 @@ const List: FC<Props> = (props) => {
 								<i className='material-icons mr-1'>visibility</i>
 								View
 							</Link>
-							{['Nurse', 'Midwife', 'Admin'].includes(user.role) ? (
+							{['Nurse', 'Midwife'].includes(user.role) ? (
 								<Link to={url(`/${id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
 									<i className='material-icons mr-1'>create</i>
 									Edit

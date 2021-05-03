@@ -12,6 +12,8 @@ import $ from 'jquery';
 import Modal from '../Modal';
 import lodash from 'lodash';
 import { IllnessHistory } from '../../Contracts/IllnessHistory';
+import state from '../../state';
+import { User } from '../../Contracts/User';
 
 type Props = {};
 
@@ -67,6 +69,8 @@ const View: FC<Props> = (props) => {
 	// 	}
 	// };
 
+	const user = state.get<User>('user');
+
 	useEffect(() => {
 		fetchPatient(match.params.id);
 		// eslint-disable-next-line
@@ -79,10 +83,14 @@ const View: FC<Props> = (props) => {
 					<h4 className='card-title'>View Patient</h4>
 					<div className='d-flex'>
 						{patient ? <p className='card-category align-self-center'>{patient.name}</p> : null}
-						<Link to={`${routes.DASHBOARD}${routes.PATIENTS}/${patient?.id}/edit`} className='btn btn-warning btn-sm ml-auto'>
-							<i className='material-icons mr-1'>create</i>
-							Edit
-						</Link>
+						{['Nurse', 'Midwife'].includes(user?.role) ? (
+							<Link
+								to={`${routes.DASHBOARD}${routes.PATIENTS}/${patient?.id}/edit`}
+								className='btn btn-warning btn-sm ml-auto'>
+								<i className='material-icons mr-1'>create</i>
+								Edit
+							</Link>
+						) : null}
 					</div>
 				</div>
 				<div className='card-body'>

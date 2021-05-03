@@ -38,7 +38,7 @@ class Record extends Model
         });
 
         static::saving(function (self $record) {
-            $record->status = trim($record->diagnosis) === '' ? 'Pending' : 'Done';
+            $record->status = empty(trim($record->diagnosis)) ? 'Pending' : 'Done';
         });
     }
 

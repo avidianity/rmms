@@ -26,7 +26,7 @@ const Form: FC<Props> = (props) => {
 	const [mode, setMode] = useState('Add');
 	const [id, setID] = useState<number>();
 	const [birthday, setBirthday] = useState(new Date());
-	const { register, handleSubmit, setValue } = useForm<ImmunizationRecord>({
+	const { register, handleSubmit, setValue, getValues } = useForm<ImmunizationRecord>({
 		defaultValues: {
 			info: {
 				bcg: sample,
@@ -39,6 +39,7 @@ const Form: FC<Props> = (props) => {
 			},
 		},
 	});
+
 	const match = useRouteMatch<{ id: string }>();
 	const history = useHistory();
 
@@ -220,7 +221,10 @@ const Form: FC<Props> = (props) => {
 																	ref={register}
 																	type='text'
 																	className='form-control'
-																	disabled={processing || mode === 'Edit'}
+																	disabled={
+																		processing ||
+																		(getValues()?.info as any)?.[field.key]?.[property] !== 'N/A'
+																	}
 																	name={`info[${field.key}][${property}]`}
 																/>
 															</div>

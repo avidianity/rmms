@@ -9,7 +9,9 @@ import {
 	Weeks as WeeksContract,
 	Years as YearsContract,
 } from '../../Contracts/misc';
+import { User } from '../../Contracts/User';
 import { routes } from '../../routes';
+import state from '../../state';
 import Exports from '../Exports';
 import Charts from './Stats/Charts';
 import Counts from './Stats/Counts';
@@ -145,6 +147,8 @@ const Statistics: FC<Props> = (props) => {
 		setTimeout(() => setShowPrint(true), 1500);
 	};
 
+	const user = state.get<User>('user');
+
 	useEffect(() => {
 		fetchRequirements();
 		setShowSearch(false);
@@ -169,7 +173,7 @@ const Statistics: FC<Props> = (props) => {
 			) : null}
 			<button
 				type='button'
-				className='btn btn-info btn-sm mx-1'
+				className='btn btn-info btn-sm mx-1 d-none'
 				onClick={(e) => {
 					e.preventDefault();
 					if (exportModalRef.current) {
@@ -255,26 +259,30 @@ const Statistics: FC<Props> = (props) => {
 											Patients
 										</button>
 									</div>
-									<div className='col-12 col-md-6 col-lg-4'>
-										<button
-											className='btn btn-info btn-sm w-100'
-											onClick={(e) => {
-												e.preventDefault();
-												window.open(routes.EXPORTS.MEDICINES);
-											}}>
-											Medicines
-										</button>
-									</div>
-									<div className='col-12 col-md-6 col-lg-4'>
-										<button
-											className='btn btn-warning btn-sm w-100'
-											onClick={(e) => {
-												e.preventDefault();
-												window.open(routes.EXPORTS.INVENTORIES);
-											}}>
-											Supplies
-										</button>
-									</div>
+									{!['Doctor', 'Nurse'].includes(user?.role) ? (
+										<>
+											<div className='col-12 col-md-6 col-lg-4'>
+												<button
+													className='btn btn-info btn-sm w-100'
+													onClick={(e) => {
+														e.preventDefault();
+														window.open(routes.EXPORTS.MEDICINES);
+													}}>
+													Medicines
+												</button>
+											</div>
+											<div className='col-12 col-md-6 col-lg-4'>
+												<button
+													className='btn btn-warning btn-sm w-100'
+													onClick={(e) => {
+														e.preventDefault();
+														window.open(routes.EXPORTS.INVENTORIES);
+													}}>
+													Supplies
+												</button>
+											</div>
+										</>
+									) : null}
 									<div className='col-12 col-md-6 col-lg-4'>
 										<button
 											className='btn btn-success btn-sm w-100'
