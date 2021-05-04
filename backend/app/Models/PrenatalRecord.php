@@ -36,6 +36,7 @@ class PrenatalRecord extends Model
         'status',
         'attendee_id',
         'patient_id',
+        'husband',
     ];
 
     protected $casts = [

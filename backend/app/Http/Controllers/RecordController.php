@@ -36,6 +36,7 @@ class RecordController extends Controller
     {
         $data = $request->validate([
             'diagnosis' => ['nullable', 'string', 'max:255'],
+            'chief_complaint' => ['required', 'string', 'max:255'],
             'doctor_id' => ['required', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
             'patient_id' => ['required', 'numeric', Rule::exists(Patient::class, 'id')],
             'prescriptions' => ['nullable', 'array'],
@@ -81,6 +82,7 @@ class RecordController extends Controller
     {
         $data = $request->validate([
             'diagnosis' => ['nullable', 'string', 'max:255'],
+            'chief_complaint' => ['nullable', 'string', 'max:255'],
             'doctor_id' => ['nullable', 'numeric', Rule::exists(User::class, 'id'), new Role(['Doctor'])],
             'prescriptions' => ['nullable', 'array'],
             'prescriptions.items.*.medicine_id' => ['required', 'numeric', Rule::exists(Medicine::class, 'id')],

@@ -13,7 +13,6 @@ class ImmunizationRecord extends Model
     protected $fillable = [
         'name',
         'birthday',
-        'gender',
         'outcome',
         'address',
         'weight',
@@ -26,6 +25,8 @@ class ImmunizationRecord extends Model
         'place_of_del',
         'info',
     ];
+
+    protected $searchable = ['name', 'outcome', 'address'];
 
     protected $casts = [
         'birthday' => 'datetime',

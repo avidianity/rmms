@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
@@ -11,6 +11,7 @@ import { Prescription } from '../../../Contracts/Prescription';
 import { Medicine } from '../../../Contracts/Medicine';
 import { STATUSES } from '../../../contants';
 import state from '../../../state';
+import { SearchContext } from '../../../contexts';
 
 type Props = {};
 
@@ -77,6 +78,7 @@ const Form: FC<Props> = (props) => {
 			setValue('bmi', data.bmi);
 			setValue('delivery_status', data.delivery_status);
 			setValue('delivery_outcome', data.delivery_outcome);
+			setValue('husband', data.husband);
 			setPrescriptions(data.prescriptions!);
 			setID(data.id);
 			$('.form-group').addClass('is-filled');
@@ -110,12 +112,18 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
 		fetchRequirements();
+		setShowSearch(false);
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchPrenatalRecord(match.params.id);
 		}
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 
@@ -131,7 +139,7 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='row'>
-						<div className='col-12 col-md-6'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Patient</label>
 								<select ref={register} className='form-control' disabled={processing} name='patient_id'>
@@ -143,7 +151,7 @@ const Form: FC<Props> = (props) => {
 								</select>
 							</div>
 						</div>
-						<div className='col-12 col-md-6'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Attendee</label>
 								<select ref={register} className='form-control' disabled={processing} name='attendee_id'>
@@ -154,7 +162,13 @@ const Form: FC<Props> = (props) => {
 									))}
 								</select>
 							</div>
-						</div>
+                        </div>
+                        <div className='col-12 col-md-4'>
+                            <div className='form-group bmd-form-group is-filled'>
+                                <label className='bmd-label-floating'>Husband</label>
+                                <input ref={register} type='text' name='husband' id='husband' disabled={processing} className='form-control'/>
+                            </div>
+                        </div>
 						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>Last Menstrual Period</label>

@@ -8,6 +8,7 @@ export interface Record extends Model {
 	diagnosis: string;
 	doctor_id: number;
 	patient_id: number;
+	chief_complaint: string;
 	status: string;
 	patient?: Patient;
 	doctor?: User;

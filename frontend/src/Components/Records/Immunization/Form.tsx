@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
@@ -10,6 +10,7 @@ import Flatpickr from 'react-flatpickr';
 import { STATUSES } from '../../../contants';
 import state from '../../../state';
 import { User } from '../../../Contracts/User';
+import { SearchContext } from '../../../contexts';
 
 type Props = {};
 
@@ -71,7 +72,6 @@ const Form: FC<Props> = (props) => {
 			setValue('time_of_del', data.time_of_del);
 			setValue('type_of_del', data.type_of_del);
 			setValue('place_of_del', data.place_of_del);
-			setValue('gender', data.gender);
 
 			STATUSES.Immunization.fields.forEach((field) => {
 				STATUSES.Immunization.properties.forEach((property) => {
@@ -88,11 +88,17 @@ const Form: FC<Props> = (props) => {
 
 	const user = state.get<User>('user');
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
+		setShowSearch(false);
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchImmunizationRecord(match.params.id);
 		}
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 
@@ -108,13 +114,13 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='row'>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Name</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='name' />
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Birthday</label>
 								<Flatpickr
@@ -127,7 +133,7 @@ const Form: FC<Props> = (props) => {
 								/>
 							</div>
 						</div>
-						<div className='col-12 col-md-3'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating required'>Address</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='address' />
@@ -135,17 +141,11 @@ const Form: FC<Props> = (props) => {
 						</div>
 						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group is-filled'>
-								<label className='bmd-label-floating required'>Gender</label>
-								<select ref={register} name='gender' className='form-control' disabled={processing}>
+								<label className='bmd-label-floating required'>Outcome</label>
+								<select ref={register} name='outcome' className='form-control' disabled={processing}>
 									<option value='Male'>Male</option>
 									<option value='Female'>Female</option>
 								</select>
-							</div>
-						</div>
-						<div className='col-12 col-md-3'>
-							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>Outcome</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='outcome' />
 							</div>
 						</div>
 						<div className='col-12 col-md-3'>

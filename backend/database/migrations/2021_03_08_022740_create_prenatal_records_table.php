@@ -42,6 +42,7 @@ class CreatePrenatalRecordsTable extends Migration
             $table->string('delivery_status')->nullable();
             $table->string('delivery_outcome')->nullable();
             $table->string('status')->index();
+            $table->string('husband')->nullable();
             $table->foreignIdFor(new User(), 'attendee_id')->constrained((new User())->getTable());
             $table->foreignIdFor(new Patient())->constrained();
             $table->timestamps();

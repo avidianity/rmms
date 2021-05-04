@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
@@ -10,6 +10,7 @@ import dayjs from 'dayjs';
 import { IllnessHistory } from '../../Contracts/IllnessHistory';
 import state from '../../state';
 import { User } from '../../Contracts/User';
+import { SearchContext } from '../../contexts';
 
 type Props = {};
 
@@ -63,12 +64,19 @@ const Form: FC<Props> = (props) => {
 
 	const user = state.get<User>('user');
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
+		setShowSearch(false);
 		$('.form-group').addClass('is-filled');
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchPatient(match.params.id);
 		}
+
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 

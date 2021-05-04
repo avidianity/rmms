@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
@@ -11,6 +11,7 @@ import { Prescription } from '../../../Contracts/Prescription';
 import { Medicine } from '../../../Contracts/Medicine';
 import { STATUSES } from '../../../contants';
 import state from '../../../state';
+import { SearchContext } from '../../../contexts';
 
 type Props = {};
 
@@ -57,6 +58,7 @@ const Form: FC<Props> = (props) => {
 			setValue('doctor_id', data.doctor_id);
 			setValue('patient_id', data.patient_id);
 			setValue('status', data.status);
+			setValue('chief_complaint', data.chief_complaint);
 			setPrescriptions(data.prescriptions!);
 			setPatient(data.patient!);
 			setID(data.id);
@@ -95,8 +97,14 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
+		setShowSearch(false);
 		fetchRequirements();
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 
@@ -109,7 +117,7 @@ const Form: FC<Props> = (props) => {
 			<div className='card-body'>
 				<form onSubmit={handleSubmit(submit)}>
 					<div className='row'>
-						<div className='col-12 col-md-6'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Patient</label>
 								<input
@@ -135,7 +143,7 @@ const Form: FC<Props> = (props) => {
 								</datalist>
 							</div>
 						</div>
-						<div className='col-12 col-md-6'>
+						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Doctor</label>
 								<select ref={register} className='form-control' disabled={processing} name='doctor_id'>
@@ -145,6 +153,19 @@ const Form: FC<Props> = (props) => {
 										</option>
 									))}
 								</select>
+							</div>
+						</div>
+						<div className='col-12 col-md-4'>
+							<div className='form-group bmd-form-group'>
+								<label className='bmd-label-floating required'>Chief Complaint</label>
+								<input
+									ref={register}
+									type='text'
+									name='chief_complaint'
+									id='chief_complaint'
+									disabled={processing}
+									className='form-control'
+								/>
 							</div>
 						</div>
 						{user.role === 'Doctor' ? (

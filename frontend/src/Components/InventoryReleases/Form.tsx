@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
@@ -8,6 +8,7 @@ import Flatpickr from 'react-flatpickr';
 import dayjs from 'dayjs';
 import { InventoryRelease } from '../../Contracts/InventoryRelease';
 import { Inventory } from '../../Contracts/Inventory';
+import { SearchContext } from '../../contexts';
 
 type Props = {};
 
@@ -63,12 +64,18 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
 		fetchInventories();
+		setShowSearch(false);
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchInventoryRelease(match.params.id);
 		}
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 

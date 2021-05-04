@@ -16,6 +16,7 @@ class Record extends Model
         'doctor_id',
         'patient_id',
         'status',
+        'chief_complaint',
     ];
 
     protected $casts = [

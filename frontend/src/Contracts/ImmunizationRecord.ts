@@ -15,7 +15,6 @@ export interface ImmunizationRecord extends Model {
 	address: string;
 	weight: string;
 	nbs: string;
-	gender: string;
 	mother: string;
 	father: string;
 	tt_injection: string;

@@ -1,12 +1,13 @@
 import axios from 'axios';
 import dayjs from 'dayjs';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
 import { Medicine } from '../../../Contracts/Medicine';
 import { handleError } from '../../../helpers';
 import Flatpickr from 'react-flatpickr';
+import { SearchContext } from '../../../contexts';
 
 type Props = {};
 
@@ -52,11 +53,17 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
+		setShowSearch(false);
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchMedicine(match.params.id);
 		}
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 

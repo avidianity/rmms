@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
+import { SearchContext } from '../../contexts';
 import { User } from '../../Contracts/User';
 import { handleError } from '../../helpers';
 
@@ -42,11 +43,17 @@ const Form: FC<Props> = (props) => {
 		}
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
+		setShowSearch(false);
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchUser(match.params.id);
 		}
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 

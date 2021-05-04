@@ -127,9 +127,9 @@ class ReportsController extends Controller
                 foreach ($gaps as $gap) {
                     try {
                         if ($record->info->{$key}->{$gap} !== 'N/A') {
-                            if ($record->gender === 'Male') {
+                            if ($record->outcome === 'Male') {
                                 $data[$key]['males'] += 1;
-                            } else {
+                            } else if ($record->outcome === 'Female') {
                                 $data[$key]['females'] += 1;
                             }
                             break;

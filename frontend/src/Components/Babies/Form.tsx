@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { createRef, FC, useEffect, useState } from 'react';
+import React, { createRef, FC, useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import toastr from 'toastr';
@@ -9,6 +9,7 @@ import { handleError } from '../../helpers';
 import Flatpickr from 'react-flatpickr';
 import dayjs from 'dayjs';
 import { BabyVaccination } from '../../Contracts/BabyVaccination';
+import { SearchContext } from '../../contexts';
 
 type Props = {};
 
@@ -82,12 +83,18 @@ const Form: FC<Props> = (props) => {
 		setAttendees(data);
 	};
 
+	const { setShow: setShowSearch } = useContext(SearchContext);
+
 	useEffect(() => {
 		fetchAttendees();
+		setShowSearch(false);
 		if (match.path.includes('edit')) {
 			setMode('Edit');
 			fetchBaby(match.params.id);
 		}
+		return () => {
+			setShowSearch(true);
+		};
 		// eslint-disable-next-line
 	}, []);
 
