@@ -212,7 +212,6 @@ const Form: FC<Props> = (props) => {
 															tt: 'N/A',
 														},
 														patient_id: -1,
-														chief_complaint: '',
 													},
 												]);
 											}}>
@@ -337,20 +336,6 @@ const Form: FC<Props> = (props) => {
 																		setHistories([...histories]);
 																	}}
 																	value={history.physical_exams.tt}
-																/>
-															</div>
-														</div>
-														<div className='col-12'>
-															<div className='form-group bmd-form-group'>
-																<label className='bmd-label-floating required'>Chief Complaint</label>
-																<input
-																	className='form-control'
-																	onChange={(e) => {
-																		history.chief_complaint = e.target.value;
-																		histories.splice(index, 1, history);
-																		setHistories([...histories]);
-																	}}
-																	value={history.chief_complaint}
 																/>
 															</div>
 														</div>

@@ -23,7 +23,7 @@ class CreateImmunizationRecordsTable extends Migration
             $table->string('nbs');
             $table->string('mother')->index();
             $table->string('father')->index();
-            $table->string('tt_injection');
+            $table->string('tt_injection')->nullable();
             $table->string('time_of_del');
             $table->string('type_of_del');
             $table->string('place_of_del');

@@ -16,7 +16,6 @@ class CreateIllnessHistoriesTable extends Migration
     {
         Schema::create('illness_histories', function (Blueprint $table) {
             $table->id();
-            $table->string('chief_complaint');
             $table->json('physical_exams');
             $table->foreignIdFor(new Patient())->constrained();
             $table->timestamps();

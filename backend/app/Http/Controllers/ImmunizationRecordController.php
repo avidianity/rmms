@@ -27,7 +27,7 @@ class ImmunizationRecordController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', Rule::unique(ImmunizationRecord::class)],
             'birthday' => ['required', 'date'],
             'outcome' => ['nullable', 'string', Rule::in(['Male', 'Female'])],
             'address' => ['required', 'string', 'max:255'],
@@ -35,7 +35,7 @@ class ImmunizationRecordController extends Controller
             'nbs' => ['required', 'string', 'max:255'],
             'mother' => ['required', 'string', 'max:255'],
             'father' => ['required', 'string', 'max:255'],
-            'tt_injection' => ['required', 'string', 'max:255'],
+            'tt_injection' => ['nullable', 'string', 'max:255'],
             'time_of_del' => ['required', 'string', 'max:255'],
             'type_of_del' => ['required', 'string', 'max:255'],
             'place_of_del' => ['required', 'string', 'max:255'],
@@ -101,7 +101,7 @@ class ImmunizationRecordController extends Controller
     public function update(Request $request, ImmunizationRecord $immunizationRecord)
     {
         $data = $request->validate([
-            'name' => ['nullable', 'string', 'max:255'],
+            'name' => ['nullable', 'string', 'max:255', Rule::unique(ImmunizationRecord::class)->ignoreModel($immunizationRecord)],
             'birthday' => ['nullable', 'date'],
             'outcome' => ['nullable', 'string', Rule::in(['Male', 'Female'])],
             'address' => ['nullable', 'string', 'max:255'],

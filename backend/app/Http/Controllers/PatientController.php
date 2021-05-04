@@ -58,7 +58,6 @@ class PatientController extends Controller
             'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
             'histories' => ['nullable', 'array'],
-            'histories.*.chief_complaint' => ['required', 'string', 'max:255'],
             'histories.*.physical_exams' => ['required'],
         ]);
 
@@ -120,7 +119,6 @@ class PatientController extends Controller
             'religion' => ['nullable', 'string', 'max:255'],
             'blood_type' => ['nullable', 'string', 'max:255'],
             'histories' => ['nullable', 'array'],
-            'histories.*.chief_complaint' => ['required', 'string', 'max:255'],
             'histories.*.physical_exams' => ['required'],
         ]);
 

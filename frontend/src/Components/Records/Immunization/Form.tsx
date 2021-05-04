@@ -162,7 +162,7 @@ const Form: FC<Props> = (props) => {
 						</div>
 						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group'>
-								<label className='bmd-label-floating required'>TT Injection</label>
+								<label className='bmd-label-floating'>TT Injection</label>
 								<input ref={register} type='text' className='form-control' disabled={processing} name='tt_injection' />
 							</div>
 						</div>
