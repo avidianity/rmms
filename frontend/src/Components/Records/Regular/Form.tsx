@@ -228,13 +228,15 @@ const Form: FC<Props> = (props) => {
 																		disabled={prescription.released_at !== null}
 																		onClick={(e) => {
 																			e.preventDefault();
-																			prescription.items?.push({
-																				medicine_id: medicines[0].id as number,
-																				quantity: 1,
-																				prescription_id: prescription.id as number,
-																			});
-																			prescriptions.splice(prescriptionIndex, 1, prescription);
-																			setPrescriptions([...prescriptions]);
+																			if (prescription.released_at === null) {
+																				prescription.items?.push({
+																					medicine_id: medicines[0].id as number,
+																					quantity: 1,
+																					prescription_id: prescription.id as number,
+																				});
+																				prescriptions.splice(prescriptionIndex, 1, prescription);
+																				setPrescriptions([...prescriptions]);
+																			}
 																		}}>
 																		{prescription.released_at === null
 																			? 'Add Item'
@@ -305,6 +307,12 @@ const Form: FC<Props> = (props) => {
 																							disabled={processing}
 																							name='quantity'
 																							placeholder='Quantity'
+																							max={
+																								medicines.find(
+																									(medicine) =>
+																										medicine.id === item.medicine_id
+																								)?.available || undefined
+																							}
 																							onChange={(e) => {
 																								item.quantity = Number(e.target.value);
 																								prescription.items?.splice(

@@ -165,9 +165,9 @@ class ReportsController extends Controller
                 ];
 
                 if ($record->patient->sex === 'Male') {
-                    $diseases['males'] += 1;
+                    $diseases[$record->diagnosis]['males'] += 1;
                 } else {
-                    $diseases['females'] += 1;
+                    $diseases[$record->diagnosis]['females'] += 1;
                 }
             }
         }

@@ -162,13 +162,20 @@ const Form: FC<Props> = (props) => {
 									))}
 								</select>
 							</div>
-                        </div>
-                        <div className='col-12 col-md-4'>
-                            <div className='form-group bmd-form-group is-filled'>
-                                <label className='bmd-label-floating'>Husband</label>
-                                <input ref={register} type='text' name='husband' id='husband' disabled={processing} className='form-control'/>
-                            </div>
-                        </div>
+						</div>
+						<div className='col-12 col-md-4'>
+							<div className='form-group bmd-form-group is-filled'>
+								<label className='bmd-label-floating'>Husband</label>
+								<input
+									ref={register}
+									type='text'
+									name='husband'
+									id='husband'
+									disabled={processing}
+									className='form-control'
+								/>
+							</div>
+						</div>
 						<div className='col-12 col-md-3'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>Last Menstrual Period</label>
@@ -302,7 +309,7 @@ const Form: FC<Props> = (props) => {
 							</div>
 						</div>
 						<div className='col-12 col-md-4'>
-							<div className='form-group bmd-form-group'>
+							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Delivery Status</label>
 								<select ref={register} className='form-control' disabled={processing} name='delivery_status'>
 									<option value='Alive'>Alive</option>
@@ -311,7 +318,7 @@ const Form: FC<Props> = (props) => {
 							</div>
 						</div>
 						<div className='col-12 col-md-4'>
-							<div className='form-group bmd-form-group'>
+							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Delivery Outcome</label>
 								<select ref={register} className='form-control' disabled={processing} name='delivery_outcome'>
 									<option value='Male'>Male</option>
@@ -440,6 +447,12 @@ const Form: FC<Props> = (props) => {
 																						}
 																						name='quantity'
 																						placeholder='Quantity'
+																						max={
+																							medicines.find(
+																								(medicine) =>
+																									medicine.id === item.medicine_id
+																							)?.available || undefined
+																						}
 																						onChange={(e) => {
 																							const value = Number(e.target.value);
 																							if (value > 0) {

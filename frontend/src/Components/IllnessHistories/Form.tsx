@@ -39,7 +39,6 @@ const Form: FC<Props> = (props) => {
 			const { data } = await axios.get<IllnessHistory>(`/illness-histories/${id}`);
 			setPatientID(data.patient_id);
 			setPatientName(data.patient?.name || '');
-			setValue('chief_complaint', data.chief_complaint);
 			setValue('physical_exams[bp]', data.physical_exams.bp);
 			setValue('physical_exams[wt]', data.physical_exams.wt);
 			setValue('physical_exams[ht]', data.physical_exams.ht);
