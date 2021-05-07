@@ -15,7 +15,8 @@ class ImmunizationRecordController extends Controller
      */
     public function index()
     {
-        return ImmunizationRecord::paginate(10);
+        return ImmunizationRecord::whereYear('created_at', now()->year)
+            ->paginate(10);
     }
 
     /**
@@ -172,7 +173,7 @@ class ImmunizationRecordController extends Controller
     public function archived()
     {
         return ImmunizationRecord::oldest('created_at')
-            ->whereYear('created_at', '<', now()->year - 1)
+            ->whereYear('created_at', '!=', now()->year)
             ->paginate(10);
     }
 }

@@ -19,8 +19,8 @@ class PrenatalRecordController extends Controller
      */
     public function index()
     {
-        return PrenatalRecord::orderBy('case_number', 'DESC')
-            ->latest('case_number')
+        return PrenatalRecord::latest('case_number')
+            ->whereYear('created_at', now()->year)
             ->with(['attendee', 'patient'])
             ->paginate(10);
     }
@@ -153,7 +153,7 @@ class PrenatalRecordController extends Controller
     {
         return PrenatalRecord::with(['attendee', 'patient'])
             ->oldest('created_at')
-            ->whereYear('created_at', '<', now()->year - 1)
+            ->whereYear('created_at', '!=', now()->year)
             ->paginate(10);
     }
 

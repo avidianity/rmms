@@ -22,6 +22,7 @@ class RecordController extends Controller
     public function index()
     {
         return Record::with(['doctor', 'patient'])
+            ->whereYear('created_at', now()->year)
             ->latest('case_number')
             ->paginate(10);
     }
@@ -124,7 +125,7 @@ class RecordController extends Controller
     {
         return Record::with(['doctor', 'patient'])
             ->oldest('created_at')
-            ->whereYear('created_at', '<', now()->year - 1)
+            ->whereYear('created_at', '!=', now()->year)
             ->paginate(10);
     }
 

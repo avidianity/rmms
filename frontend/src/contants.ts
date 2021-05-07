@@ -22,6 +22,6 @@ export const STATUSES = {
 			{ key: 'measles', name: 'Measles' },
 			{ key: 'other', name: 'Other' },
 		],
-		properties: ['at_birth', 'six_weeks', 'fourteen_weeks', 'nine_months'],
+		properties: ['at_birth', 'six_weeks', 'ten_weeks', 'fourteen_weeks', 'nine_months'],
 	},
 };

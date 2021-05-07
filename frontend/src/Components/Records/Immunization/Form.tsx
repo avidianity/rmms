@@ -48,7 +48,12 @@ const Form: FC<Props> = (props) => {
 		setProcessing(true);
 		try {
 			data.birthday = birthday.toJSON();
-			await (mode === 'Add' ? axios.post(`/immunization-records`, data) : axios.put(`/immunization-records/${id}`, data));
+			await (mode === 'Add'
+				? axios.post(`/immunization-records`, data)
+				: axios.post(`/immunization-records/${id}`, {
+						...data,
+						_method: 'PUT',
+				  }));
 			toastr.success('Immunization Patient saved successfully.');
 		} catch (error) {
 			handleError(error);
@@ -221,10 +226,24 @@ const Form: FC<Props> = (props) => {
 																	ref={register}
 																	type='text'
 																	className='form-control'
-																	disabled={
-																		processing ||
-																		(getValues()?.info as any)?.[field.key]?.[property] !== 'N/A'
-																	}
+																	disabled={(() => {
+																		if (processing) {
+																			return true;
+																		}
+
+																		if ((getValues()?.info as any)?.[field.key]?.[property] === 'N/A') {
+																			return false;
+																		}
+
+																		if (
+																			String((getValues()?.info as any)?.[field.key]?.[property])
+																				.length > 0
+																		) {
+																			return true;
+																		}
+
+																		return false;
+																	})()}
 																	name={`info[${field.key}][${property}]`}
 																/>
 															</div>
