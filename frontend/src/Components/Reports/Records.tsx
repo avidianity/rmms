@@ -39,19 +39,19 @@ const Records: FC<Props> = (props) => {
 				<table className='table'>
 					<thead>
 						<tr>
-							<th className='text-center'>Disease</th>
-							<th className='text-center'>Male</th>
-							<th className='text-center'>Female</th>
-							<th className='text-center'>Total</th>
+							<th className='text-center font-weight-bold'>Disease</th>
+							<th className='text-center font-weight-bold'>Male</th>
+							<th className='text-center font-weight-bold'>Female</th>
+							<th className='text-center font-weight-bold'>Total</th>
 						</tr>
 					</thead>
 					<tbody>
 						{data.map((item, index) => (
 							<tr key={index}>
-								<td className='text-center'>{item.disease}</td>
-								<td className='text-center'>{item.males}</td>
-								<td className='text-center'>{item.females}</td>
-								<td className='text-center'>{item.males + item.females}</td>
+								<td className='text-center font-weight-bold'>{item.disease}</td>
+								<td className='text-center font-weight-bold'>{item.males}</td>
+								<td className='text-center font-weight-bold'>{item.females}</td>
+								<td className='text-center font-weight-bold'>{item.males + item.females}</td>
 							</tr>
 						))}
 					</tbody>

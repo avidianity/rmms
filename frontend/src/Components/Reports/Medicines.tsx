@@ -36,21 +36,21 @@ const Medicines: FC<Props> = (props) => {
 				<table className='table'>
 					<thead>
 						<tr>
-							<th className='text-center'>Description</th>
-							<th className='text-center'>Released</th>
-							<th className='text-center'>Available</th>
-							<th className='text-cennter'>Estimated Unit Cost</th>
-							<th className='text-cennter'>Estimated Cost</th>
+							<th className='text-center font-weight-bold'>Description</th>
+							<th className='text-center font-weight-bold'>Released</th>
+							<th className='text-center font-weight-bold'>Available</th>
+							<th className='text-center font-weight-bold'>Estimated Unit Cost</th>
+							<th className='text-center font-weight-bold'>Estimated Cost</th>
 						</tr>
 					</thead>
 					<tbody>
 						{data.map((item, index) => (
 							<tr key={index}>
-								<td className='text-center'>{item.description}</td>
-								<td className='text-center'>{item.released}</td>
-								<td className='text-center'>{item.available}</td>
-								<td className='text-center'>{item.estimated_unit_cost}</td>
-								<td className='text-center'>{item.estimated_cost}</td>
+								<td className='text-center font-weight-bold'>{item.description}</td>
+								<td className='text-center font-weight-bold'>{item.released}</td>
+								<td className='text-center font-weight-bold'>{item.available}</td>
+								<td className='text-center font-weight-bold'>{item.estimated_unit_cost}</td>
+								<td className='text-center font-weight-bold'>{item.estimated_cost}</td>
 							</tr>
 						))}
 					</tbody>

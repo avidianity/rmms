@@ -159,7 +159,14 @@ const Form: FC<Props> = (props) => {
 						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group'>
 								<label className='bmd-label-floating'>Philhealth Number</label>
-								<input ref={register} type='text' className='form-control' disabled={processing} name='philhealth_number' />
+								<input
+									pattern='[0-9]{2}-[0-9]{9}-[0-9]{1}'
+									ref={register}
+									type='text'
+									className='form-control'
+									disabled={processing}
+									name='philhealth_number'
+								/>
 							</div>
 						</div>
 						<div className='col-12 col-md-4'>

@@ -113,10 +113,12 @@ const List: FC<Props> = (props) => {
 						<td>{inventory.available}</td>
 						<td>{formatCurrency(inventory.estimated_cost)}</td>
 						<td>
-							<Link to={url(`/${inventory.id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-								<i className='material-icons mr-1'>create</i>
-								Edit
-							</Link>
+							{user.role !== 'Admin' ? (
+								<Link to={url(`/${inventory.id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+									<i className='material-icons mr-1'>create</i>
+									Edit
+								</Link>
+							) : null}
 							{/* <a
 								href={url(`/${id}/delete`)}
 								className='btn btn-danger btn-sm'

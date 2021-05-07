@@ -89,10 +89,12 @@ const List: FC<Props> = (props) => {
 						<td>{dayjs(inventoryRelease.date).format('MMMM DD, YYYY')}</td>
 						<td>{inventoryRelease.inventory?.description}</td>
 						<td className='text-center'>
-							<Link to={url(`/${inventoryRelease.id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
-								<i className='material-icons mr-1'>create</i>
-								Edit
-							</Link>
+							{user.role !== 'Admin' ? (
+								<Link to={url(`/${inventoryRelease.id}/edit`)} className='btn btn-warning btn-sm' title='Edit'>
+									<i className='material-icons mr-1'>create</i>
+									Edit
+								</Link>
+							) : null}
 						</td>
 					</tr>
 				))}

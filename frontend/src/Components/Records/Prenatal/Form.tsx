@@ -311,19 +311,13 @@ const Form: FC<Props> = (props) => {
 						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Delivery Status</label>
-								<select ref={register} className='form-control' disabled={processing} name='delivery_status'>
-									<option value='Alive'>Alive</option>
-									<option value='Deceased'>Deceased</option>
-								</select>
+								<input type='text' ref={register} className='form-control' disabled={processing} name='delivery_status' />
 							</div>
 						</div>
 						<div className='col-12 col-md-4'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating required'>Delivery Outcome</label>
-								<select ref={register} className='form-control' disabled={processing} name='delivery_outcome'>
-									<option value='Male'>Male</option>
-									<option value='Female'>Female</option>
-								</select>
+								<input type='text' ref={register} className='form-control' disabled={processing} name='delivery_outcome' />
 							</div>
 						</div>
 						<div className='col-12 col-md-4'>

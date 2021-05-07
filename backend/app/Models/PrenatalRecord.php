@@ -54,7 +54,7 @@ class PrenatalRecord extends Model
         });
 
         static::saving(function (self $record) {
-            $record->status = empty(trim($record->remarks ? $record->remarks : '')) ? 'Pending' : 'Done';
+            $record->status = empty(trim($record->remarks ? $record->remarks : '')) || $record->remarks === 'N/A' ? 'Pending' : 'Done';
         });
     }
 

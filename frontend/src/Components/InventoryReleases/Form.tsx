@@ -118,7 +118,14 @@ const Form: FC<Props> = (props) => {
 						<div className='col-12 col-md-6'>
 							<div className='form-group bmd-form-group is-filled'>
 								<label className='bmd-label-floating'>Date</label>
-								<Flatpickr value={date} className='form-control' onChange={(dates) => setDate(dates[0])} />
+								<Flatpickr
+									value={date}
+									className='form-control'
+									options={{
+										minDate: dayjs(`January 01, ${new Date().getFullYear()}`, 'MMMM DD, YYYY').toDate(),
+									}}
+									onChange={(dates) => setDate(dates[0])}
+								/>
 							</div>
 						</div>
 						<div className='col-12'>

@@ -43,27 +43,27 @@ const PrenatalRecords: FC<Props> = (props) => {
 				<table className='table'>
 					<thead>
 						<tr>
-							<th className='text-center'>Address</th>
-							<th className='text-center'>Male</th>
-							<th className='text-center'>Female</th>
-							<th className='text-center'>NSD</th>
-							<th className='text-center'>CS</th>
-							<th className='text-center'>Live Births</th>
-							<th className='text-center'>Deceased Births</th>
-							<th className='text-center'>Total</th>
+							<th className='text-center font-weight-bold'>Address</th>
+							<th className='text-center font-weight-bold'>Male</th>
+							<th className='text-center font-weight-bold'>Female</th>
+							<th className='text-center font-weight-bold'>NSD</th>
+							<th className='text-center font-weight-bold'>CS</th>
+							<th className='text-center font-weight-bold'>Live Births</th>
+							<th className='text-center font-weight-bold'>Deceased Births</th>
+							<th className='text-center font-weight-bold'>Total</th>
 						</tr>
 					</thead>
 					<tbody>
 						{data.map((item, index) => (
 							<tr key={index}>
-								<td className='text-center'>{item.address}</td>
-								<td className='text-center'>{item.males}</td>
-								<td className='text-center'>{item.females}</td>
-								<td className='text-center'>{item.nsd}</td>
-								<td className='text-center'>{item.cs}</td>
-								<td className='text-center'>{item.live_births}</td>
-								<td className='text-center'>{item.death_births}</td>
-								<td className='text-center'>{item.live_births + item.death_births}</td>
+								<td className='text-center font-weight-bold'>{item.address}</td>
+								<td className='text-center font-weight-bold'>{item.males}</td>
+								<td className='text-center font-weight-bold'>{item.females}</td>
+								<td className='text-center font-weight-bold'>{item.nsd}</td>
+								<td className='text-center font-weight-bold'>{item.cs}</td>
+								<td className='text-center font-weight-bold'>{item.live_births}</td>
+								<td className='text-center font-weight-bold'>{item.death_births}</td>
+								<td className='text-center font-weight-bold'>{item.live_births + item.death_births}</td>
 							</tr>
 						))}
 					</tbody>

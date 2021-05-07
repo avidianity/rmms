@@ -249,16 +249,50 @@ const Statistics: FC<Props> = (props) => {
 						<div className='modal-body'>
 							<div className='container-fluid'>
 								<div className='row'>
-									<div className='col-12 col-md-6 col-lg-4'>
-										<button
-											className='btn btn-primary btn-sm w-100'
-											onClick={(e) => {
-												e.preventDefault();
-												window.open(routes.EXPORTS.PATIENTS);
-											}}>
-											Patients
-										</button>
-									</div>
+									{!['Pharmacist'].includes(user?.role) ? (
+										<>
+											<div className='col-12 col-md-6 col-lg-4'>
+												<button
+													className='btn btn-primary btn-sm w-100'
+													onClick={(e) => {
+														e.preventDefault();
+														window.open(routes.EXPORTS.PATIENTS);
+													}}>
+													Patients
+												</button>
+											</div>
+											<div className='col-12 col-md-6 col-lg-4'>
+												<button
+													className='btn btn-success btn-sm w-100'
+													onClick={(e) => {
+														e.preventDefault();
+														window.open(routes.EXPORTS.IMMUNIZATIONS);
+													}}>
+													Immunizations
+												</button>
+											</div>
+											<div className='col-12 col-md-6 col-lg-4'>
+												<button
+													className='btn btn-danger btn-sm w-100'
+													onClick={(e) => {
+														e.preventDefault();
+														window.open(routes.EXPORTS.RECORDS);
+													}}>
+													Regular Patients
+												</button>
+											</div>
+											<div className='col-12 col-md-6 col-lg-4'>
+												<button
+													className='btn btn-secondary btn-sm w-100'
+													onClick={(e) => {
+														e.preventDefault();
+														window.open(routes.EXPORTS.PRENATALS);
+													}}>
+													Prenatal Patients
+												</button>
+											</div>
+										</>
+									) : null}
 									{!['Doctor', 'Nurse'].includes(user?.role) ? (
 										<>
 											<div className='col-12 col-md-6 col-lg-4'>
@@ -283,36 +317,6 @@ const Statistics: FC<Props> = (props) => {
 											</div>
 										</>
 									) : null}
-									<div className='col-12 col-md-6 col-lg-4'>
-										<button
-											className='btn btn-success btn-sm w-100'
-											onClick={(e) => {
-												e.preventDefault();
-												window.open(routes.EXPORTS.IMMUNIZATIONS);
-											}}>
-											Immunizations
-										</button>
-									</div>
-									<div className='col-12 col-md-6 col-lg-4'>
-										<button
-											className='btn btn-danger btn-sm w-100'
-											onClick={(e) => {
-												e.preventDefault();
-												window.open(routes.EXPORTS.RECORDS);
-											}}>
-											Regular Patients
-										</button>
-									</div>
-									<div className='col-12 col-md-6 col-lg-4'>
-										<button
-											className='btn btn-secondary btn-sm w-100'
-											onClick={(e) => {
-												e.preventDefault();
-												window.open(routes.EXPORTS.PRENATALS);
-											}}>
-											Prenatal Patients
-										</button>
-									</div>
 								</div>
 							</div>
 						</div>

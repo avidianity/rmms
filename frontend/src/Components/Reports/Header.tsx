@@ -12,8 +12,8 @@ const Header: FC<Props> = (props) => {
 				style={{ height: '100px', width: '100px' }}
 			/>
 			<div className='mx-5 text-center'>
-				<h2>MUNICIPAL HEALTH CENTER OF GLORIA</h2>
-				<h4>Maligaya Gloria, Oriental Mindoro</h4>
+				<h2 className='font-weight-bold'>MUNICIPAL HEALTH CENTER OF GLORIA</h2>
+				<h4 className='font-weight-bold'>Maligaya Gloria, Oriental Mindoro</h4>
 			</div>
 			<img
 				src='/assets/img/logo.svg'

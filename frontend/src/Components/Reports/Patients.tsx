@@ -41,20 +41,20 @@ const Patients: FC<Props> = (props) => {
 					<thead>
 						<tr>
 							<th>Barangay</th>
-							<th className='text-center'>Regular</th>
-							<th className='text-center'>Prenatal</th>
-							<th className='text-center'>Immunization</th>
-							<th className='text-center'>Total</th>
+							<th className='text-center font-weight-bold'>Regular</th>
+							<th className='text-center font-weight-bold'>Prenatal</th>
+							<th className='text-center font-weight-bold'>Immunization</th>
+							<th className='text-center font-weight-bold'>Total</th>
 						</tr>
 					</thead>
 					<tbody>
 						{data.map((item, index) => (
 							<tr key={index}>
 								<td>{item.address}</td>
-								<td className='text-center'>{item.regular}</td>
-								<td className='text-center'>{item.prenatal}</td>
-								<td className='text-center'>{item.immunization}</td>
-								<td className='text-center'>{item.regular + item.prenatal + item.immunization}</td>
+								<td className='text-center font-weight-bold'>{item.regular}</td>
+								<td className='text-center font-weight-bold'>{item.prenatal}</td>
+								<td className='text-center font-weight-bold'>{item.immunization}</td>
+								<td className='text-center font-weight-bold'>{item.regular + item.prenatal + item.immunization}</td>
 							</tr>
 						))}
 					</tbody>
