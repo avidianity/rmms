@@ -19,7 +19,7 @@ class CreateInventoryReleasesTable extends Migration
             $table->string('name');
             $table->foreignIdFor(new Inventory())->constrained();
             $table->unsignedBigInteger('quantity');
-            $table->timestamp('date');
+            $table->string('date');
             $table->timestamps();
         });
     }

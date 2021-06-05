@@ -30,7 +30,7 @@ class InventoryReleaseController extends Controller
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'quantity' => ['required', 'numeric'],
-            'date' => ['required', 'date'],
+            'date' => ['required', 'string'],
             'inventory_id' => ['required', 'numeric', Rule::exists(Inventory::class, 'id')],
         ]);
 

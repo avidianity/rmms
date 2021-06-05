@@ -12,10 +12,6 @@ class InventoryRelease extends Model
 
     protected $fillable = ['name', 'quantity', 'date'];
 
-    protected $casts = [
-        'date' => 'timestamp',
-    ];
-
     protected static function booted()
     {
         static::deleting(function (self $inventoryRelease) {
